@@ -1,0 +1,10 @@
+{
+  "suite": "steve-design-suite",
+  "version": "1.0.0",
+  "components": {
+    "steve": "1.0.0",
+    "ui-ux-pro-max": "1.0.0"
+  },
+  "updatePolicy": "verified-release-only",
+  "rollback": "install the previous verified suite release"
+}

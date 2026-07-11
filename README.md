@@ -1,41 +1,52 @@
-# Claude Code Skills
+# Personal agent skills
 
-Custom skills for [Claude Code](https://docs.anthropic.com/en/docs/claude-code).
+Focused skills for testing, module audits, live production shipping, product
+design, and agent-environment updates.
 
-## Skills
-
-| Skill | Description |
-|-------|-------------|
-| **chris** | Testable Architecture — analyze code into testable units, write tests, review & audit test suites. Based on Functional Core / Imperative Shell principles. |
-| **formpress** | Print-on-Form Positioning — precise data placement on pre-printed paper forms. Interview → calculate coordinates → generate jsPDF code → calibrate printer → preview overlay. |
-| **margaret** | Deep Bug & Security Finder — systematic multi-phase audit using parallel agents to find bugs, security holes, and gaps. Module-level analysis. |
-| **ship** | Ship code to production — commit, build, migrate, deploy, push, and verify using project-specific commands. |
-| **update-all** | Full Codex environment updater — CLI, npm globals, Homebrew, plugin marketplaces, skills, RTK, Graphify, and local tools. |
+| Skill | Use |
+|---|---|
+| `chris` | **all** testing work; testable architecture remains the core |
+| `formpress` | precise positioning for printing onto pre-printed forms |
+| `margaret` | deep module/system audit |
+| `ship` | live production deployment only |
+| `steve` + `ui-ux-pro-max` | product design decision + implementation guidance |
+| `update-all` | safe agent ecosystem update |
 
 ## Install
 
-```bash
-git clone https://github.com/polaminggkub-debug/claude-skills.git
-cd claude-skills
-bash install.sh
+The portable installer needs Python 3. It copies skills directly, so it works
+for local Codex, Claude Code, and compatible cloud workspaces that expose a
+writable skills directory.
+
+```powershell
+python install.py --platform codex
+python install.py --platform claude
 ```
 
-Or install manually:
-
-```bash
-cp -r chris ~/.claude/skills/
-cp -r formpress ~/.claude/skills/
-cp -r margaret ~/.claude/skills/
-cp -r ship ~/.claude/skills/
-cp -r update-all ~/.claude/skills/
+```sh
+python3 install.py --platform codex
+python3 install.py --platform claude
 ```
 
-Restart Claude Code after installing.
+Override the destination with `CODEX_HOME` or `CLAUDE_CODE_SKILLS_DIR`.
+Restart the agent if discovery is not immediate.
 
-## Update
+## Steve Design Suite
 
-```bash
-cd claude-skills
-git pull
-bash install.sh
+`steve-design-suite/` is a versioned bundle: installing it supplies both
+`steve` and `ui-ux-pro-max` together. `dependency-lock.json` records the tested
+pair. Release a new suite only after validation; consumers update to that
+verified release and can reinstall the preceding release to roll back.
+
+The repository includes Codex and Claude Code plugin manifests for marketplace
+distribution. A marketplace/managed-plugin installation can provide platform
+updates; direct skill installation is intentionally pinned until the user runs
+an update.
+
+## Validate
+
+```sh
+python scripts/validate-skills.py
 ```
+
+The validator is standard-library-only and runs on Windows, macOS, and Linux.

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Chris"
+  short_description: "All testing through testable architecture"
+  default_prompt: "Use $chris to handle this testing task with clear unit boundaries."

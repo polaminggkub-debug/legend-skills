@@ -1,0 +1,6 @@
+{
+  "name": "steve-design-suite",
+  "version": "1.0.0",
+  "description": "Steve product design judgment plus UIUX Pro Max implementation guidance.",
+  "skills": ["./skills/steve", "./skills/ui-ux-pro-max"]
+}

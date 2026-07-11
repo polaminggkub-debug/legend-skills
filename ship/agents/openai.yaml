@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ship"
+  short_description: "Deploy ready revisions to live production"
+  default_prompt: "Use $ship to deploy this ready revision to live production safely."

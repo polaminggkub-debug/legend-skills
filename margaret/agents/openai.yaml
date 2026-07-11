@@ -1,0 +1,4 @@
+interface:
+  display_name: "Margaret"
+  short_description: "Deep module audits for bugs and security"
+  default_prompt: "Use $margaret to audit this module and verify important findings."

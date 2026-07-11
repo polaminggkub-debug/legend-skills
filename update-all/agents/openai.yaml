@@ -1,0 +1,4 @@
+interface:
+  display_name: "Update All"
+  short_description: "Safely update the full agent ecosystem"
+  default_prompt: "Use $update-all to safely update this agent environment."

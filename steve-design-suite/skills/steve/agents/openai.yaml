@@ -1,0 +1,4 @@
+interface:
+  display_name: "Steve"
+  short_description: "Product-led UI and UX review and building"
+  default_prompt: "Use $steve to review or build this UI from the product experience outward."

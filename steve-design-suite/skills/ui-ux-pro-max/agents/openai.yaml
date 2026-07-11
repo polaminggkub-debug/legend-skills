@@ -1,0 +1,4 @@
+interface:
+  display_name: "UIUX Pro Max"
+  short_description: "Apply UI and UX implementation guidance"
+  default_prompt: "Use $ui-ux-pro-max with Steve to implement this UI direction."
