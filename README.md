@@ -1,52 +1,52 @@
-# Personal agent skills
+# Legend Skills
 
-Focused skills for testing, module audits, live production shipping, product
-design, and agent-environment updates.
+Portable agent skills plus an optional GPT-5.6 routing profile for Codex.
 
-| Skill | Use |
-|---|---|
-| `chris` | **all** testing work; testable architecture remains the core |
-| `formpress` | precise positioning for printing onto pre-printed forms |
-| `margaret` | deep module/system audit |
-| `ship` | live production deployment only |
-| `steve` + `ui-ux-pro-max` | product design decision + implementation guidance |
-| `update-all` | safe agent ecosystem update |
+| Component | Codex | Claude Code | Requirement |
+|---|---:|---:|---|
+| General skills | Yes | Yes | None |
+| Steve Design Suite | Yes | Yes | None |
+| GPT-5.6 Router | Yes | No | `gpt-5.6-luna`, `gpt-5.6-terra`, or `gpt-5.6-sol` |
 
 ## Install
 
-The portable installer needs Python 3. It copies skills directly, so it works
-for local Codex, Claude Code, and compatible cloud workspaces that expose a
-writable skills directory.
+Give this repository to your coding agent and say:
 
-```powershell
-python install.py --platform codex
-python install.py --platform claude
+```text
+Read gpt56-router/INSTALL_FOR_AI.md and install the components I request.
+Follow every compatibility, backup, ownership, and uninstall rule.
 ```
 
-```sh
-python3 install.py --platform codex
-python3 install.py --platform claude
-```
+No installer runtime is required. The same instruction works on Windows,
+macOS, and Linux.
 
-Override the destination with `CODEX_HOME` or `CLAUDE_CODE_SKILLS_DIR`.
-Restart the agent if discovery is not immediate.
+General skills: `chris`, `formpress`, `margaret`, `ship`, `steve`,
+`ui-ux-pro-max`, and `update-all`.
 
-## Steve Design Suite
+## GPT-5.6 Router
 
-`steve-design-suite/` is a versioned bundle: installing it supplies both
-`steve` and `ui-ux-pro-max` together. `dependency-lock.json` records the tested
-pair. Release a new suite only after validation; consumers update to that
-verified release and can reinstall the preceding release to roll back.
+Install only for Codex running GPT-5.6. If the active model is incompatible,
+the agent must skip installation. If the router is already present, the agent
+must recommend safe removal.
 
-The repository includes Codex and Claude Code plugin manifests for marketplace
-distribution. A marketplace/managed-plugin installation can provide platform
-updates; direct skill installation is intentionally pinned until the user runs
-an update.
+Recommended routing:
 
-## Validate
+| Work | Model |
+|---|---|
+| Main planning, routing, synthesis | Sol medium |
+| Known target, at most two files/directories | Luna high |
+| Broad repository discovery and large context | Terra high |
+| Implementation, debugging, tests | Terra high |
+| Security, production, migration, destructive work | Sol high |
+| Verified commit and push | Luna low |
 
-```sh
-python scripts/validate-skills.py
-```
+Sol xhigh, max, and ultra remain manual-only. Ultra is reserved for work that
+splits into at least three independent parallel tracks.
 
-The validator is standard-library-only and runs on Windows, macOS, and Linux.
+See `gpt56-router/SUBAGENT_ROUTING.md` for policy and
+`gpt56-router/BENCHMARKS.md` for the reasoning behind these defaults.
+
+## Repository rename
+
+This project was previously named `claude-skills`. GitHub redirects old links
+after the repository is renamed to `legend-skills`.
