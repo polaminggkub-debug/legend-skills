@@ -11,12 +11,12 @@ Remove RTK, Graphify, and the complete Caveman ecosystem from active local use, 
 - Remove their entries from `.agents/.skill-lock.json`.
 - Remove active Caveman response-style instructions from `.codex/AGENTS.md` while preserving GPT-5.6 routing.
 - Remove local Caveman source/work clones and Graphify retirement artifacts.
+- Delete the remote GitHub repository `polaminggkub-debug/caveman-thai-fork` after confirming the authenticated owner and retaining its local clone until remote deletion succeeds.
 - Remove Graphify and Caveman usage references from canonical user-authored Markdown/config files and generated Codex worktree copies. Replace executable command prefixes with native commands where applicable; delete obsolete instruction lines.
 - Verify RTK remains absent.
 
 ## Non-goals
 
-- Do not delete the remote GitHub repository `polaminggkub-debug/caveman-thai-fork`.
 - Do not change unrelated tools, skills, PATH entries, project code, or historical Codex session JSON.
 - Do not edit unrelated uses of common words or third-party product names.
 
@@ -27,6 +27,7 @@ Remove RTK, Graphify, and the complete Caveman ecosystem from active local use, 
 - Preserve shared parent directories and unrelated dirty worktree changes.
 - Tracked Markdown/config changes remain recoverable through Git. Deleted upstream source clones can be cloned again. Installed skills can be reinstalled from their recorded GitHub source.
 - Graphify backup artifacts and untracked local runtime data are intentionally removed without creating another local copy.
+- Keep the local `caveman-pr-thai` clone only as a temporary rollback source. Delete it after the remote fork deletion is verified; recreating the deleted GitHub repository afterward would require creating a new repository and pushing from another surviving source.
 
 ## Validation
 
@@ -34,6 +35,7 @@ Remove RTK, Graphify, and the complete Caveman ecosystem from active local use, 
 - No installed Caveman/Cavecrew directories or lock entries remain.
 - Active global instructions contain no Caveman directive.
 - RTK and Graphify commands remain unresolved and no matching services/tasks/packages exist.
+- GitHub reports `polaminggkub-debug/caveman-thai-fork` as absent after deletion.
 - Scoped Markdown/config scans find no active RTK, Graphify, Caveman, or Cavecrew usage references.
 - Git diffs contain only intended documentation/config changes and pass `git diff --check`.
 
