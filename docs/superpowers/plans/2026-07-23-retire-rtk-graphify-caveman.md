@@ -22,6 +22,12 @@ $text = Get-Content -Raw update-all/SKILL.md
 foreach ($name in 'RTK','Graphify','Caveman','Cavecrew') {
   if ($text -notmatch [regex]::Escape($name)) { throw "Missing retired-tool policy: $name" }
 }
+foreach ($verb in 'install','update','restore','recommend','re-enable') {
+  if ($text -notmatch [regex]::Escape($verb)) { throw "Missing retired-tool prohibition: $verb" }
+}
+foreach ($guard in 'verify exact targets','document rollback') {
+  if ($text -notmatch [regex]::Escape($guard)) { throw "Missing deletion guard: $guard" }
+}
 ```
 
 Expected: FAIL with `Missing retired-tool policy: RTK`.
@@ -45,7 +51,8 @@ Add this paragraph under `## Constraints` in both files:
 ```markdown
 RTK, Graphify, Caveman, and Cavecrew are retired. Never install, update,
 restore, recommend, or re-enable them. If discovered, report them as retired
-and skip them unless the user explicitly requests removal.
+and skip them. Treat an explicit removal request as separate destructive work:
+verify exact targets and document rollback before deleting anything.
 ```
 
 - [ ] **Step 2: Run the policy assertion again**
@@ -57,6 +64,7 @@ Expected: exit 0.
 - [ ] **Step 3: Validate both skill copies**
 
 ```powershell
+$env:PYTHONUTF8 = '1'
 python C:\Users\i9-14900K\.codex\skills\.system\skill-creator\scripts\quick_validate.py update-all
 python C:\Users\i9-14900K\.codex\skills\.system\skill-creator\scripts\quick_validate.py C:\Users\i9-14900K\.codex\skills\update-all
 ```

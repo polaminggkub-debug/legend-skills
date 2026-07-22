@@ -27,7 +27,7 @@ Remove RTK, Graphify, and the complete Caveman ecosystem from active local use, 
 - Resolve every recursive deletion target to an exact absolute path and reject unexpected leaf names.
 - Never use wildcards for deletion.
 - Preserve shared parent directories and unrelated dirty worktree changes.
-- Tracked Markdown/config changes remain recoverable through Git. Deleted upstream source clones can be cloned again. Installed skills can be reinstalled from their recorded GitHub source.
+- Tracked Markdown/config changes remain recoverable through Git. Retirement itself has no rollback that restores or re-enables these tools; any future reversal requires a new, explicit policy decision outside this cleanup.
 - Graphify backup artifacts and untracked local runtime data are intentionally removed without creating another local copy.
 - Keep the local `caveman-pr-thai` clone only as a temporary rollback source. Delete it after the remote fork deletion is verified; recreating the deleted GitHub repository afterward would require creating a new repository and pushing from another surviving source.
 
