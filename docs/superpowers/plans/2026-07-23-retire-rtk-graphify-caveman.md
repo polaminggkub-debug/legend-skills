@@ -105,6 +105,7 @@ Expected: no output. JSON parsing of `.agents/.skill-lock.json` succeeds and non
 - Modify: generated Markdown/config copies under `C:\Users\i9-14900K\.codex\worktrees`, `C:\Users\i9-14900K\.codex\visualizations`, and `C:\Users\i9-14900K\.config\superpowers\worktrees`
 - Delete: `C:\Users\i9-14900K\Documents\Codex\2026-07-15\superpowers-receiving-code-review-c-users\work\graphify-removal-backup-20260715.zip`
 - Delete: `C:\Users\i9-14900K\Documents\Codex\2026-07-15\superpowers-receiving-code-review-c-users\outputs\2026-07-15-complete-graphify-retirement-plan.md`
+- Modify: `C:\Users\i9-14900K\.codex\.legend-skills\backups\gpt56-router-20260712-233133\AGENTS.md`
 
 - [ ] **Step 1: Classify exact references**
 
@@ -169,6 +170,8 @@ Expected: a GitHub draft PR URL.
 - Delete remote: `polaminggkub-debug/caveman-thai-fork`
 - Delete local: `C:\Users\i9-14900K\Documents\Codex\2026-06-29\github\work\caveman-pr-thai`
 - Delete local: `C:\Users\i9-14900K\Documents\Codex\2026-04-27\github-caveman-windows-windows-application-cli\caveman`
+- Delete local after content validation: `C:\Users\i9-14900K\Documents\Codex\2026-06-29\github`
+- Delete empty/task remnants: `C:\Users\i9-14900K\Documents\Codex\2026-04-27\plugin-caveman`, `C:\Users\i9-14900K\Documents\Codex\2026-05-01\skill-caveman`, and `C:\Users\i9-14900K\Documents\Codex\2026-04-27\github-caveman-windows-windows-application-cli`
 
 - [ ] **Step 1: Verify the remote and authorization**
 
@@ -226,6 +229,10 @@ Expected: no Caveman/Cavecrew directories, lock entries, or active global direct
 
 Expected: zero active-use references and every approved deletion target absent.
 
-- [ ] **Step 4: Verify Git and GitHub state**
+- [ ] **Step 4: Remove the RTK-named task workspace and trust entry last**
+
+Atomically remove only the exact project table for `C:\Users\i9-14900K\Documents\Codex\2026-07-23\rtk-md-rtk` from `C:\Users\i9-14900K\.codex\config.toml`, preserving the rest of the file. From a different working directory, resolve and delete that exact workspace only after all reports and checks no longer depend on it.
+
+- [ ] **Step 5: Verify Git and GitHub state**
 
 Expected: `legend-skills` branch pushed, draft PR exists, remote Caveman fork is absent, and unrelated dirty project changes remain untouched.

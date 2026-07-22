@@ -11,6 +11,7 @@ Remove RTK, Graphify, and the complete Caveman ecosystem from active local use, 
 - Remove their entries from `.agents/.skill-lock.json`.
 - Remove active Caveman response-style instructions from `.codex/AGENTS.md` while preserving GPT-5.6 routing.
 - Remove local Caveman source/work clones and Graphify retirement artifacts.
+- Remove Caveman task-parent remnants, rollback instructions that would re-enable Caveman, and the current RTK-named task workspace/trust entry last.
 - Delete the remote GitHub repository `polaminggkub-debug/caveman-thai-fork` after confirming the authenticated owner and retaining its local clone until remote deletion succeeds.
 - Remove Graphify and Caveman usage references from canonical user-authored Markdown/config files and generated Codex worktree copies. Replace executable command prefixes with native commands where applicable; delete obsolete instruction lines.
 - Verify RTK remains absent.
@@ -18,6 +19,7 @@ Remove RTK, Graphify, and the complete Caveman ecosystem from active local use, 
 ## Non-goals
 
 - Do not change unrelated tools, skills, PATH entries, project code, or historical Codex session JSON.
+- Preserve unrelated dirty worktree content while removing only the approved tool directives and command references.
 - Do not edit unrelated uses of common words or third-party product names.
 
 ## Safety and rollback
