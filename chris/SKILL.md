@@ -43,6 +43,35 @@ orchestrators wire them together.
 7. Run the narrowest relevant test before and after a change; expand only when
    risk or dependencies justify it.
 
+- For local Supabase E2E auth, bootstrap a loopback-only JWT with `role`/`aud`
+  `authenticated` before Playwright's web server starts; see [Supabase testing](https://supabase.com/docs/guides/local-development/testing/overview), [Playwright webServer](https://playwright.dev/docs/test-webserver), and [PostgreSQL SET/role sessions](https://www.postgresql.org/docs/current/sql-set.html).
+
+## Recurring failure triage
+
+Before changing product code, reproduce the narrowest failing command and classify
+the failure as product/contract, stale selector or expectation, auth/RLS,
+dependency/type-resolution, timing/isolation, or external service. Fix the
+boundary cause, then rerun the focused test and its affected suite; never hide a
+failure with retries, sleeps, skipped tests, or weaker assertions. For local
+Supabase E2E, verify the loopback target and a three-part `authenticated` JWT
+reach the Playwright web server before diagnosing UI selectors.
+
+For local Vitest/Store integration, set `VITE_LOCAL_SUPABASE_AUTH_JWT` before
+application modules import, seed the fixed test identity required by RLS, and
+prove Realtime readiness with a bounded subscribe-plus-canary-event check after
+Docker startup. Intentional missing-JWT tests must override the env explicitly.
+See [Supabase Realtime Postgres Changes](https://supabase.com/docs/guides/realtime/postgres-changes)
+and [Playwright projects/webServer](https://playwright.dev/docs/test-projects).
+
+Every local run must also prove the effective boundary, not only token shape:
+make one authenticated PostgREST request through the same client/server path and
+assert it is not `401`/`PGRST301`; if a worker or channel reconnects later, its
+`CHANNEL_ERROR`/`TIMED_OUT` is an infrastructure failure to diagnose before
+selectors. Run the documented database contract gate (`supabase test db` or the
+repository's explicit local `psql` fallback) before declaring SQL behavior green;
+do not rewrite a failing expectation without an independently derived domain
+invariant.
+
 ## Audit policy
 
 Default: one focused analysis plus mandatory verification of every CRITICAL/HIGH
