@@ -21,75 +21,64 @@ orchestrators wire them together.
 
 ## Route
 
-| Request | Read first | Deliver |
-|---|---|---|
-| new feature/fix | `references/tdd.md` | failing test, minimal implementation, verified test |
-| write tests/test strategy | `references/writing-tests.md` | test plan or tests |
-| improve testability | `references/testable-architecture.md` | unit map and refactor seam |
-| failed/flaky test | `references/debugging-tests.md` | reproduced cause and verified repair |
-| review/audit tests | `references/reviewing-tests.md` | concise Markdown review/audit |
-| CI, fixtures, coverage, performance | `references/test-infrastructure.md` | smallest reliable configuration |
+Read the matching reference before acting: feature/fix -> `tdd.md`; tests or
+strategy -> `writing-tests.md`; testability -> `testable-architecture.md`;
+failure/flakiness -> `debugging-tests.md`; review/audit -> `reviewing-tests.md`;
+CI, fixtures, coverage, or performance -> `test-infrastructure.md`.
 
 ## Non-negotiables
 
-1. State each unit's input/output spec before testing it.
-2. Test pure logic in isolation. Test I/O at boundaries with controlled data.
-3. Keep UI/orchestrator tests thin; use E2E/contract tests only for critical flows.
-4. Happy path first, then a distinct edge/error risk. Assert user-visible or
-   spec-derived values, never implementation details.
-5. No circular tests: seed input -> execute system -> assert independently
-   derived expectation.
-6. Tests are readable AAA sequences; avoid test control flow and hidden logic.
-7. Run the narrowest relevant test before and after a change; expand only when
+1. State each unit's input/output contract before testing it; isolate pure logic
+   and test I/O at controlled boundaries.
+2. Keep UI/orchestrator tests thin; reserve E2E/contract tests for critical flows.
+3. Test the happy path, then one distinct edge/error risk; assert user-visible or
+   independently derived behavior, never implementation details.
+4. Avoid circular tests: seed -> execute -> independently derive expected output.
+5. Keep tests readable AAA sequences; avoid hidden control flow.
+6. Run the narrowest relevant test before and after a change; expand only when
    risk or dependencies justify it.
+7. For auth-backed local E2E, prove an authenticated request through the same
+   application boundary before diagnosing UI selectors; a token-shaped string alone
+   is not proof. Follow the provider's documented JWT/RLS/realtime setup.
 
-- For local Supabase E2E auth, bootstrap a loopback-only JWT with `role`/`aud`
-  `authenticated` before Playwright's web server starts; see [Supabase testing](https://supabase.com/docs/guides/local-development/testing/overview), [Playwright webServer](https://playwright.dev/docs/test-webserver), and [PostgreSQL SET/role sessions](https://www.postgresql.org/docs/current/sql-set.html).
+## External state isolation
 
-## Recurring failure triage
+Browser/worker fixtures isolate browser state, not databases, APIs, files, ports,
+or queues.
 
-Before changing product code, reproduce the narrowest failing command and classify
-the failure as product/contract, stale selector or expectation, auth/RLS,
-dependency/type-resolution, timing/isolation, or external service. Fix the
-boundary cause, then rerun the focused test and its affected suite; never hide a
-failure with retries, sleeps, skipped tests, or weaker assertions. For local
-Supabase E2E, verify the loopback target and a three-part `authenticated` JWT
-reach the Playwright web server before diagnosing UI selectors.
+- Give each mutating run/worker a unique namespace (`runId + workerId`) and clean
+  up only that namespace. Never share fixed mutable fixtures or reset/seed a
+  shared database from parallel workers.
+- Keep read-only tests parallel and stateful lifecycle tests serial unless every
+  worker has an isolated database/schema/stack.
+- If a test passes alone but fails together, reproduce isolated -> serial ->
+  parallel and classify isolation before touching product code. Do not hide it
+  with retries, sleeps, skips, or weaker assertions.
 
-For local Vitest/Store integration, set `VITE_LOCAL_SUPABASE_AUTH_JWT` before
-application modules import, seed the fixed test identity required by RLS, and
-prove Realtime readiness with a bounded subscribe-plus-canary-event check after
-Docker startup. Intentional missing-JWT tests must override the env explicitly.
-See [Supabase Realtime Postgres Changes](https://supabase.com/docs/guides/realtime/postgres-changes)
-and [Playwright projects/webServer](https://playwright.dev/docs/test-projects).
+## Failure triage
 
-Every local run must also prove the effective boundary, not only token shape:
-make one authenticated PostgREST request through the same client/server path and
-assert it is not `401`/`PGRST301`; if a worker or channel reconnects later, its
-`CHANNEL_ERROR`/`TIMED_OUT` is an infrastructure failure to diagnose before
-selectors. Run the documented database contract gate (`supabase test db` or the
-repository's explicit local `psql` fallback) before declaring SQL behavior green;
-do not rewrite a failing expectation without an independently derived domain
-invariant.
+Reproduce the narrowest failing command first. Classify the cause as product or
+contract, stale selector/expectation, auth/RLS, dependency/config, timing or
+isolation, or external service. Fix the boundary cause, then rerun the focused
+test and affected suite. For database behavior, run the repository's documented
+contract gate and check an independent domain invariant before changing an
+expectation. Treat reconnect errors, unauthorized responses, and missing local
+services as infrastructure failures to diagnose before UI assertions.
 
 ## Audit policy
 
-Default: one focused analysis plus mandatory verification of every CRITICAL/HIGH
-finding. Add an independent pass only for deep or high-risk work; do not ask
-for a pass count by default. For very large targets, state the estimate first.
-
-Every CRITICAL/HIGH finding needs: `file:line`, code/config evidence, a failure
-scenario, impact, and verification. Mark confidence `CONFIRMED`, `LIKELY`, or
-`NEEDS REVIEW`.
+Use one focused analysis and verify every CRITICAL/HIGH finding; add an independent
+pass only for deep or high-risk work. Each such finding needs `file:line`, evidence,
+failure scenario, impact, verification, and confidence (`CONFIRMED`, `LIKELY`, or
+`NEEDS REVIEW`).
 
 ## Output
 
-Use Markdown. Reviews/audits use `PASS`, `CONDITIONAL PASS`, or `FAIL`, then
-findings ordered `CRITICAL`, `HIGH`, `MEDIUM`, `LOW`. Include skipped coverage
-and why; never invent a numeric quality score.
+Use Markdown. Reviews/audits use `PASS`, `CONDITIONAL PASS`, or `FAIL`, findings
+ordered CRITICAL -> LOW, and include skipped coverage with its reason. Never invent
+a numeric quality score.
 
 ## Constraints
 
-Detect the project's test runner, package manager, OS, and commands. Use only
-documented project commands. Never assume Bash, `python3`, a home-directory
-path, a framework, or a database is available.
+Detect the test runner, package manager, OS, and documented commands. Never assume
+Bash, `python3`, a framework, a database, or a home path.
