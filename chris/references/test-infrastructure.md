@@ -20,3 +20,16 @@ runtime and flaky retries. Treat coverage percentages as a navigation signal,
 not proof; map uncovered important behavior instead. Performance tests need a
 stable environment, defined workload, warmup policy, baseline, threshold, and
 actionable failure output.
+
+## Release decisions
+
+When a repository defines a release test contract, run its affected tests and
+fixed critical gate in the documented order. Keep critical selections explicit
+and small; do not replace an allowlist with a broad project or suite selector.
+
+Full E2E requires explicit semantic user intent for the complete suite. A
+generic request to ship, test, or run tests does not authorize it. Equivalent
+wording in another language can authorize it when the meaning clearly requests
+the complete suite. Risk signals and stale or unknown status never authorize an
+automatic run. Report status read-only, and record a new successful result only
+after that explicitly authorized suite succeeds.

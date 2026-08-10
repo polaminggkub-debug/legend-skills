@@ -41,6 +41,15 @@ CI, fixtures, coverage, or performance -> `test-infrastructure.md`.
    application boundary before diagnosing UI selectors; a token-shaped string alone
    is not proof. Follow the provider's documented JWT/RLS/realtime setup.
 
+## Release test decisions
+
+For release work, follow the repository's documented affected-test and fixed
+critical-gate contract. Never infer Full E2E from ship/release intent, risk,
+migrations, authentication, age, commit count, or Playwright changes. Run Full
+E2E only when the user explicitly requests the complete suite; judge the
+meaning of the request, not an exact phrase. Stale or unknown Full E2E status is
+a reminder only and never starts the suite.
+
 ## External state isolation
 
 Browser/worker fixtures isolate browser state, not databases, APIs, files, ports,
