@@ -28,6 +28,7 @@ Copy these repository directories into the platform skills directory:
 | `chris` | `chris` |
 | `formpress` | `formpress` |
 | `margaret` | `margaret` |
+| `matt` | `matt` |
 | `ship` | `ship` |
 | `update-all` | `update-all` |
 | `steve-design-suite/skills/steve` | `steve` |
@@ -35,6 +36,13 @@ Copy these repository directories into the platform skills directory:
 
 If a destination exists and is not recorded as an unchanged Legend-managed
 copy, preserve it and ask before replacement. Never delete unrelated files.
+
+### Matt prerequisite and setup
+
+When `matt` is requested, read and follow `matt/INSTALL_FOR_AI.md`. Installation
+is incomplete until its interactive bootstrap is completed or explicitly
+reported as deferred. This prerequisite step may require Node.js and `npx`;
+copying Legend Skills itself does not.
 
 ## 3. Install GPT-5.6 Router
 
@@ -68,8 +76,11 @@ Read back each copied file. Confirm the five roles and models:
 - `legend-guardian` -> Sol high
 - `legend-publisher` -> Luna low
 
-Confirm `AGENTS.md` contains one exact managed block. Report installed paths,
-backups, skipped conflicts, and any manual action still required.
+Confirm `AGENTS.md` contains one exact managed block. When `matt` was installed,
+also confirm its 25 locked prerequisites are available to every selected agent
+and report whether global defaults were configured or deferred. Report
+installed paths, backups, skipped conflicts, and any manual action still
+required.
 
 ## 5. Safe removal
 
@@ -82,5 +93,10 @@ backups, skipped conflicts, and any manual action still required.
 6. Never delete or alter `config.toml` automatically.
 7. Remove the state record only after every managed item is removed, restored,
    or explicitly preserved and reported.
+
+Removing the Legend-managed `matt` directory does not authorize removing its
+global configuration or any separately installed upstream skills. Preserve
+both unless the user explicitly requests their removal, then apply the same
+conflict and backup rules.
 
 These rules apply equally on Windows, macOS, and Linux.

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Matt"
+  short_description: "Guide the next safe engineering step"
+  default_prompt: "Use $matt to assess the current evidence, identify the next safe action, and show where my approval is required."
+policy:
+  allow_implicit_invocation: true
