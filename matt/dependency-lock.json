@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "suite": "matt",
+  "upstream": {
+    "source": "mattpocock/skills",
+    "version": "1.2.3",
+    "commit": "5b15a47f2d7150f545fbcacbfe381787fc0230dc",
+    "installSource": "https://github.com/mattpocock/skills/tree/5b15a47f2d7150f545fbcacbfe381787fc0230dc",
+    "manifestPath": ".claude-plugin/plugin.json"
+  },
+  "requiredSkills": [
+    "ask-matt",
+    "code-review",
+    "codebase-design",
+    "diagnosing-bugs",
+    "domain-modeling",
+    "grill-me",
+    "grill-with-docs",
+    "grilling",
+    "handoff",
+    "implement",
+    "improve-codebase-architecture",
+    "prototype",
+    "research",
+    "resolving-merge-conflicts",
+    "setup-matt-pocock-skills",
+    "tdd",
+    "teach",
+    "to-questionnaire",
+    "to-spec",
+    "to-tickets",
+    "triage",
+    "wait-what",
+    "wayfinder",
+    "wizard",
+    "writing-for-agents"
+  ],
+  "includedCategories": [
+    "engineering",
+    "productivity"
+  ],
+  "excludedCategories": [
+    "deprecated",
+    "in-progress",
+    "misc"
+  ],
+  "updatePolicy": "verified-release-only"
+}

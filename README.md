@@ -5,6 +5,7 @@ Portable agent skills plus an optional GPT-5.6 routing profile for Codex.
 | Component | Codex | Claude Code | Requirement |
 |---|---:|---:|---|
 | General skills | Yes | Yes | None |
+| Matt guided workflow router | Yes | Yes | Stable `mattpocock/skills` suite |
 | Steve Design Suite | Yes | Yes | None |
 | GPT-5.6 Router | Yes | No | `gpt-5.6-luna`, `gpt-5.6-terra`, or `gpt-5.6-sol` |
 
@@ -17,11 +18,26 @@ Read gpt56-router/INSTALL_FOR_AI.md and install the components I request.
 Follow every compatibility, backup, ownership, and uninstall rule.
 ```
 
-No installer runtime is required. The same instruction works on Windows,
-macOS, and Linux.
+Installing files from this repository requires no installer runtime. The same
+instruction works on Windows, macOS, and Linux. If `matt` prerequisites are
+missing, their separate upstream installation requires Node.js and `npx`.
 
-General skills: `chris`, `formpress`, `margaret`, `ship`, `steve`,
+General skills: `chris`, `formpress`, `margaret`, `matt`, `ship`, `steve`,
 `ui-ux-pro-max`, and `update-all`.
+
+`matt` uses current evidence to identify the next safe workflow action and its
+approval boundary. Guided mode asks before starting an AFK-ready action;
+Autopilot must be explicitly enabled for the current request and still stops at
+scope, architecture, merge, deploy, Production, and destructive boundaries. On
+first use Matt checks for the reviewed stable skills from
+[`mattpocock/skills`](https://github.com/mattpocock/skills), asks before any
+external installation, and captures tracker/spec defaults.
+
+For a complete `matt` installation, tell the installing agent to read and
+follow `matt/INSTALL_FOR_AI.md`. Copying or downloading the directory alone is
+only a partial installation. The installer verifies the pinned GitHub manifest,
+downloads every missing upstream dependency after one approval, and completes
+configuration immediately or on the first `$matt` invocation.
 
 ## GPT-5.6 Router
 
