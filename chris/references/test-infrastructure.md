@@ -21,15 +21,26 @@ not proof; map uncovered important behavior instead. Performance tests need a
 stable environment, defined workload, warmup policy, baseline, threshold, and
 actionable failure output.
 
-## Release decisions
+## External state isolation
 
-When a repository defines a release test contract, run its affected tests and
-fixed critical gate in the documented order. Keep critical selections explicit
-and small; do not replace an allowlist with a broad project or suite selector.
+Browser/worker fixtures isolate browser state, not databases, APIs, files, ports,
+or queues. Give each mutating run/worker a unique namespace (`runId + workerId`)
+and clean up only that namespace. Never share fixed mutable fixtures or
+reset/seed a shared database from parallel workers.
 
-Full E2E requires explicit semantic user intent for the complete suite. A
-generic request to ship, test, or run tests does not authorize it. Equivalent
-wording in another language can authorize it when the meaning clearly requests
-the complete suite. Risk signals and stale or unknown status never authorize an
-automatic run. Report status read-only, and record a new successful result only
-after that explicitly authorized suite succeeds.
+Keep read-only tests parallel and stateful lifecycle tests serial unless every
+worker has an isolated database/schema/stack. If a test passes alone but fails
+together, reproduce isolated -> serial -> parallel and classify isolation before
+touching product code. Preserve the signal rather than adding retries, sleeps,
+skips, or weaker assertions.
+
+## Release selections
+
+Run the repository's affected tests and fixed critical gate in its documented
+order. Keep critical selections explicit and small; do not replace an allowlist
+with a broad project or suite selector. Apply the Full E2E authorization policy
+in [Chris](../SKILL.md#release-test-decisions). Record a new successful full-suite
+result only after that authorized suite succeeds.
+
+For commands, required gates, path filters, skipped jobs, or policy changes,
+read [Guardrails and CI](guardrails-and-ci.md).
