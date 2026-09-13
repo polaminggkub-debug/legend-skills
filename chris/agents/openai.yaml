@@ -1,4 +1,4 @@
 interface:
   display_name: "Chris"
-  short_description: "All testing through testable architecture"
-  default_prompt: "Use $chris to handle this testing task with clear unit boundaries."
+  short_description: "Acceptance, tests, guardrails, and CI evidence"
+  default_prompt: "Use $chris to define acceptance, choose focused checks, and verify the evidence for this change."

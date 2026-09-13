@@ -25,6 +25,13 @@ missing, their separate upstream installation requires Node.js and `npx`.
 General skills: `chris`, `formpress`, `margaret`, `matt`, `ship`, `steve`,
 `ui-ux-pro-max`, and `update-all`.
 
+`chris` connects acceptance criteria to focused tests, lint/guardrails, and actual
+CI evidence. Its short entrypoint routes to operating guides and a local case
+library with pinned source links; cases are read only when relevant. It preserves
+the explicit user-request requirement for a Full E2E run. For Codex, install one
+global copy at `~/.agents/skills/chris`; the [installation guide](gpt56-router/INSTALL_FOR_AI.md#chris-global-installation) covers duplicate
+cleanup and preservation of an existing invocation preference.
+
 `matt` uses current evidence to identify the next safe workflow action and its
 approval boundary. Guided mode asks before starting an AFK-ready action;
 Autopilot must be explicitly enabled for the current request and still stops at

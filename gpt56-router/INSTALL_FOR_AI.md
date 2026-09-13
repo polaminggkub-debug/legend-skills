@@ -37,6 +37,33 @@ Copy these repository directories into the platform skills directory:
 If a destination exists and is not recorded as an unchanged Legend-managed
 copy, preserve it and ask before replacement. Never delete unrelated files.
 
+### Chris global installation
+
+For Codex, use the user-scoped destination `~/.agents/skills/chris` so Chris is
+available in every project. This overrides the generic Codex skill destination
+for Chris only. Keep a repository checkout as distribution source, outside a
+skill discovery directory. For Claude Code, retain its platform destination.
+
+Before copying, inventory existing Chris entries in user, legacy, project, and
+plugin skill locations, including symlinks and nested backups. Compare their
+contents and preserve meaningful customizations. Preserve an existing target's
+`agents/openai.yaml` invocation policy; a fresh install uses the repository's
+metadata, which permits implicit invocation by default. Global availability does
+not require changing an existing explicit-only preference.
+
+When duplicate cleanup is authorized, move redundant copies to a timestamped
+backup outside every skill discovery directory. Preserve distinct project or
+plugin configuration unless the requested consolidation covers it. Install the
+complete Chris directory, including references and UI metadata. Verify the
+intended global entry and resolve every local reference. Report intentionally
+retained project/plugin copies separately. Authorized consolidation is complete
+when no unintended duplicate remains in Codex discovery. If the UI has not
+refreshed, follow the host's reload/restart guidance; file inventory alone is
+not confirmation that its picker has refreshed.
+
+See [official Codex skill locations](https://learn.chatgpt.com/docs/build-skills)
+for user/repository scopes and refresh behavior.
+
 ### Matt prerequisite and setup
 
 When `matt` is requested, read and follow `matt/INSTALL_FOR_AI.md`. Installation
