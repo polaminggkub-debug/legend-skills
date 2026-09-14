@@ -72,7 +72,7 @@ Inspect available repository and session facts before asking. Classify the activ
 
 - Misalignment or unresolved product decisions → `$grill-with-docs` in a repository, `$grill-me` elsewhere.
 - External technical uncertainty or expensive repeated exploration → `$research`.
-- A runnable state, interaction, UI, or integration question → `$prototype`.
+- A design question about state, interaction, UI, or integration that needs a throwaway experiment → `$prototype`. For missing evidence on an existing implementation, use the repository's relevant verification or a bounded reproduction instead.
 - A hard bug or performance regression without a tight red loop → `$diagnosing-bugs`.
 - A concrete behavior suited to test-first work → `$tdd`.
 - A huge effort whose decision path does not fit one session → `$wayfinder`.

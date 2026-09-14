@@ -50,6 +50,8 @@ Use sub-issues for containment and native dependencies for prerequisites. Parent
 
 For approved task creation, create the Issues, capture their returned identities, then add hierarchy/dependencies and Project membership. Read back every declared relationship and the intended ready frontier. Use the installed CLI/API's current supported operations. If the installed `$to-tickets` only creates Beads, name that mismatch and propose the equivalent bounded GitHub action under Matt's approval rules; preserve the Beads skill and the selected spec.
 
+For a preparation-only request, finish the requested draft Issue payloads and dependency mapping from available facts before seeking execution approval. Leave missing facts explicit. Preparing a reviewable draft and writing it to GitHub are separate actions; a request to defer execution does not defer the authorized drafting work.
+
 ## Assignment and handoff
 
 Parallelize only after identifying independent outcomes or edit ownership, stable interfaces, and an integration owner. Give a shared interface one owner or an explicit coordinated change plan. Separate worktrees isolate edits, but do not resolve contract disagreements. If two slices must land together, retain that integration obligation even when development runs in parallel.
@@ -70,6 +72,8 @@ Link reusable context instead of copying the whole repository or transcript. Con
 ## Review and acceptance
 
 Classify each actionable finding against the agreed AC/scope. Work necessary for the current AC stays in the same task through rework and relevant re-verification. An independent improvement may become a linked follow-up with an owner and reason for deferral. If deferral changes acceptance, obtain the required scope decision; creating a follow-up does not silently remove an unmet AC. Record rejected findings with rationale and the applicable decision authority.
+
+A finding on an earlier revision remains an obligation to disposition, not proof that the current candidate still has the defect. Inspect or reproduce it on the current candidate before prescribing a fix. If rework changes the candidate, identify the resulting revision and verify that revision rather than reporting the pre-fix SHA as tested.
 
 Collect evidence while working so the user does not have to reconstruct it manually. For each applicable AC, link a check/result/artifact and the tested revision/environment. Failed, skipped, cancelled, unavailable, or stale results need an explicit disposition; a green aggregate check does not prove an unexecuted scenario. Use automated checks where they answer the AC, and require UI/manual evidence only where the task's acceptance needs it.
 
