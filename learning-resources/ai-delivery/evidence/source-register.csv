@@ -1,0 +1,228 @@
+source_id,title_as_cited,url,accessed,publisher
+S001,Omarchy issue #5423,https://github.com/omacom/omarchy/issues/5423#issuecomment-4313024503,2026-09-13,omacom/omarchy
+S002,Dyad disposal test,https://github.com/dyad-sh/dyad/commit/0f10c2326d132f9d8b54ab4d51774bac65453b64,2026-09-13,dyad-sh/dyad
+S003,Dyad disconnect,https://github.com/dyad-sh/dyad/pull/4187#discussion_r3725735279,2026-09-13,dyad-sh/dyad
+S004,OpenHands คำสั่งแก้ซ้ำ,https://github.com/OpenHands/OpenHands/pull/8310#discussion_r2083685712,2026-09-13,OpenHands/OpenHands
+S005,Dyad Neon Auth,https://github.com/dyad-sh/dyad/pull/4187#discussion_r3717925547,2026-09-13,dyad-sh/dyad
+S006,Omarchy #6093,https://github.com/omacom/omarchy/pull/6093,2026-09-13,omacom/omarchy
+S007,OpenHands independent re-evaluation,https://github.com/OpenHands/OpenHands/pull/8310#pullrequestreview-2847914134,2026-09-13,OpenHands/OpenHands
+S008,Dyad PR,https://github.com/dyad-sh/dyad/pull/4187,2026-09-13,dyad-sh/dyad
+S009,run ที่บาง job fail ก่อน merge,https://github.com/dyad-sh/dyad/actions/runs/31821951795,2026-09-13,dyad-sh/dyad
+S010,GitHub: multiple authors,https://docs.github.com/en/pull-requests/how-tos/commit-changes/creating-a-commit-with-multiple-authors,2026-09-13,GitHub Docs
+S011,Omarchy review,https://github.com/omacom/omarchy/pull/5435#discussion_r3142496458,2026-09-13,omacom/omarchy
+S012,Dyad,https://github.com/dyad-sh/dyad/pull/4187#discussion_r3717928781,2026-09-13,dyad-sh/dyad
+S013,GitHub: troubleshooting required status checks,https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/troubleshooting-required-status-checks,2026-09-13,GitHub Docs
+S014,anomalyco/opencode,https://github.com/anomalyco/opencode,2026-09-13,anomalyco/opencode
+S015,anomalyco/opentui,https://github.com/anomalyco/opentui,2026-09-13,anomalyco/opentui
+S016,cline/cline,https://github.com/cline/cline,2026-09-13,cline/cline
+S017,RooCodeInc/Roo-Code,https://github.com/RooCodeInc/Roo-Code,2026-09-13,RooCodeInc/Roo-Code
+S018,aaif-goose/goose,https://github.com/aaif-goose/goose,2026-09-13,aaif-goose/goose
+S019,openai/codex,https://github.com/openai/codex,2026-09-13,openai/codex
+S020,browser-use/browser-use,https://github.com/browser-use/browser-use,2026-09-13,browser-use/browser-use
+S021,microsoft/markitdown,https://github.com/microsoft/markitdown,2026-09-13,microsoft/markitdown
+S022,astral-sh/ty,https://github.com/astral-sh/ty,2026-09-13,astral-sh/ty
+S023,dyad-sh/dyad,https://github.com/dyad-sh/dyad,2026-09-13,dyad-sh/dyad
+S024,omacom/omarchy,https://github.com/omacom/omarchy,2026-09-13,omacom/omarchy
+S025,OpenHands/OpenHands,https://github.com/OpenHands/OpenHands,2026-09-13,OpenHands/OpenHands
+S026,BerriAI/litellm,https://github.com/BerriAI/litellm,2026-09-13,BerriAI/litellm
+S027,OpenHands/OpenHands #8310,https://github.com/OpenHands/OpenHands/pull/8310,2026-09-13,OpenHands/OpenHands
+S028,omacom/omarchy #5435,https://github.com/omacom/omarchy/pull/5435,2026-09-13,omacom/omarchy
+S029,omacom/omarchy #6388,https://github.com/omacom/omarchy/pull/6388,2026-09-13,omacom/omarchy
+S030,cline/cline #13968,https://github.com/cline/cline/pull/13968,2026-09-13,cline/cline
+S031,cline/cline #13969,https://github.com/cline/cline/pull/13969,2026-09-13,cline/cline
+S032,RooCodeInc/Roo-Code #11409,https://github.com/RooCodeInc/Roo-Code/pull/11409,2026-09-13,RooCodeInc/Roo-Code
+S033,aaif-goose/goose #11307,https://github.com/aaif-goose/goose/pull/11307,2026-09-13,aaif-goose/goose
+S034,anomalyco/opencode #44281,https://github.com/anomalyco/opencode/pull/44281,2026-09-13,anomalyco/opencode
+S035,BerriAI/litellm #40785,https://github.com/BerriAI/litellm/pull/40785,2026-09-13,BerriAI/litellm
+S036,BerriAI/litellm #40841,https://github.com/BerriAI/litellm/pull/40841,2026-09-13,BerriAI/litellm
+S037,anomalyco/opencode #47286,https://github.com/anomalyco/opencode/pull/47286,2026-09-13,anomalyco/opencode
+S038,anomalyco/opencode #47455,https://github.com/anomalyco/opencode/pull/47455,2026-09-13,anomalyco/opencode
+S039,anomalyco/opentui #1481,https://github.com/anomalyco/opentui/pull/1481,2026-09-13,anomalyco/opentui
+S040,anomalyco/opentui #1314,https://github.com/anomalyco/opentui/pull/1314,2026-09-13,anomalyco/opentui
+S041,ข้อทักท้วง,https://github.com/dyad-sh/dyad/pull/4187#discussion_r3709212241,2026-09-13,dyad-sh/dyad
+S042,commit 43110685,https://github.com/dyad-sh/dyad/commit/43110685df945df319bf0cea53030707f2ffbf26,2026-09-13,dyad-sh/dyad
+S043,ข้อทักท้วง,https://github.com/dyad-sh/dyad/pull/4187#discussion_r3709262835,2026-09-13,dyad-sh/dyad
+S044,commit 83d03f03,https://github.com/dyad-sh/dyad/commit/83d03f03de1fdfb32cf74b6108bd6b83d71a0d5c,2026-09-13,dyad-sh/dyad
+S045,ข้อทักท้วง,https://github.com/dyad-sh/dyad/pull/4187#discussion_r3717963627,2026-09-13,dyad-sh/dyad
+S046,คำตอบ,https://github.com/dyad-sh/dyad/pull/4187#discussion_r3725731148,2026-09-13,dyad-sh/dyad
+S047,commit 231ab2d7,https://github.com/dyad-sh/dyad/commit/231ab2d7cb493297607b4d4de82da29dd6becf6e,2026-09-13,dyad-sh/dyad
+S048,ข้อทักท้วง,https://github.com/dyad-sh/dyad/pull/4187#discussion_r3717963623,2026-09-13,dyad-sh/dyad
+S049,คำตอบ,https://github.com/dyad-sh/dyad/pull/4187#discussion_r3725733107,2026-09-13,dyad-sh/dyad
+S050,ข้อทักท้วง,https://github.com/dyad-sh/dyad/pull/4187#discussion_r3717997232,2026-09-13,dyad-sh/dyad
+S051,commit 6d768325,https://github.com/dyad-sh/dyad/commit/6d768325b57afdfd7da5ebb778baef779a0e7f83,2026-09-13,dyad-sh/dyad
+S052,macOS unit job,https://github.com/dyad-sh/dyad/actions/runs/31821951795/job/94837110193,2026-09-13,dyad-sh/dyad
+S053,E2E shard ที่ fail,https://github.com/dyad-sh/dyad/actions/runs/31821951795/job/94837573273,2026-09-13,dyad-sh/dyad
+S054,review สุดท้าย,https://github.com/dyad-sh/dyad/pull/4187#issuecomment-5296148330,2026-09-13,dyad-sh/dyad
+S055,รายงานอีก run,https://github.com/dyad-sh/dyad/pull/4187#issuecomment-5297447563,2026-09-13,dyad-sh/dyad
+S056,merge commit,https://github.com/dyad-sh/dyad/commit/ba782f433205935979de8a9cc2d606944fe534a1,2026-09-13,dyad-sh/dyad
+S057,ดูหลักฐาน,https://github.com/OpenHands/OpenHands/issues/8304#issuecomment-2855275930,2026-09-13,OpenHands/OpenHands
+S058,issue #8304,https://github.com/OpenHands/OpenHands/issues/8304,2026-09-13,OpenHands/OpenHands
+S059,ผู้แจ้งยืนยันว่า AGENT_ENABLE_EDITOR=false ปิด editor ได้,https://github.com/OpenHands/OpenHands/issues/8304#issuecomment-2855217978,2026-09-13,OpenHands/OpenHands
+S060,การรายงาน failure หลังปิด editor,https://github.com/OpenHands/OpenHands/issues/8304#issuecomment-2855257850,2026-09-13,OpenHands/OpenHands
+S061,การจำกัดเงื่อนไขบั๊กโดย enyst,https://github.com/OpenHands/OpenHands/issues/8304#issuecomment-2855377063,2026-09-13,OpenHands/OpenHands
+S062,การตอบรับเริ่มทำพร้อม run,https://github.com/OpenHands/OpenHands/issues/8304#issuecomment-2855276458,2026-09-13,OpenHands/OpenHands
+S063,ลอง image ของ commit e26ca14 และรายงานว่าใช้ได้,https://github.com/OpenHands/OpenHands/issues/8304#issuecomment-2859398773,2026-09-13,OpenHands/OpenHands
+S064,คำสั่งงานที่เจาะจง,https://github.com/OpenHands/OpenHands/pull/8310#discussion_r2083672095,2026-09-13,OpenHands/OpenHands
+S065,xingyaoww เสนอ .replace,https://github.com/OpenHands/OpenHands/pull/8310#discussion_r2083661449,2026-09-13,OpenHands/OpenHands
+S066,คำตอบ agent,https://github.com/OpenHands/OpenHands/pull/8310#discussion_r2083672241,2026-09-13,OpenHands/OpenHands
+S067,คำขอ eval,https://github.com/OpenHands/OpenHands/pull/8310#pullrequestreview-2833830914,2026-09-13,OpenHands/OpenHands
+S068,คำถามเรื่องชุดทดสอบ,https://github.com/OpenHands/OpenHands/pull/8310#issuecomment-2874363398,2026-09-13,OpenHands/OpenHands
+S069,รายงานพร้อมข้อจำกัด,https://github.com/OpenHands/OpenHands/pull/8310#issuecomment-2884584530,2026-09-13,OpenHands/OpenHands
+S070,approval สุดท้าย,https://github.com/OpenHands/OpenHands/pull/8310#pullrequestreview-2847958918,2026-09-13,OpenHands/OpenHands
+S071,merge,https://github.com/OpenHands/OpenHands/commit/c17b0ebfc6195fd37bea999abbc629da4335c0ad,2026-09-13,OpenHands/OpenHands
+S072,issue #5423,https://github.com/omacom/omarchy/issues/5423,2026-09-13,omacom/omarchy
+S073,review บน commit ล่าสุด,https://github.com/omacom/omarchy/pull/5435#issuecomment-4314480436,2026-09-13,omacom/omarchy
+S074,คำตอบ,https://github.com/omacom/omarchy/pull/5435#discussion_r3143669287,2026-09-13,omacom/omarchy
+S075,commit ที่ตัดออกพร้อม Claude co-author,https://github.com/omacom/omarchy/commit/e28d4955caac33ecda8bf8b50f8d0c1c90325762,2026-09-13,omacom/omarchy
+S076,merge commit,https://github.com/omacom/omarchy/commit/b164549b51d790d42a725baa21fc86a34111b00f,2026-09-13,omacom/omarchy
+S077,ปรับเอกสารให้ตรง implementation,https://github.com/omacom/omarchy/pull/5435#discussion_r3143720285,2026-09-13,omacom/omarchy
+S078,รายงานหลัง merge,https://github.com/omacom/omarchy/pull/5435#issuecomment-4616309590,2026-09-13,omacom/omarchy
+S079,คำอธิบายเมื่อแทนที่ PR,https://github.com/omacom/omarchy/pull/6093#issuecomment-5086374297,2026-09-13,omacom/omarchy
+S080,dhh ขอให้รอ hardware test,https://github.com/omacom/omarchy/pull/6388#issuecomment-5086383113,2026-09-13,omacom/omarchy
+S081,ทดลองสคริปต์ของ PR บน B9406 จริง,https://github.com/omacom/omarchy/pull/6388#issuecomment-5321029803,2026-09-13,omacom/omarchy
+S082,รายงานว่าดีขึ้นแต่แยก causality ไม่ได้,https://github.com/omacom/omarchy/pull/6388#issuecomment-5321855391,2026-09-13,omacom/omarchy
+S083,ดูหลักฐาน,https://github.com/anomalyco/opencode/commit/29dec99e6784f9277be14074b1f0c2b527c31126,2026-09-13,anomalyco/opencode
+S084,70ae4617,https://github.com/anomalyco/opencode/commit/70ae4617a2edbe94c0e5450a019cf39aeaf58708,2026-09-13,anomalyco/opencode
+S085,#44280,https://github.com/anomalyco/opencode/issues/44280,2026-09-13,anomalyco/opencode
+S086,bot comment,https://github.com/anomalyco/opencode/issues/44280#issuecomment-5383411729,2026-09-13,anomalyco/opencode
+S087,author reply,https://github.com/anomalyco/opencode/issues/44280#issuecomment-5399182214,2026-09-13,anomalyco/opencode
+S088,7183a791,https://github.com/anomalyco/opencode/commit/7183a7915464727578e3a7a459e0313d3e4f051c,2026-09-13,anomalyco/opencode
+S089,f8b4dd70,https://github.com/anomalyco/opencode/commit/f8b4dd70ac26996436e259fc386917944c05f481,2026-09-13,anomalyco/opencode
+S090,review comment,https://github.com/anomalyco/opencode/pull/44281#issuecomment-5384523212,2026-09-13,anomalyco/opencode
+S091,response,https://github.com/anomalyco/opencode/pull/44281#issuecomment-5390195804,2026-09-13,anomalyco/opencode
+S092,Actions run 32744944205,https://github.com/anomalyco/opencode/actions/runs/32744944205,2026-09-13,anomalyco/opencode
+S093,run 32744944379,https://github.com/anomalyco/opencode/actions/runs/32744944379,2026-09-13,anomalyco/opencode
+S094,62ba6539,https://github.com/cline/cline/commit/62ba65397fca8d583540319fa574a62d1ac7d498,2026-09-13,cline/cline
+S095,f32bf5f,https://github.com/cline/cline/commit/f32bf5f97ef7328021857365e31bc3de5ff3a463,2026-09-13,cline/cline
+S096,b6486204,https://github.com/cline/cline/commit/b6486204ef2845daa085035fb7ffa1c7043f3b77,2026-09-13,cline/cline
+S097,5ec58c1,https://github.com/cline/cline/commit/5ec58c1232f2f5036748329ae4734fa0d501495c,2026-09-13,cline/cline
+S098,9337b4e,https://github.com/cline/cline/commit/9337b4ebdb5ebaa431848c77ec8a57b2efc7311f,2026-09-13,cline/cline
+S099,P1 replay,https://github.com/cline/cline/pull/13968#discussion_r3962858573,2026-09-13,cline/cline
+S100,P1 liveness,https://github.com/cline/cline/pull/13968#discussion_r3962882599,2026-09-13,cline/cline
+S101,ตอบ replay,https://github.com/cline/cline/pull/13968#discussion_r3962903690,2026-09-13,cline/cline
+S102,ตอบ liveness,https://github.com/cline/cline/pull/13968#discussion_r3962905078,2026-09-13,cline/cline
+S103,ถอน finding,https://github.com/cline/cline/pull/13968#discussion_r3962909424,2026-09-13,cline/cline
+S104,controlled reproduction,https://github.com/cline/cline/pull/13968#issuecomment-5593008205,2026-09-13,cline/cline
+S105,test job,https://github.com/cline/cline/actions/runs/34288934509/job/102270921042,2026-09-13,cline/cline
+S106,Greptile Review,https://github.com/cline/cline/runs/102270891325,2026-09-13,cline/cline
+S107,Analyze JavaScript/TypeScript,https://github.com/cline/cline/actions/runs/34288932700/job/102270872399,2026-09-13,cline/cline
+S108,Analyze Rust,https://github.com/cline/cline/actions/runs/34288932700/job/102270872367,2026-09-13,cline/cline
+S109,ดูหลักฐาน,https://github.com/cline/cline/commit/e3b2e375c7f4e0c09cfef277ce5031c0bf8d5168,2026-09-13,cline/cline
+S110,23f2197c,https://github.com/cline/cline/commit/23f2197c535f904bb4bbe17012fc81cdf3b2b8ac,2026-09-13,cline/cline
+S111,ca3aafc,https://github.com/cline/cline/commit/ca3aafc99b0cb8d1d991aeaa82d6862a896862d3,2026-09-13,cline/cline
+S112,e174a76,https://github.com/cline/cline/commit/e174a767ea20aa65af87aa11d5738389b1af9575,2026-09-13,cline/cline
+S113,0adda99,https://github.com/cline/cline/commit/0adda99aae11ed9235db7176bbf63a876f2c765f,2026-09-13,cline/cline
+S114,deecbe2,https://github.com/cline/cline/commit/deecbe2837a2601bad519405aab5f005659d52e8,2026-09-13,cline/cline
+S115,b34b926,https://github.com/cline/cline/commit/b34b92640871be133bdb1019a7a1457fcf746b54,2026-09-13,cline/cline
+S116,4c31d06,https://github.com/cline/cline/commit/4c31d06b387345664bfb9ba9bc349fd5be8ae71d,2026-09-13,cline/cline
+S117,88cc56c,https://github.com/cline/cline/commit/88cc56ccb653821700402db1e003e1580550e576,2026-09-13,cline/cline
+S118,d4f2b14,https://github.com/cline/cline/commit/d4f2b142c6ca421def06f48fb68fe07337927410,2026-09-13,cline/cline
+S119,944df2a,https://github.com/cline/cline/commit/944df2a488e76a5a1869b536a416a73015da0225,2026-09-13,cline/cline
+S120,7ed28e8,https://github.com/cline/cline/commit/7ed28e895c2db946d8a514c99fd24af5c3878d92,2026-09-13,cline/cline
+S121,P1,https://github.com/cline/cline/pull/13969#discussion_r3962894505,2026-09-13,cline/cline
+S122,P1,https://github.com/cline/cline/pull/13969#discussion_r3963154102,2026-09-13,cline/cline
+S123,ผู้เขียนตอบ,https://github.com/cline/cline/pull/13969#discussion_r3963457918,2026-09-13,cline/cline
+S124,P1,https://github.com/cline/cline/pull/13969#discussion_r3963617983,2026-09-13,cline/cline
+S125,P1,https://github.com/cline/cline/pull/13969#discussion_r3963848996,2026-09-13,cline/cline
+S126,Greptile ถอนเป็น blocker,https://github.com/cline/cline/pull/13969#discussion_r3963851551,2026-09-13,cline/cline
+S127,test,https://github.com/cline/cline/actions/runs/34303406469/job/102315007045,2026-09-13,cline/cline
+S128,CodeQL,https://github.com/cline/cline/runs/102315086295,2026-09-13,cline/cline
+S129,Greptile Review,https://github.com/cline/cline/runs/102314982901,2026-09-13,cline/cline
+S130,Analyze Rust,https://github.com/cline/cline/actions/runs/34303405333/job/102314966284,2026-09-13,cline/cline
+S131,e6f0e79c,https://github.com/RooCodeInc/Roo-Code/commit/e6f0e79c389dc558338b243f6854c11c2854786f,2026-09-13,RooCodeInc/Roo-Code
+S132,e8dfdc2,https://github.com/RooCodeInc/Roo-Code/commit/e8dfdc2e7dfa994300fde371c1aec4bcb01382c5,2026-09-13,RooCodeInc/Roo-Code
+S133,57e9792,https://github.com/RooCodeInc/Roo-Code/commit/57e9792425626344686e2af8665f0bd0bdfa6d7f,2026-09-13,RooCodeInc/Roo-Code
+S134,de6982e,https://github.com/RooCodeInc/Roo-Code/commit/de6982ef832a0ca70758a4f7662761235f1163a1,2026-09-13,RooCodeInc/Roo-Code
+S135,cb4bfc9,https://github.com/RooCodeInc/Roo-Code/commit/cb4bfc9997081683ec72848ead28272de36fa272,2026-09-13,RooCodeInc/Roo-Code
+S136,e37585f,https://github.com/RooCodeInc/Roo-Code/commit/e37585fa87fcddfb3c457c4cc71549632402beb7,2026-09-13,RooCodeInc/Roo-Code
+S137,P1,https://github.com/RooCodeInc/Roo-Code/pull/11409#discussion_r2794507746,2026-09-13,RooCodeInc/Roo-Code
+S138,P1,https://github.com/RooCodeInc/Roo-Code/pull/11409#discussion_r2794630411,2026-09-13,RooCodeInc/Roo-Code
+S139,comprehensive review,https://github.com/RooCodeInc/Roo-Code/pull/11409#pullrequestreview-3786381922,2026-09-13,RooCodeInc/Roo-Code
+S140,P1 save return,https://github.com/RooCodeInc/Roo-Code/pull/11409#discussion_r2794842545,2026-09-13,RooCodeInc/Roo-Code
+S141,P1 pendingToolResults,https://github.com/RooCodeInc/Roo-Code/pull/11409#discussion_r2794842551,2026-09-13,RooCodeInc/Roo-Code
+S142,P2 image URL,https://github.com/RooCodeInc/Roo-Code/pull/11409#discussion_r2794842548,2026-09-13,RooCodeInc/Roo-Code
+S143,984857e,https://github.com/RooCodeInc/Roo-Code/commit/984857e60fbc9786e1af46881e4b075ff9e6049b,2026-09-13,RooCodeInc/Roo-Code
+S144,re-review,https://github.com/RooCodeInc/Roo-Code/pull/11409#issuecomment-3885766946,2026-09-13,RooCodeInc/Roo-Code
+S145,approve final head,https://github.com/RooCodeInc/Roo-Code/pull/11409#pullrequestreview-3786644844,2026-09-13,RooCodeInc/Roo-Code
+S146,integration-test,https://github.com/RooCodeInc/Roo-Code/actions/runs/21918347482/job/63291556921,2026-09-13,RooCodeInc/Roo-Code
+S147,compile,https://github.com/RooCodeInc/Roo-Code/actions/runs/21918347482/job/63291546440,2026-09-13,RooCodeInc/Roo-Code
+S148,platform-unit-test Ubuntu,https://github.com/RooCodeInc/Roo-Code/actions/runs/21918347482/job/63291546413,2026-09-13,RooCodeInc/Roo-Code
+S149,platform-unit-test Windows,https://github.com/RooCodeInc/Roo-Code/actions/runs/21918347482/job/63291546409,2026-09-13,RooCodeInc/Roo-Code
+S150,CodeQL,https://github.com/RooCodeInc/Roo-Code/runs/63291755171,2026-09-13,RooCodeInc/Roo-Code
+S151,ดูหลักฐาน,https://github.com/aaif-goose/goose/commit/5372cf21c4c043cb25959d08529c766012cdbd48,2026-09-13,aaif-goose/goose
+S152,a5de3781,https://github.com/aaif-goose/goose/commit/a5de37814adb1b8f7eab3046c53811d5808733fa,2026-09-13,aaif-goose/goose
+S153,aa847d3,https://github.com/aaif-goose/goose/commit/aa847d3bb9de1f0d96de11fe96175b4ff8bfcfc1,2026-09-13,aaif-goose/goose
+S154,P1,https://github.com/aaif-goose/goose/pull/11307#discussion_r3828196036,2026-09-13,aaif-goose/goose
+S155,P2,https://github.com/aaif-goose/goose/pull/11307#discussion_r3828216905,2026-09-13,aaif-goose/goose
+S156,d656b43,https://github.com/aaif-goose/goose/commit/d656b43bfddc7df8bfdd49da13c3efbc896c99d0,2026-09-13,aaif-goose/goose
+S157,P2,https://github.com/aaif-goose/goose/pull/11307#discussion_r3828395594,2026-09-13,aaif-goose/goose
+S158,ddf10a2,https://github.com/aaif-goose/goose/commit/ddf10a298497a493226908626cd45d1935ba8e90,2026-09-13,aaif-goose/goose
+S159,mark findings fixed,https://github.com/aaif-goose/goose/pull/11307#discussion_r3828630359,2026-09-13,aaif-goose/goose
+S160,legacy finding fixed,https://github.com/aaif-goose/goose/pull/11307#discussion_r3828630796,2026-09-13,aaif-goose/goose
+S161,approve,https://github.com/aaif-goose/goose/pull/11307#pullrequestreview-4991286679,2026-09-13,aaif-goose/goose
+S162,Build and Test Rust Project,https://github.com/aaif-goose/goose/actions/runs/32462933787/job/96713466853,2026-09-13,aaif-goose/goose
+S163,Test and Lint Electron Desktop App,https://github.com/aaif-goose/goose/actions/runs/32462933787/job/96713466896,2026-09-13,aaif-goose/goose
+S164,Lint Rust Code,https://github.com/aaif-goose/goose/actions/runs/32462933787/job/96713466872,2026-09-13,aaif-goose/goose
+S165,Check Rust Code Format,https://github.com/aaif-goose/goose/actions/runs/32462933787/job/96713466915,2026-09-13,aaif-goose/goose
+S166,Check Generated Schemas,https://github.com/aaif-goose/goose/actions/runs/32462933787/job/96713466920,2026-09-13,aaif-goose/goose
+S167,ดูหลักฐาน,https://github.com/BerriAI/litellm/pull/40785#issuecomment-5640336188,2026-09-13,BerriAI/litellm
+S168,Devin session,https://app.devin.ai/sessions/7b76d7e3c19b4b6bb72e1ea1df5aeee3,2026-09-13,app.devin.ai
+S169,`b5f7b58a1ac9`,https://github.com/BerriAI/litellm/commit/b5f7b58a1ac9875f219b17d33ef1b3ef3f0f3362,2026-09-13,BerriAI/litellm
+S170,`747dda483e4b`,https://github.com/BerriAI/litellm/commit/747dda483e4ba9c5eb676100cd56c77221c1d213,2026-09-13,BerriAI/litellm
+S171,`0f729bd767d3`,https://github.com/BerriAI/litellm/commit/0f729bd767d3631b056c31fc5460bebe0d94dbe6,2026-09-13,BerriAI/litellm
+S172,`9f9ec6871c94`,https://github.com/BerriAI/litellm/commit/9f9ec6871c946448b0344f3a9d23828e2f62d75a,2026-09-13,BerriAI/litellm
+S173,`97a45a4f65d9`,https://github.com/BerriAI/litellm/commit/97a45a4f65d9bbfae70d05cd73e83b39995b9011,2026-09-13,BerriAI/litellm
+S174,`7ffde11054ba`,https://github.com/BerriAI/litellm/commit/7ffde11054bab40dcff9f159376896652a1ffd12,2026-09-13,BerriAI/litellm
+S175,`48c2fe18791e`,https://github.com/BerriAI/litellm/commit/48c2fe18791ec6f4e1f439f3db10c470c4ec8890,2026-09-13,BerriAI/litellm
+S176,`ce090d069761`,https://github.com/BerriAI/litellm/commit/ce090d069761956270e212b88bbac6e04a968f78,2026-09-13,BerriAI/litellm
+S177,`0ded7b43d2f7`,https://github.com/BerriAI/litellm/commit/0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce,2026-09-13,BerriAI/litellm
+S178,Greptile comment,https://github.com/BerriAI/litellm/pull/40785#discussion_r3993209769,2026-09-13,BerriAI/litellm
+S179,reply,https://github.com/BerriAI/litellm/pull/40785#discussion_r3993236524,2026-09-13,BerriAI/litellm
+S180,Devin review,https://github.com/BerriAI/litellm/pull/40785#discussion_r3993251914,2026-09-13,BerriAI/litellm
+S181,Greptile P1,https://github.com/BerriAI/litellm/pull/40785#discussion_r3993542362,2026-09-13,BerriAI/litellm
+S182,Greptile P2,https://github.com/BerriAI/litellm/pull/40785#discussion_r3993542370,2026-09-13,BerriAI/litellm
+S183,Greptile P2,https://github.com/BerriAI/litellm/pull/40785#discussion_r3993542375,2026-09-13,BerriAI/litellm
+S184,reply,https://github.com/BerriAI/litellm/pull/40785#discussion_r3993672253,2026-09-13,BerriAI/litellm
+S185,Devin review,https://github.com/BerriAI/litellm/pull/40785#discussion_r3993806947,2026-09-13,BerriAI/litellm
+S186,check-runs API,https://api.github.com/repos/BerriAI/litellm/commits/0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce/check-runs,2026-09-13,repos/BerriAI
+S187,CodSpeed comment,https://github.com/BerriAI/litellm/pull/40785#issuecomment-5640362052,2026-09-13,BerriAI/litellm
+S188,`e4f59a953cac`,https://github.com/BerriAI/litellm/commit/e4f59a953cac0543515449d8485a94e7393c2636,2026-09-13,BerriAI/litellm
+S189,ดูหลักฐาน,https://github.com/BerriAI/litellm/pull/40841#issuecomment-5644537226,2026-09-13,BerriAI/litellm
+S190,Devin session,https://app.devin.ai/sessions/bbe614d754bf4e779ed46e0d131c407e,2026-09-13,app.devin.ai
+S191,`6012071b403f`,https://github.com/BerriAI/litellm/commit/6012071b403fb9ef9f2a8f18ad682770f998220f,2026-09-13,BerriAI/litellm
+S192,`f7e03fb90055`,https://github.com/BerriAI/litellm/commit/f7e03fb900554be4318a3b4584ebbf2ad6e6b04c,2026-09-13,BerriAI/litellm
+S193,`a84c4ccb63c7`,https://github.com/BerriAI/litellm/commit/a84c4ccb63c7e2df3307c3509856cece3e65319c,2026-09-13,BerriAI/litellm
+S194,`df2a3056892a`,https://github.com/BerriAI/litellm/commit/df2a3056892ab3ddc493625ea5b39855fc024fcb,2026-09-13,BerriAI/litellm
+S195,final review,https://github.com/BerriAI/litellm/pull/40841#pullrequestreview-5187056347,2026-09-13,BerriAI/litellm
+S196,`1c61c2606e36`,https://github.com/BerriAI/litellm/commit/1c61c2606e36061db4fce10f7bb94745d76bc84f,2026-09-13,BerriAI/litellm
+S197,comment,https://github.com/BerriAI/litellm/pull/40841#issuecomment-5646996787,2026-09-13,BerriAI/litellm
+S198,f9bc2233,https://github.com/anomalyco/opencode/commit/f9bc2233ddcc11503a0804b317401bc221ef0e7f,2026-09-13,anomalyco/opencode
+S199,d0fe0c2e,https://github.com/anomalyco/opencode/commit/d0fe0c2e97253b9488d96b2f4e6cfcf9e635266c,2026-09-13,anomalyco/opencode
+S200,#47260,https://github.com/anomalyco/opencode/pull/47260,2026-09-13,anomalyco/opencode
+S201,734acbaf,https://github.com/anomalyco/opencode/commit/734acbafe3c1fe9545bcffc18331ad586355c005,2026-09-13,anomalyco/opencode
+S202,3666deef,https://github.com/anomalyco/opencode/commit/3666deef52891d8314cb5a1b55f4d4ffe4cca488,2026-09-13,anomalyco/opencode
+S203,c54a3f6e,https://github.com/anomalyco/opencode/commit/c54a3f6e808c97e52db0090f99b0b348176f0823,2026-09-13,anomalyco/opencode
+S204,permalink,https://github.com/anomalyco/opencode/pull/47286#issuecomment-5584366158,2026-09-13,anomalyco/opencode
+S205,Actions run 34195339626,https://github.com/anomalyco/opencode/actions/runs/34195339626,2026-09-13,anomalyco/opencode
+S206,f1ce69d2,https://github.com/anomalyco/opencode/commit/f1ce69d2ceae4ed7e39c49210ae9264cbf86ffec,2026-09-13,anomalyco/opencode
+S207,99a101c2,https://github.com/anomalyco/opencode/commit/99a101c2d67da0893964fdb37c7cc07e2b15870f,2026-09-13,anomalyco/opencode
+S208,#47265,https://github.com/anomalyco/opencode/issues/47265,2026-09-13,anomalyco/opencode
+S209,ee2ca0c1,https://github.com/anomalyco/opencode/commit/ee2ca0c1ce671da267546fa468894116b02c43d8,2026-09-13,anomalyco/opencode
+S210,Actions run 34219424387,https://github.com/anomalyco/opencode/actions/runs/34219424387,2026-09-13,anomalyco/opencode
+S211,62a7c382,https://github.com/anomalyco/opentui/commit/62a7c3828947a641927a39295889b5642c069006,2026-09-13,anomalyco/opentui
+S212,c6f3e7c3,https://github.com/anomalyco/opentui/commit/c6f3e7c30308e18f5f5b07f2b4a12ed49d7b1b68,2026-09-13,anomalyco/opentui
+S213,051c1b8d,https://github.com/anomalyco/opentui/commit/051c1b8d35316b45b5f97c0e2b49549a23c9ab3d,2026-09-13,anomalyco/opentui
+S214,c7e9bb37,https://github.com/anomalyco/opentui/commit/c7e9bb370b7c5af7fbce37b515b983cac28165b1,2026-09-13,anomalyco/opentui
+S215,1a411b79,https://github.com/anomalyco/opentui/commit/1a411b79e41eeef52d0833effb84ea8faadb0f55,2026-09-13,anomalyco/opentui
+S216,5cdb091f,https://github.com/anomalyco/opentui/commit/5cdb091f136e040459859aa7db1540934fa3d19b,2026-09-13,anomalyco/opentui
+S217,Actions run 34026819466,https://github.com/anomalyco/opentui/actions/runs/34026819466,2026-09-13,anomalyco/opentui
+S218,run 34026819417,https://github.com/anomalyco/opentui/actions/runs/34026819417,2026-09-13,anomalyco/opentui
+S219,db3137a3,https://github.com/anomalyco/opentui/commit/db3137a35aed5c958194364acee3841e7ba12f91,2026-09-13,anomalyco/opentui
+S220,d42e6ceb,https://github.com/anomalyco/opentui/commit/d42e6cebf3564f12a43b409e57d644d984ebb628,2026-09-13,anomalyco/opentui
+S221,29ecec38,https://github.com/anomalyco/opentui/commit/29ecec38059b96fb94556e0ead1ed15ee3482b24,2026-09-13,anomalyco/opentui
+S222,ff824140,https://github.com/anomalyco/opentui/commit/ff8241406b908b2566bc556c710b2c054a2e8642,2026-09-13,anomalyco/opentui
+S223,6725f4a1,https://github.com/anomalyco/opentui/commit/6725f4a1e9733ef6d9c16612dc8a00b75a6b87d1,2026-09-13,anomalyco/opentui
+S224,Actions run 30765499637,https://github.com/anomalyco/opentui/actions/runs/30765499637,2026-09-13,anomalyco/opentui
+S225,OpenHands discussions,https://github.com/OpenHands/OpenHands/discussions,2026-09-13,OpenHands/OpenHands
+S226,OpenCode issues,https://github.com/anomalyco/opencode/issues,2026-09-13,anomalyco/opencode
+S227,LiteLLM issues,https://github.com/BerriAI/litellm/issues,2026-09-13,BerriAI/litellm

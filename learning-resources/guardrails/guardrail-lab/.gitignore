@@ -1,0 +1,4 @@
+# verify.mjs writes a machine-local runtime report; keep it out of the learning snapshot.
+verification.json
+node_modules/
+.DS_Store

@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>บทที่ 3: แบ่งงานตามผลส่งมอบและ dependency — ส่งงานที่ตรวจรับได้</title>
+  <link rel="stylesheet" href="../assets/course.css">
+</head>
+<body data-lesson="L03">
+  <main class="page-shell">
+    <header class="masthead">
+      <div class="brand">AI delivery lab · บทเรียนสั้น</div>
+      <div class="progress">บท <strong>3 / 8</strong> · <a href="../START-HERE.html">หน้าหลัก</a></div>
+    </header>
+
+    <article class="lesson-card">
+      <div class="lesson-header">
+        <div class="lesson-number">03</div>
+        <div>
+          <p class="eyebrow">ทักษะที่ใช้กับงานจริง</p>
+          <h1 class="lesson-title">แบ่งงานตามผลส่งมอบและ dependency</h1>
+          <p class="lesson-subtitle">งานย่อยที่ดีมีเจ้าของ contract และเกณฑ์จบของตัวเอง</p>
+        </div>
+      </div>
+
+      <div class="mission-strip">
+        <strong>ผลที่ฝึกได้ในบทนี้</strong>
+        คุณจะเปลี่ยน feature ใหญ่เป็นชุดงานที่ส่งต่อกันได้โดยไม่ชนกัน
+      </div>
+
+      <div class="two-col">
+        <section>
+          <p>แบ่งงานตาม <strong>ผลส่งมอบ</strong> ไม่ใช่แบ่งตามจำนวนบรรทัดหรือชื่อไฟล์อย่างเดียว งานหนึ่งควรตอบได้ว่าใครรับผิดชอบ, ส่งอะไร, ใช้ contract จากไหน, ทำพร้อมงานอื่นได้เมื่อใด และจบเมื่อเห็นอะไร</p>
+<p>เริ่มด้วย reproduction/contract แล้วค่อยแยก implementation, UI หรือ integration test ตาม dependency ถ้าสองงานต้องตัดสินใจ interface เดียวกัน ให้ตั้งเจ้าของ contract หนึ่งคน ไม่เช่นนั้นจะได้ patch ที่แต่ละส่วนผ่าน test ของตัวเองแต่รวมกันใช้ไม่ได้</p>
+<div class="callout"><strong>ตัวอย่างจาก LiteLLM #40841</strong><br>งาน auth phase ถูกแยกจาก post-call spend path และสิ่งที่เหลือใน rate limiter ถูกบันทึกเป็น PR (c) candidate การบันทึก “ไม่ทำตอนนี้” ช่วยกัน scope creep</div>
+<div class="table-scroll" tabindex="0" role="region" aria-label="ตารางตัวอย่าง เลื่อนแนวนอนเพื่อดูครบ"><table><thead><tr><th>งาน</th><th>ผลส่งมอบ</th><th>เกณฑ์จบ</th></tr></thead><tbody><tr><td>reproduce</td><td>ตัวอย่าง fail + contract</td><td>อาการเดิมเกิดซ้ำ</td></tr><tr><td>implement</td><td>patch ใน ownership</td><td>AC ผ่าน</td></tr><tr><td>verify</td><td>evidence table</td><td>ทุก AC มีผลหรือช่องว่าง</td></tr></tbody></table></div>
+        </section>
+        <div class="stack">
+          <aside class="source-card">
+  <span class="tag">แหล่งต้นทางหลัก</span>
+  <p><a href="https://github.com/BerriAI/litellm/pull/40841">LiteLLM PR #40841 — stacked scope</a></p>
+  <p class="small">อ่านเพื่อดู: ดูการแยก auth phase, post-call path และ follow-up ที่ตั้งใจเลื่อนไป</p>
+</aside>
+          <aside class="callout warn">
+            <span class="tag">จำไว้</span>
+            <p>งานย่อยที่แยกตามไฟล์แต่ใช้ contract ร่วมโดยไม่มี owner ยังเป็นงานก้อนเดียวในทางความเสี่ยง</p>
+          </aside>
+        </div>
+      </div>
+
+      <section class="quiz" data-answer="a" data-explanation="แบ่งงานตาม dependency และเจ้าของ contract ที่ใช้ร่วมกัน ช่วยให้แต่ละงานมีผลลัพธ์ที่ตรวจแยกได้และรวมกลับได้" data-hint="จำนวน agent ไม่ได้บอกว่างานเป็นอิสระ ลองตรวจว่าต้องรอผลกันหรือแก้ไฟล์เดียวกันหรือไม่" aria-labelledby="quiz-title">
+        <h3 id="quiz-title">ลองตอบก่อนดูเฉลย</h3>
+        <p>หลักใดเหมาะที่สุดสำหรับใช้แบ่งงาน feature ขนาดใหญ่</p>
+        <div class="choice-grid">
+      <button type="button" data-option="b" aria-pressed="false">ตาม จำนวนบรรทัด ใน diff</button>
+      <button type="button" data-option="c" aria-pressed="false">ตาม คนที่ว่าง ในวันนี้ ปัจจุบัน</button>
+      <button type="button" data-option="a" aria-pressed="false">ตาม ผลส่งมอบ และ dependency</button>
+        </div>
+        <p class="quiz-feedback" role="status" aria-live="polite">เลือกคำตอบหนึ่งข้อ</p>
+      </section>
+
+      <section class="practice" aria-labelledby="practice-title">
+        <h3 id="practice-title">ลงมือกับงานของคุณ</h3>
+        <p>วาดตารางงานของ feature หนึ่งชิ้นในชีวิตจริง 3–5 แถว โดยใส่ owner, output, dependency และ completion criterion ให้ครบ</p>
+        <textarea aria-label="คำตอบแบบฝึกหัด" placeholder="เขียนคำตอบสั้น ๆ ตรงนี้…"></textarea>
+        <div class="practice-actions">
+          <button type="button" data-toggle-rubric aria-expanded="false">เปิดเกณฑ์ตรวจ</button>
+          <button type="button" data-mark-complete aria-pressed="false">ทำบทนี้เสร็จ</button>
+        </div>
+        <div class="rubric">
+          <strong>เกณฑ์ตรวจตนเอง</strong>
+          <ul>
+      <li>แต่ละแถวมี output ที่ส่งต่อได้</li>
+      <li>เห็น dependency ระหว่างแถว</li>
+      <li>มี owner ของ contract ที่อาจชนกัน</li>
+      <li>ทุกแถวมีเงื่อนไขจบที่ตรวจได้</li>
+          </ul>
+        </div>
+      </section>
+
+      <p class="teacher-note"><strong>ถามครูได้เสมอ:</strong> ถ้าคำศัพท์หรือหลักฐานชิ้นไหนยังไม่ชัด ให้ถามต่อพร้อมคัดลอกประโยคหรือ link ที่ติดขัด ครูจะช่วยแยกข้อเท็จจริงจากข้อสังเคราะห์ให้</p>
+
+      <footer class="lesson-footer">
+        <div class="nav"><a class="button-link" href="../lessons/0002-goal-scope.html">← บทก่อน</a> <a class="button-link" href="../lessons/0004-acceptance-criteria.html">บทถัดไป →</a></div>
+        <div class="nav"><a class="button-link" href="../reference/glossary.html">ศัพท์สำคัญ</a><a class="button-link" href="../reference/checklist.html">เช็กลิสต์</a></div>
+      </footer>
+    </article>
+  </main>
+  <script src="../assets/lesson.js"></script>
+</body>
+</html>

@@ -8,6 +8,13 @@ Portable agent skills for Codex and Claude Code.
 | Matt guided workflow router | Yes | Yes | Stable `mattpocock/skills` suite |
 | Steve Design Suite | Yes | Yes | None |
 
+## Learning resources
+
+[Learning Resources](learning-resources/README.md) collects Thai self-study
+lessons, research evidence, and offline labs for AI Delivery, Context Discovery,
+Task Orchestration with GitHub Projects, and Guardrails/Lint. Start from its
+topic index to choose a lesson or exercise.
+
 ## Install
 
 Give this repository to your coding agent and say:

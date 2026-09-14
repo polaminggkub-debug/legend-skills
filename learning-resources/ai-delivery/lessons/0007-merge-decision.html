@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>บทที่ 7: ตัดสินใจ merge จาก revision ที่จะรับจริง — ส่งงานที่ตรวจรับได้</title>
+  <link rel="stylesheet" href="../assets/course.css">
+</head>
+<body data-lesson="L07">
+  <main class="page-shell">
+    <header class="masthead">
+      <div class="brand">AI delivery lab · บทเรียนสั้น</div>
+      <div class="progress">บท <strong>7 / 8</strong> · <a href="../START-HERE.html">หน้าหลัก</a></div>
+    </header>
+
+    <article class="lesson-card">
+      <div class="lesson-header">
+        <div class="lesson-number">07</div>
+        <div>
+          <p class="eyebrow">ทักษะที่ใช้กับงานจริง</p>
+          <h1 class="lesson-title">ตัดสินใจ merge จาก revision ที่จะรับจริง</h1>
+          <p class="lesson-subtitle">approved, checks และ merged เป็นคนละชั้นของหลักฐาน</p>
+        </div>
+      </div>
+
+      <div class="mission-strip">
+        <strong>ผลที่ฝึกได้ในบทนี้</strong>
+        คุณจะอ่าน head SHA, check status, approval และ merge event แยกกัน
+      </div>
+
+      <div class="two-col">
+        <section>
+          <p>ก่อน merge ให้ตรวจห้าชั้น: requirement ครบหรือมีข้อยกเว้น, finding สำคัญปิดหรือมีเหตุผล, tests มีผลจริง, ผลผูกกับ revision ที่จะรับ, และ final diff ถูกอ่านแล้ว</p>
+<p>อย่าใช้คำว่า “CI ผ่าน” แบบไร้เวลาและ SHA check ที่เก่าอาจกลายเป็น stale หลัง push; check ที่ skipped หรือ neutral อาจผ่านกติกา required status แต่ไม่ได้รัน assertion ที่คุณต้องการ ส่วน <code>merged_at</code> และ merge commit เป็นหลักฐานว่าอะไรถูกนำเข้าไปจริง</p>
+<div class="callout warn"><strong>ประโยคตัดสินใจที่ดี</strong><br>“รับที่ head SHA X เพราะ AC1/AC2 มี evidence; check Y skipped จึงไม่ใช้เป็น proof; manual path Z ยังไม่มีหลักฐาน จึงส่งกลับไปตรวจหากเป็น AC ที่ต้องผ่านก่อนรับงาน”</div>
+<p>เคส Omarchy #6093 เตือนว่า PR ที่ปิดโดยไม่ merge ไม่ควรเล่าเป็นงานที่ถูกรับ แม้มี diff และคำอธิบายละเอียด</p>
+        </section>
+        <div class="stack">
+          <aside class="source-card">
+  <span class="tag">แหล่งต้นทางหลัก</span>
+  <p><a href="https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/troubleshooting-required-status-checks">GitHub: Troubleshooting required status checks</a></p>
+  <p class="small">อ่านเพื่อดู: เข้าใจความต่างของ head checks, skipped/neutral และเงื่อนไข merge</p>
+</aside>
+          <aside class="callout warn">
+            <span class="tag">จำไว้</span>
+            <p>human approval ไม่ได้ลบข้อจำกัดของ evidence; เขียนสิ่งที่ผู้อนุมัติยังไม่ได้ตรวจด้วย</p>
+          </aside>
+        </div>
+      </div>
+
+      <section class="quiz" data-answer="a" data-explanation="merge event และ merge SHA ระบุสถานะการรับงานจริง ส่วนผล check ต้องตรวจเวลาและ revision แยกอีกชั้น" data-hint="ชื่อ PR หรือ badge ไม่ยืนยันว่า commit ใดถูกรับ และ check อาจเสร็จหลัง merge" aria-labelledby="quiz-title">
+        <h3 id="quiz-title">ลองตอบก่อนดูเฉลย</h3>
+        <p>ข้อใดควรเป็นหลักฐานสุดท้ายของสิ่งที่ repository รับเข้าไปจริง</p>
+        <div class="choice-grid">
+      <button type="button" data-option="a" aria-pressed="false">merge SHA merge event</button>
+      <button type="button" data-option="b" aria-pressed="false">PR title reviewer name</button>
+      <button type="button" data-option="c" aria-pressed="false">green badge branch name</button>
+        </div>
+        <p class="quiz-feedback" role="status" aria-live="polite">เลือกคำตอบหนึ่งข้อ</p>
+      </section>
+
+      <section class="practice" aria-labelledby="practice-title">
+        <h3 id="practice-title">ลงมือกับงานของคุณ</h3>
+        <p>เขียน merge decision สั้น ๆ จากสถานการณ์สมมติที่มีหนึ่ง check ผ่าน, หนึ่ง check skipped และหนึ่ง AC ยังไม่มีหลักฐาน</p>
+        <textarea aria-label="คำตอบแบบฝึกหัด" placeholder="เขียนคำตอบสั้น ๆ ตรงนี้…"></textarea>
+        <div class="practice-actions">
+          <button type="button" data-toggle-rubric aria-expanded="false">เปิดเกณฑ์ตรวจ</button>
+          <button type="button" data-mark-complete aria-pressed="false">ทำบทนี้เสร็จ</button>
+        </div>
+        <div class="rubric">
+          <strong>เกณฑ์ตรวจตนเอง</strong>
+          <ul>
+      <li>ระบุ revision ที่ตรวจ</li>
+      <li>แยก passed, skipped และ missing evidence</li>
+      <li>บอกว่าจะ merge, ส่งกลับ หรือเลื่อนอะไร</li>
+      <li>ไม่ใช้ approval เป็นคำตอบแทน business proof</li>
+          </ul>
+        </div>
+      </section>
+
+      <p class="teacher-note"><strong>ถามครูได้เสมอ:</strong> ถ้าคำศัพท์หรือหลักฐานชิ้นไหนยังไม่ชัด ให้ถามต่อพร้อมคัดลอกประโยคหรือ link ที่ติดขัด ครูจะช่วยแยกข้อเท็จจริงจากข้อสังเคราะห์ให้</p>
+
+      <footer class="lesson-footer">
+        <div class="nav"><a class="button-link" href="../lessons/0006-review-loop.html">← บทก่อน</a> <a class="button-link" href="../lessons/0008-postmerge-learning.html">บทถัดไป →</a></div>
+        <div class="nav"><a class="button-link" href="../reference/glossary.html">ศัพท์สำคัญ</a><a class="button-link" href="../reference/checklist.html">เช็กลิสต์</a></div>
+      </footer>
+    </article>
+  </main>
+  <script src="../assets/lesson.js"></script>
+</body>
+</html>

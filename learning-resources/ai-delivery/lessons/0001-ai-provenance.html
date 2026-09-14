@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>บทที่ 1: แยกหลักฐานว่า AI เขียนออกจาก AI รีวิว — ส่งงานที่ตรวจรับได้</title>
+  <link rel="stylesheet" href="../assets/course.css">
+</head>
+<body data-lesson="L01">
+  <main class="page-shell">
+    <header class="masthead">
+      <div class="brand">AI delivery lab · บทเรียนสั้น</div>
+      <div class="progress">บท <strong>1 / 8</strong> · <a href="../START-HERE.html">หน้าหลัก</a></div>
+    </header>
+
+    <article class="lesson-card">
+      <div class="lesson-header">
+        <div class="lesson-number">01</div>
+        <div>
+          <p class="eyebrow">ทักษะที่ใช้กับงานจริง</p>
+          <h1 class="lesson-title">แยกหลักฐานว่า AI เขียนออกจาก AI รีวิว</h1>
+          <p class="lesson-subtitle">อย่าตัดสินจากชื่อ branch หรือสไตล์โค้ดเพียงอย่างเดียว</p>
+        </div>
+      </div>
+
+      <div class="mission-strip">
+        <strong>ผลที่ฝึกได้ในบทนี้</strong>
+        คุณจะจัดหลักฐานแต่ละชิ้นได้ว่า ยืนยัน authorship, ยืนยัน review หรือเป็นเพียงเบาะแส
+      </div>
+
+      <div class="two-col">
+        <section>
+          <p>คำว่า “AI เขียน” ต้องตอบให้ได้ว่า <em>หลักฐานอยู่ตรงไหน</em> และหลักฐานนั้นสรุปได้ไกลแค่ไหน ชื่อ <code>claude</code> ใน branch เป็นเบาะแส แต่ PR ที่เปิดโดย bot บอกได้เพียง workflow ส่วน commit ที่เปิดเผย AI ใน <code>Co-Authored-By</code> และร่องรอย agent ลงมือแก้ตามคำสั่งเป็นหลักฐานประกอบที่ตรวจย้อนรอยได้ ทั้งสองอย่างยังไม่บอกว่า AI เขียนทุกบรรทัด</p>
+<p>แยกบทบาทสามอย่างเสมอ: คนหรือ bot ที่เปิด PR, ผู้สร้างข้อความ/commit ตามที่เปิดเผย, และผู้ตัดสินใจ merge ส่วน Greptile, Cursor Bugbot หรือ Codex ที่แสดง review เป็นหลักฐานของ <strong>AI review</strong> ไม่ใช่หลักฐานว่า AI เขียน patch นั้น</p>
+<div class="definition-card"><strong>กฎใช้งาน</strong><br>เขียนเป็น “หลักฐาน → สิ่งที่สรุปได้ → สิ่งที่ยังสรุปไม่ได้” เช่น “commit trailer ระบุ Devin AI → มีการเปิดเผย AI ร่วมเขียน commit นี้ → ยังไม่รู้ว่า AI สร้างกี่บรรทัด”</div>
+<pre>evidence = source + actor + revision + claim + limit</pre>
+        </section>
+        <div class="stack">
+          <aside class="source-card">
+  <span class="tag">แหล่งต้นทางหลัก</span>
+  <p><a href="https://docs.github.com/en/pull-requests/how-tos/commit-changes/creating-a-commit-with-multiple-authors">GitHub: Creating a commit with multiple authors</a></p>
+  <p class="small">อ่านเพื่อดู: ความหมายของ Co-authored-by และการให้เครดิต ไม่ใช่เครื่องตรวจว่าใครพิมพ์ทุกบรรทัด</p>
+</aside>
+          <aside class="callout warn">
+            <span class="tag">จำไว้</span>
+            <p>อย่านับชื่อ AI ใน contributor เป็นคำตอบสุดท้าย ต้องตามไปยัง PR/commit ที่กำลังศึกษา</p>
+          </aside>
+        </div>
+      </div>
+
+      <section class="quiz" data-answer="a" data-explanation="หลักฐานตรงจากการเปิดเผยหรือการลงมือของ agent รองรับ AI involvement ได้ ส่วนชื่อ branch และ bot เปิด PR ยังไม่บอกว่าใครผลิตโค้ด" data-hint="แยกคนเปิด PR ออกจากผู้ผลิตโค้ด แล้วหาข้อความเปิดเผยหรือร่องรอยการลงมือที่ตรวจย้อนกลับได้" aria-labelledby="quiz-title">
+        <h3 id="quiz-title">ลองตอบก่อนดูเฉลย</h3>
+        <p>ถ้าต้องการอ้างว่า AI ร่วมเขียนงานหนึ่งชิ้น หลักฐานแรกที่ควรผูกให้แน่นคืออะไร</p>
+        <div class="choice-grid">
+      <button type="button" data-option="a" aria-pressed="false">ผูก หลักฐาน กับ revision</button>
+      <button type="button" data-option="b" aria-pressed="false">เดา จาก สไตล์โค้ด ล้วน</button>
+      <button type="button" data-option="c" aria-pressed="false">นับ ชื่อ bot ทั้งหมด</button>
+        </div>
+        <p class="quiz-feedback" role="status" aria-live="polite">เลือกคำตอบหนึ่งข้อ</p>
+      </section>
+
+      <section class="practice" aria-labelledby="practice-title">
+        <h3 id="practice-title">ลงมือกับงานของคุณ</h3>
+        <p>เลือก PR หนึ่งรายการจากงานที่คุณกำลังดู แล้วเขียนหลักฐาน 2 ชิ้น: หนึ่งชิ้นสำหรับ authorship และหนึ่งชิ้นสำหรับ review พร้อมเขียนข้อจำกัดของแต่ละชิ้น</p>
+        <textarea aria-label="คำตอบแบบฝึกหัด" placeholder="เขียนคำตอบสั้น ๆ ตรงนี้…"></textarea>
+        <div class="practice-actions">
+          <button type="button" data-toggle-rubric aria-expanded="false">เปิดเกณฑ์ตรวจ</button>
+          <button type="button" data-mark-complete aria-pressed="false">ทำบทนี้เสร็จ</button>
+        </div>
+        <div class="rubric">
+          <strong>เกณฑ์ตรวจตนเอง</strong>
+          <ul>
+      <li>ระบุ URL หรือ revision ที่คนอื่นเปิดตรวจได้</li>
+      <li>บอก actor และบทบาทของเขาอย่างชัดเจน</li>
+      <li>แยกคำว่า “ยืนยัน” ออกจาก “เป็นเบาะแส”</li>
+      <li>เขียนสิ่งที่หลักฐานนั้นยังพิสูจน์ไม่ได้</li>
+          </ul>
+        </div>
+      </section>
+
+      <p class="teacher-note"><strong>ถามครูได้เสมอ:</strong> ถ้าคำศัพท์หรือหลักฐานชิ้นไหนยังไม่ชัด ให้ถามต่อพร้อมคัดลอกประโยคหรือ link ที่ติดขัด ครูจะช่วยแยกข้อเท็จจริงจากข้อสังเคราะห์ให้</p>
+
+      <footer class="lesson-footer">
+        <div class="nav"><span class="small">เริ่มจากบทนี้</span> <a class="button-link" href="../lessons/0002-goal-scope.html">บทถัดไป →</a></div>
+        <div class="nav"><a class="button-link" href="../reference/glossary.html">ศัพท์สำคัญ</a><a class="button-link" href="../reference/checklist.html">เช็กลิสต์</a></div>
+      </footer>
+    </article>
+  </main>
+  <script src="../assets/lesson.js"></script>
+</body>
+</html>

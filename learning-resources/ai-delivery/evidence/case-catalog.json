@@ -1,0 +1,4105 @@
+{
+  "summary": {
+    "snapshot": "2026-09-13",
+    "main_workflows": 10,
+    "main_prs": 12,
+    "comparison_prs": 4,
+    "repositories_main": 8,
+    "repositories_all": 9,
+    "collected_pr_counts": {
+      "comments": 117,
+      "reviews": 317,
+      "review-comments": 420,
+      "commits": 255
+    },
+    "note": "Counts are fetched API records, not unique people, not test cases, and not a claim that every comment is reproduced or independently verified. PR bodies/claims may have been edited. Check rows associated with head can include post-merge runs and skipped jobs."
+  },
+  "cases": [
+    {
+      "case_id": "P1",
+      "repo": "dyad-sh/dyad",
+      "pr": 4187,
+      "title": "feat(coolify): deploy apps to a self-hosted server",
+      "url": "https://github.com/dyad-sh/dyad/pull/4187",
+      "ai_evidence_level": "B",
+      "ai_evidence_url": "https://github.com/dyad-sh/dyad/pull/4187#discussion_r3717925547",
+      "main_or_comparison": "main",
+      "created_at": "2026-08-04T03:15:47Z",
+      "merged_at": "2026-08-14T18:57:09Z",
+      "closed_at": "2026-08-14T18:57:09Z",
+      "status": "merged",
+      "head_sha": "6e5abff6dad5355c5ebffb7c884ea54a57aacf52",
+      "merge_sha": "ba782f433205935979de8a9cc2d606944fe534a1",
+      "merged_by": "RyanGroch",
+      "changed_files": 71,
+      "additions": 15051,
+      "deletions": 67,
+      "counts": {
+        "comments": 27,
+        "reviews": 235,
+        "review-comments": 343,
+        "commits": 126
+      },
+      "checks_total_reported": 34,
+      "checks_rows_captured": 34,
+      "checks_pagination_complete": true,
+      "check_conclusions": {
+        "skipped": 14,
+        "success": 15,
+        "failure": 4,
+        "neutral": 1
+      },
+      "checks": [
+        {
+          "name": "pg-schema-classifier-tests",
+          "conclusion": "skipped",
+          "head_sha": "6e5abff6dad5355c5ebffb7c884ea54a57aacf52",
+          "url": "https://github.com/dyad-sh/dyad/actions/runs/31831053791/job/94866598693",
+          "started_at": "2026-08-14T18:57:21Z",
+          "completed_at": "2026-08-14T18:57:13Z",
+          "completed_before_merge": false
+        },
+        {
+          "name": "codex-review",
+          "conclusion": "skipped",
+          "head_sha": "6e5abff6dad5355c5ebffb7c884ea54a57aacf52",
+          "url": "https://github.com/dyad-sh/dyad/actions/runs/31831053521/job/94866598514",
+          "started_at": "2026-08-14T18:57:21Z",
+          "completed_at": "2026-08-14T18:57:12Z",
+          "completed_before_merge": false
+        },
+        {
+          "name": "ts-pg-schema-diff-tests",
+          "conclusion": "skipped",
+          "head_sha": "6e5abff6dad5355c5ebffb7c884ea54a57aacf52",
+          "url": "https://github.com/dyad-sh/dyad/actions/runs/31831053791/job/94866591504",
+          "started_at": "2026-08-14T18:57:20Z",
+          "completed_at": "2026-08-14T18:57:13Z",
+          "completed_before_merge": false
+        },
+        {
+          "name": "build-e2e-artifacts",
+          "conclusion": "skipped",
+          "head_sha": "6e5abff6dad5355c5ebffb7c884ea54a57aacf52",
+          "url": "https://github.com/dyad-sh/dyad/actions/runs/31831053791/job/94866590418",
+          "started_at": "2026-08-14T18:57:19Z",
+          "completed_at": "2026-08-14T18:57:13Z",
+          "completed_before_merge": false
+        },
+        {
+          "name": "merge-reports",
+          "conclusion": "skipped",
+          "head_sha": "6e5abff6dad5355c5ebffb7c884ea54a57aacf52",
+          "url": "https://github.com/dyad-sh/dyad/actions/runs/31831053791/job/94866564783",
+          "started_at": "2026-08-14T18:57:13Z",
+          "completed_at": "2026-08-14T18:57:13Z",
+          "completed_before_merge": false
+        },
+        {
+          "name": "safe-storage-e2e",
+          "conclusion": "skipped",
+          "head_sha": "6e5abff6dad5355c5ebffb7c884ea54a57aacf52",
+          "url": "https://github.com/dyad-sh/dyad/actions/runs/31831053791/job/94866564677",
+          "started_at": "2026-08-14T18:57:13Z",
+          "completed_at": "2026-08-14T18:57:13Z",
+          "completed_before_merge": false
+        },
+        {
+          "name": "e2e-tests",
+          "conclusion": "skipped",
+          "head_sha": "6e5abff6dad5355c5ebffb7c884ea54a57aacf52",
+          "url": "https://github.com/dyad-sh/dyad/actions/runs/31831053791/job/94866564417",
+          "started_at": "2026-08-14T18:57:13Z",
+          "completed_at": "2026-08-14T18:57:13Z",
+          "completed_before_merge": false
+        },
+        {
+          "name": "unit-tests-macos",
+          "conclusion": "skipped",
+          "head_sha": "6e5abff6dad5355c5ebffb7c884ea54a57aacf52",
+          "url": "https://github.com/dyad-sh/dyad/actions/runs/31831053791/job/94866564080",
+          "started_at": "2026-08-14T18:57:13Z",
+          "completed_at": "2026-08-14T18:57:13Z",
+          "completed_before_merge": false
+        },
+        {
+          "name": "unit-tests-windows",
+          "conclusion": "skipped",
+          "head_sha": "6e5abff6dad5355c5ebffb7c884ea54a57aacf52",
+          "url": "https://github.com/dyad-sh/dyad/actions/runs/31831053791/job/94866563934",
+          "started_at": "2026-08-14T18:57:13Z",
+          "completed_at": "2026-08-14T18:57:13Z",
+          "completed_before_merge": false
+        },
+        {
+          "name": "check-changes",
+          "conclusion": "skipped",
+          "head_sha": "6e5abff6dad5355c5ebffb7c884ea54a57aacf52",
+          "url": "https://github.com/dyad-sh/dyad/actions/runs/31831053791/job/94866563506",
+          "started_at": "2026-08-14T18:57:13Z",
+          "completed_at": "2026-08-14T18:57:13Z",
+          "completed_before_merge": false
+        },
+        {
+          "name": "post-codex-review",
+          "conclusion": "skipped",
+          "head_sha": "6e5abff6dad5355c5ebffb7c884ea54a57aacf52",
+          "url": "https://github.com/dyad-sh/dyad/actions/runs/31831053521/job/94866562983",
+          "started_at": "2026-08-14T18:57:13Z",
+          "completed_at": "2026-08-14T18:57:13Z",
+          "completed_before_merge": false
+        },
+        {
+          "name": "cancel-ci",
+          "conclusion": "success",
+          "head_sha": "6e5abff6dad5355c5ebffb7c884ea54a57aacf52",
+          "url": "https://github.com/dyad-sh/dyad/actions/runs/31831053846/job/94866562360",
+          "started_at": "2026-08-14T18:57:16Z",
+          "completed_at": "2026-08-14T18:57:22Z",
+          "completed_before_merge": false
+        },
+        {
+          "name": "cancel-claude-pr-review",
+          "conclusion": "success",
+          "head_sha": "6e5abff6dad5355c5ebffb7c884ea54a57aacf52",
+          "url": "https://github.com/dyad-sh/dyad/actions/runs/31831053792/job/94866561941",
+          "started_at": "2026-08-14T18:57:16Z",
+          "completed_at": "2026-08-14T18:57:20Z",
+          "completed_before_merge": false
+        },
+        {
+          "name": "CLAAssistant",
+          "conclusion": "success",
+          "head_sha": "6e5abff6dad5355c5ebffb7c884ea54a57aacf52",
+          "url": "https://github.com/dyad-sh/dyad/actions/runs/31831053465/job/94866561691",
+          "started_at": "2026-08-14T18:57:15Z",
+          "completed_at": "2026-08-14T18:57:23Z",
+          "completed_before_merge": false
+        },
+        {
+          "name": "merge-reports",
+          "conclusion": "success",
+          "head_sha": "6e5abff6dad5355c5ebffb7c884ea54a57aacf52",
+          "url": "https://github.com/dyad-sh/dyad/actions/runs/31821951795/job/94841258062",
+          "started_at": "2026-08-14T17:16:48Z",
+          "completed_at": "2026-08-14T17:17:48Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "post-claude-review",
+          "conclusion": "success",
+          "head_sha": "6e5abff6dad5355c5ebffb7c884ea54a57aacf52",
+          "url": "https://github.com/dyad-sh/dyad/actions/runs/31821949519/job/94841092064",
+          "started_at": "2026-08-14T17:16:10Z",
+          "completed_at": "2026-08-14T17:16:19Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "e2e-tests (macos, [\"self-hosted\",\"macOS\",\"ARM64\"], 1, 4)",
+          "conclusion": "success",
+          "head_sha": "6e5abff6dad5355c5ebffb7c884ea54a57aacf52",
+          "url": "https://github.com/dyad-sh/dyad/actions/runs/31821951795/job/94837573279",
+          "started_at": "2026-08-14T17:02:02Z",
+          "completed_at": "2026-08-14T17:10:21Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "e2e-tests (macos, [\"self-hosted\",\"macOS\",\"ARM64\"], 4, 4)",
+          "conclusion": "success",
+          "head_sha": "6e5abff6dad5355c5ebffb7c884ea54a57aacf52",
+          "url": "https://github.com/dyad-sh/dyad/actions/runs/31821951795/job/94837573276",
+          "started_at": "2026-08-14T17:02:02Z",
+          "completed_at": "2026-08-14T17:13:21Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "e2e-tests (macos, [\"self-hosted\",\"macOS\",\"ARM64\"], 3, 4)",
+          "conclusion": "failure",
+          "head_sha": "6e5abff6dad5355c5ebffb7c884ea54a57aacf52",
+          "url": "https://github.com/dyad-sh/dyad/actions/runs/31821951795/job/94837573273",
+          "started_at": "2026-08-14T17:02:02Z",
+          "completed_at": "2026-08-14T17:16:46Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "e2e-tests (macos, [\"self-hosted\",\"macOS\",\"ARM64\"], 2, 4)",
+          "conclusion": "success",
+          "head_sha": "6e5abff6dad5355c5ebffb7c884ea54a57aacf52",
+          "url": "https://github.com/dyad-sh/dyad/actions/runs/31821951795/job/94837573240",
+          "started_at": "2026-08-14T17:02:02Z",
+          "completed_at": "2026-08-14T17:13:11Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "safe-storage-e2e",
+          "conclusion": "success",
+          "head_sha": "6e5abff6dad5355c5ebffb7c884ea54a57aacf52",
+          "url": "https://github.com/dyad-sh/dyad/actions/runs/31821951795/job/94837573201",
+          "started_at": "2026-08-14T17:16:26Z",
+          "completed_at": "2026-08-14T17:17:58Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "post-codex-review",
+          "conclusion": "skipped",
+          "head_sha": "6e5abff6dad5355c5ebffb7c884ea54a57aacf52",
+          "url": "https://github.com/dyad-sh/dyad/actions/runs/31821949645/job/94837188849",
+          "started_at": "2026-08-14T17:00:33Z",
+          "completed_at": "2026-08-14T17:00:32Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Socket Security: Pull Request Alerts",
+          "conclusion": "success",
+          "head_sha": "6e5abff6dad5355c5ebffb7c884ea54a57aacf52",
+          "url": "https://github.com/dyad-sh/dyad/runs/94837188234",
+          "started_at": "2026-08-14T17:00:31Z",
+          "completed_at": "2026-08-14T17:00:34Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "ts-pg-schema-diff-tests",
+          "conclusion": "skipped",
+          "head_sha": "6e5abff6dad5355c5ebffb7c884ea54a57aacf52",
+          "url": "https://github.com/dyad-sh/dyad/actions/runs/31821951795/job/94837111764",
+          "started_at": "2026-08-14T17:00:16Z",
+          "completed_at": "2026-08-14T17:00:15Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "pg-schema-classifier-tests",
+          "conclusion": "skipped",
+          "head_sha": "6e5abff6dad5355c5ebffb7c884ea54a57aacf52",
+          "url": "https://github.com/dyad-sh/dyad/actions/runs/31821951795/job/94837111307",
+          "started_at": "2026-08-14T17:00:16Z",
+          "completed_at": "2026-08-14T17:00:15Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "build-e2e-artifacts (macos, [\"self-hosted\",\"macOS\",\"ARM64\"])",
+          "conclusion": "success",
+          "head_sha": "6e5abff6dad5355c5ebffb7c884ea54a57aacf52",
+          "url": "https://github.com/dyad-sh/dyad/actions/runs/31821951795/job/94837110331",
+          "started_at": "2026-08-14T17:00:17Z",
+          "completed_at": "2026-08-14T17:02:00Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "unit-tests-macos",
+          "conclusion": "failure",
+          "head_sha": "6e5abff6dad5355c5ebffb7c884ea54a57aacf52",
+          "url": "https://github.com/dyad-sh/dyad/actions/runs/31821951795/job/94837110193",
+          "started_at": "2026-08-14T17:00:18Z",
+          "completed_at": "2026-08-14T17:16:24Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "unit-tests-windows",
+          "conclusion": "failure",
+          "head_sha": "6e5abff6dad5355c5ebffb7c884ea54a57aacf52",
+          "url": "https://github.com/dyad-sh/dyad/actions/runs/31821951795/job/94837110191",
+          "started_at": "2026-08-14T17:00:17Z",
+          "completed_at": "2026-08-14T17:13:49Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "cubic · AI code reviewer",
+          "conclusion": "neutral",
+          "head_sha": "6e5abff6dad5355c5ebffb7c884ea54a57aacf52",
+          "url": "https://github.com/dyad-sh/dyad/runs/94837076499",
+          "started_at": "2026-08-14T17:00:08Z",
+          "completed_at": "2026-08-14T17:00:08Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Socket Security: Project Report",
+          "conclusion": "success",
+          "head_sha": "6e5abff6dad5355c5ebffb7c884ea54a57aacf52",
+          "url": "https://github.com/dyad-sh/dyad/runs/94837072582",
+          "started_at": "2026-08-14T17:00:07Z",
+          "completed_at": "2026-08-14T17:00:30Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "check-changes",
+          "conclusion": "success",
+          "head_sha": "6e5abff6dad5355c5ebffb7c884ea54a57aacf52",
+          "url": "https://github.com/dyad-sh/dyad/actions/runs/31821951795/job/94837057632",
+          "started_at": "2026-08-14T17:00:06Z",
+          "completed_at": "2026-08-14T17:00:15Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "codex-review",
+          "conclusion": "failure",
+          "head_sha": "6e5abff6dad5355c5ebffb7c884ea54a57aacf52",
+          "url": "https://github.com/dyad-sh/dyad/actions/runs/31821949645/job/94837053485",
+          "started_at": "2026-08-14T17:00:06Z",
+          "completed_at": "2026-08-14T17:00:32Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "claude-review",
+          "conclusion": "success",
+          "head_sha": "6e5abff6dad5355c5ebffb7c884ea54a57aacf52",
+          "url": "https://github.com/dyad-sh/dyad/actions/runs/31821949519/job/94837051062",
+          "started_at": "2026-08-14T17:00:05Z",
+          "completed_at": "2026-08-14T17:16:07Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "CLAAssistant",
+          "conclusion": "success",
+          "head_sha": "6e5abff6dad5355c5ebffb7c884ea54a57aacf52",
+          "url": "https://github.com/dyad-sh/dyad/actions/runs/31821949524/job/94837050709",
+          "started_at": "2026-08-14T17:00:05Z",
+          "completed_at": "2026-08-14T17:00:14Z",
+          "completed_before_merge": true
+        }
+      ]
+    },
+    {
+      "case_id": "P2",
+      "repo": "OpenHands/OpenHands",
+      "pr": 8310,
+      "title": "Fix issue #8304: [Bug]: Non-native tool use converter fails when builtin tools are disabled",
+      "url": "https://github.com/OpenHands/OpenHands/pull/8310",
+      "ai_evidence_level": "A",
+      "ai_evidence_url": "https://github.com/OpenHands/OpenHands/issues/8304#issuecomment-2855275930",
+      "main_or_comparison": "main",
+      "created_at": "2025-05-06T16:57:17Z",
+      "merged_at": "2025-05-17T04:37:45Z",
+      "closed_at": "2025-05-17T04:37:45Z",
+      "status": "merged",
+      "head_sha": "bb767e8a1809f7815875d15c5ea09ffd406e710d",
+      "merge_sha": "c17b0ebfc6195fd37bea999abbc629da4335c0ad",
+      "merged_by": "enyst",
+      "changed_files": 8,
+      "additions": 476,
+      "deletions": 121,
+      "counts": {
+        "comments": 39,
+        "reviews": 15,
+        "review-comments": 14,
+        "commits": 27
+      },
+      "checks_total_reported": 0,
+      "checks_rows_captured": 0,
+      "checks_pagination_complete": true,
+      "check_conclusions": {},
+      "checks": []
+    },
+    {
+      "case_id": "P3",
+      "repo": "omacom/omarchy",
+      "pr": 5435,
+      "title": "Add ASUS ExpertBook B9406 display and touchpad fixes for Panther Lake",
+      "url": "https://github.com/omacom/omarchy/pull/5435",
+      "ai_evidence_level": "B",
+      "ai_evidence_url": "https://github.com/omacom/omarchy/commit/e28d4955caac33ecda8bf8b50f8d0c1c90325762",
+      "main_or_comparison": "main",
+      "created_at": "2026-04-24T15:00:35Z",
+      "merged_at": "2026-04-26T16:31:43Z",
+      "closed_at": "2026-04-26T16:31:43Z",
+      "status": "merged",
+      "head_sha": "e28d4955caac33ecda8bf8b50f8d0c1c90325762",
+      "merge_sha": "b164549b51d790d42a725baa21fc86a34111b00f",
+      "merged_by": "dhh",
+      "changed_files": 4,
+      "additions": 51,
+      "deletions": 0,
+      "counts": {
+        "comments": 6,
+        "reviews": 10,
+        "review-comments": 13,
+        "commits": 2
+      },
+      "checks_total_reported": 4,
+      "checks_rows_captured": 4,
+      "checks_pagination_complete": true,
+      "check_conclusions": {
+        "failure": 1,
+        "success": 3
+      },
+      "checks": [
+        {
+          "name": "Cleanup artifacts",
+          "conclusion": "failure",
+          "head_sha": "e28d4955caac33ecda8bf8b50f8d0c1c90325762",
+          "url": "https://github.com/omacom/omarchy/actions/runs/24959616823/job/73084045462",
+          "started_at": "2026-04-26T15:02:12Z",
+          "completed_at": "2026-04-26T15:02:15Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Upload results",
+          "conclusion": "success",
+          "head_sha": "e28d4955caac33ecda8bf8b50f8d0c1c90325762",
+          "url": "https://github.com/omacom/omarchy/actions/runs/24959616823/job/73084031810",
+          "started_at": "2026-04-26T15:01:57Z",
+          "completed_at": "2026-04-26T15:02:09Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Agent",
+          "conclusion": "success",
+          "head_sha": "e28d4955caac33ecda8bf8b50f8d0c1c90325762",
+          "url": "https://github.com/omacom/omarchy/actions/runs/24959616823/job/73083887020",
+          "started_at": "2026-04-26T14:59:22Z",
+          "completed_at": "2026-04-26T15:01:54Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Prepare",
+          "conclusion": "success",
+          "head_sha": "e28d4955caac33ecda8bf8b50f8d0c1c90325762",
+          "url": "https://github.com/omacom/omarchy/actions/runs/24959616823/job/73083881015",
+          "started_at": "2026-04-26T14:59:14Z",
+          "completed_at": "2026-04-26T14:59:19Z",
+          "completed_before_merge": true
+        }
+      ]
+    },
+    {
+      "case_id": "P3",
+      "repo": "omacom/omarchy",
+      "pr": 6093,
+      "title": "Fix ASUS ExpertBook B9406 touchpad quirk never being applied",
+      "url": "https://github.com/omacom/omarchy/pull/6093",
+      "ai_evidence_level": "B",
+      "ai_evidence_url": "https://github.com/omacom/omarchy/pull/6093",
+      "main_or_comparison": "main",
+      "created_at": "2026-06-14T10:29:02Z",
+      "merged_at": null,
+      "closed_at": "2026-07-27T01:19:23Z",
+      "status": "closed-unmerged",
+      "head_sha": "ac1dd5983fbc140acf3a5bf9d362910969c610ee",
+      "merge_sha": null,
+      "merged_by": null,
+      "changed_files": 2,
+      "additions": 25,
+      "deletions": 4,
+      "counts": {
+        "comments": 1,
+        "reviews": 1,
+        "review-comments": 3,
+        "commits": 2
+      },
+      "checks_total_reported": 0,
+      "checks_rows_captured": 0,
+      "checks_pagination_complete": true,
+      "check_conclusions": {},
+      "checks": []
+    },
+    {
+      "case_id": "P3",
+      "repo": "omacom/omarchy",
+      "pr": 6388,
+      "title": "Fix ASUS ExpertBook B9406 touchpad quirk never being applied",
+      "url": "https://github.com/omacom/omarchy/pull/6388",
+      "ai_evidence_level": "B",
+      "ai_evidence_url": "https://github.com/omacom/omarchy/pull/6388",
+      "main_or_comparison": "main",
+      "created_at": "2026-07-27T01:19:11Z",
+      "merged_at": null,
+      "closed_at": null,
+      "status": "open",
+      "head_sha": "85abe52784428519a7bb0a4324a6f81b7834d2b9",
+      "merge_sha": null,
+      "merged_by": null,
+      "changed_files": 2,
+      "additions": 18,
+      "deletions": 3,
+      "counts": {
+        "comments": 3,
+        "reviews": 1,
+        "review-comments": 0,
+        "commits": 1
+      },
+      "checks_total_reported": 3,
+      "checks_rows_captured": 3,
+      "checks_pagination_complete": true,
+      "check_conclusions": {
+        "success": 3
+      },
+      "checks": [
+        {
+          "name": "CodeQL",
+          "conclusion": "success",
+          "head_sha": "85abe52784428519a7bb0a4324a6f81b7834d2b9",
+          "url": "https://github.com/omacom/omarchy/runs/89865729959",
+          "started_at": "2026-07-27T01:19:58Z",
+          "completed_at": "2026-07-27T01:20:00Z",
+          "completed_before_merge": null
+        },
+        {
+          "name": "Analyze (python)",
+          "conclusion": "success",
+          "head_sha": "85abe52784428519a7bb0a4324a6f81b7834d2b9",
+          "url": "https://github.com/omacom/omarchy/actions/runs/30229531227/job/89865657850",
+          "started_at": "2026-07-27T01:19:17Z",
+          "completed_at": "2026-07-27T01:20:07Z",
+          "completed_before_merge": null
+        },
+        {
+          "name": "Analyze (javascript-typescript)",
+          "conclusion": "success",
+          "head_sha": "85abe52784428519a7bb0a4324a6f81b7834d2b9",
+          "url": "https://github.com/omacom/omarchy/actions/runs/30229531227/job/89865657793",
+          "started_at": "2026-07-27T01:19:17Z",
+          "completed_at": "2026-07-27T01:20:17Z",
+          "completed_before_merge": null
+        }
+      ]
+    },
+    {
+      "case_id": "C1",
+      "repo": "cline/cline",
+      "pr": 13968,
+      "title": "fix(desktop): stop the live chat stream from doubling and dropping chunks",
+      "url": "https://github.com/cline/cline/pull/13968",
+      "ai_evidence_level": "B",
+      "ai_evidence_url": "https://github.com/cline/cline/pull/13968",
+      "main_or_comparison": "main",
+      "created_at": "2026-09-08T22:28:46Z",
+      "merged_at": "2026-09-08T23:04:15Z",
+      "closed_at": "2026-09-08T23:04:15Z",
+      "status": "merged",
+      "head_sha": "8b8e975b044e7691131e82d059c239893e107faa",
+      "merge_sha": "62ba65397fca8d583540319fa574a62d1ac7d498",
+      "merged_by": "saoudrizwan",
+      "changed_files": 8,
+      "additions": 438,
+      "deletions": 2,
+      "counts": {
+        "comments": 2,
+        "reviews": 7,
+        "review-comments": 8,
+        "commits": 5
+      },
+      "checks_total_reported": 18,
+      "checks_rows_captured": 18,
+      "checks_pagination_complete": true,
+      "check_conclusions": {
+        "neutral": 2,
+        "skipped": 7,
+        "success": 9
+      },
+      "checks": [
+        {
+          "name": "Socket Security: Pull Request Alerts",
+          "conclusion": "neutral",
+          "head_sha": "8b8e975b044e7691131e82d059c239893e107faa",
+          "url": "https://github.com/cline/cline/runs/102271369868",
+          "started_at": "2026-09-08T23:04:30Z",
+          "completed_at": "2026-09-08T23:06:12Z",
+          "completed_before_merge": false
+        },
+        {
+          "name": "CodeQL",
+          "conclusion": "neutral",
+          "head_sha": "8b8e975b044e7691131e82d059c239893e107faa",
+          "url": "https://github.com/cline/cline/runs/102271013219",
+          "started_at": "2026-09-08T23:04:44Z",
+          "completed_at": "2026-09-08T23:04:47Z",
+          "completed_before_merge": false
+        },
+        {
+          "name": "qlty",
+          "conclusion": "skipped",
+          "head_sha": "8b8e975b044e7691131e82d059c239893e107faa",
+          "url": "https://github.com/cline/cline/actions/runs/34288934509/job/102270922227",
+          "started_at": "2026-09-08T23:04:22Z",
+          "completed_at": "2026-09-08T23:04:22Z",
+          "completed_before_merge": false
+        },
+        {
+          "name": "matrix.os == 'ubuntu-latest' && 'vscode test' || format('vscode test ({0})', matrix.os)",
+          "conclusion": "skipped",
+          "head_sha": "8b8e975b044e7691131e82d059c239893e107faa",
+          "url": "https://github.com/cline/cline/actions/runs/34288934509/job/102270921659",
+          "started_at": "2026-09-08T23:04:22Z",
+          "completed_at": "2026-09-08T23:04:21Z",
+          "completed_before_merge": false
+        },
+        {
+          "name": "test-platform-integration",
+          "conclusion": "skipped",
+          "head_sha": "8b8e975b044e7691131e82d059c239893e107faa",
+          "url": "https://github.com/cline/cline/actions/runs/34288934509/job/102270921651",
+          "started_at": "2026-09-08T23:04:22Z",
+          "completed_at": "2026-09-08T23:04:21Z",
+          "completed_before_merge": false
+        },
+        {
+          "name": "test",
+          "conclusion": "success",
+          "head_sha": "8b8e975b044e7691131e82d059c239893e107faa",
+          "url": "https://github.com/cline/cline/actions/runs/34288934509/job/102270921042",
+          "started_at": "2026-09-08T23:04:25Z",
+          "completed_at": "2026-09-08T23:04:29Z",
+          "completed_before_merge": false
+        },
+        {
+          "name": "Quality Checks",
+          "conclusion": "skipped",
+          "head_sha": "8b8e975b044e7691131e82d059c239893e107faa",
+          "url": "https://github.com/cline/cline/actions/runs/34288934509/job/102270920869",
+          "started_at": "2026-09-08T23:04:22Z",
+          "completed_at": "2026-09-08T23:04:21Z",
+          "completed_before_merge": false
+        },
+        {
+          "name": "e2e",
+          "conclusion": "skipped",
+          "head_sha": "8b8e975b044e7691131e82d059c239893e107faa",
+          "url": "https://github.com/cline/cline/actions/runs/34288934506/job/102270916407",
+          "started_at": "2026-09-08T23:04:21Z",
+          "completed_at": "2026-09-08T23:04:20Z",
+          "completed_before_merge": false
+        },
+        {
+          "name": "matrix_prep",
+          "conclusion": "skipped",
+          "head_sha": "8b8e975b044e7691131e82d059c239893e107faa",
+          "url": "https://github.com/cline/cline/actions/runs/34288934506/job/102270916274",
+          "started_at": "2026-09-08T23:04:21Z",
+          "completed_at": "2026-09-08T23:04:20Z",
+          "completed_before_merge": false
+        },
+        {
+          "name": "Socket Security: Project Report",
+          "conclusion": "success",
+          "head_sha": "8b8e975b044e7691131e82d059c239893e107faa",
+          "url": "https://github.com/cline/cline/runs/102270896851",
+          "started_at": "2026-09-08T23:04:15Z",
+          "completed_at": "2026-09-08T23:04:30Z",
+          "completed_before_merge": false
+        },
+        {
+          "name": "Greptile Review",
+          "conclusion": "success",
+          "head_sha": "8b8e975b044e7691131e82d059c239893e107faa",
+          "url": "https://github.com/cline/cline/runs/102270891325",
+          "started_at": "2026-09-08T23:04:14Z",
+          "completed_at": "2026-09-08T23:06:34Z",
+          "completed_before_merge": false
+        },
+        {
+          "name": "Detect Changes",
+          "conclusion": "success",
+          "head_sha": "8b8e975b044e7691131e82d059c239893e107faa",
+          "url": "https://github.com/cline/cline/actions/runs/34288934506/job/102270873203",
+          "started_at": "2026-09-08T23:04:13Z",
+          "completed_at": "2026-09-08T23:04:20Z",
+          "completed_before_merge": false
+        },
+        {
+          "name": "Detect Changes",
+          "conclusion": "success",
+          "head_sha": "8b8e975b044e7691131e82d059c239893e107faa",
+          "url": "https://github.com/cline/cline/actions/runs/34288934509/job/102270873173",
+          "started_at": "2026-09-08T23:04:13Z",
+          "completed_at": "2026-09-08T23:04:21Z",
+          "completed_before_merge": false
+        },
+        {
+          "name": "Analyze (python)",
+          "conclusion": "success",
+          "head_sha": "8b8e975b044e7691131e82d059c239893e107faa",
+          "url": "https://github.com/cline/cline/actions/runs/34288932700/job/102270872411",
+          "started_at": "2026-09-08T23:04:13Z",
+          "completed_at": "2026-09-08T23:05:05Z",
+          "completed_before_merge": false
+        },
+        {
+          "name": "Analyze (javascript-typescript)",
+          "conclusion": "success",
+          "head_sha": "8b8e975b044e7691131e82d059c239893e107faa",
+          "url": "https://github.com/cline/cline/actions/runs/34288932700/job/102270872399",
+          "started_at": "2026-09-08T23:04:13Z",
+          "completed_at": "2026-09-08T23:06:25Z",
+          "completed_before_merge": false
+        },
+        {
+          "name": "Analyze (rust)",
+          "conclusion": "success",
+          "head_sha": "8b8e975b044e7691131e82d059c239893e107faa",
+          "url": "https://github.com/cline/cline/actions/runs/34288932700/job/102270872367",
+          "started_at": "2026-09-08T23:04:13Z",
+          "completed_at": "2026-09-08T23:10:38Z",
+          "completed_before_merge": false
+        },
+        {
+          "name": "Analyze (actions)",
+          "conclusion": "success",
+          "head_sha": "8b8e975b044e7691131e82d059c239893e107faa",
+          "url": "https://github.com/cline/cline/actions/runs/34288932700/job/102270872148",
+          "started_at": "2026-09-08T23:04:13Z",
+          "completed_at": "2026-09-08T23:04:54Z",
+          "completed_before_merge": false
+        },
+        {
+          "name": "Mintlify Deployment",
+          "conclusion": "skipped",
+          "head_sha": "8b8e975b044e7691131e82d059c239893e107faa",
+          "url": "https://github.com/cline/cline/runs/102270870425",
+          "started_at": "2026-09-08T23:04:09Z",
+          "completed_at": "2026-09-08T23:04:09Z",
+          "completed_before_merge": true
+        }
+      ]
+    },
+    {
+      "case_id": "C2",
+      "repo": "cline/cline",
+      "pr": 13969,
+      "title": "fix(desktop): ask the user how to continue when the mistake limit trips instead of stopping silently",
+      "url": "https://github.com/cline/cline/pull/13969",
+      "ai_evidence_level": "B",
+      "ai_evidence_url": "https://github.com/cline/cline/commit/e3b2e375c7f4e0c09cfef277ce5031c0bf8d5168",
+      "main_or_comparison": "main",
+      "created_at": "2026-09-08T22:34:54Z",
+      "merged_at": "2026-09-09T02:45:25Z",
+      "closed_at": "2026-09-09T02:45:25Z",
+      "status": "merged",
+      "head_sha": "7ed28e895c2db946d8a514c99fd24af5c3878d92",
+      "merge_sha": "23f2197c535f904bb4bbe17012fc81cdf3b2b8ac",
+      "merged_by": "saoudrizwan",
+      "changed_files": 7,
+      "additions": 877,
+      "deletions": 19,
+      "counts": {
+        "comments": 1,
+        "reviews": 8,
+        "review-comments": 8,
+        "commits": 11
+      },
+      "checks_total_reported": 18,
+      "checks_rows_captured": 18,
+      "checks_pagination_complete": true,
+      "check_conclusions": {
+        "success": 11,
+        "skipped": 7
+      },
+      "checks": [
+        {
+          "name": "CodeQL",
+          "conclusion": "success",
+          "head_sha": "7ed28e895c2db946d8a514c99fd24af5c3878d92",
+          "url": "https://github.com/cline/cline/runs/102315086295",
+          "started_at": "2026-09-09T02:29:56Z",
+          "completed_at": "2026-09-09T02:29:58Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "qlty",
+          "conclusion": "skipped",
+          "head_sha": "7ed28e895c2db946d8a514c99fd24af5c3878d92",
+          "url": "https://github.com/cline/cline/actions/runs/34303406469/job/102315008097",
+          "started_at": "2026-09-09T02:29:32Z",
+          "completed_at": "2026-09-09T02:29:32Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "matrix.os == 'ubuntu-latest' && 'vscode test' || format('vscode test ({0})', matrix.os)",
+          "conclusion": "skipped",
+          "head_sha": "7ed28e895c2db946d8a514c99fd24af5c3878d92",
+          "url": "https://github.com/cline/cline/actions/runs/34303406469/job/102315007845",
+          "started_at": "2026-09-09T02:29:32Z",
+          "completed_at": "2026-09-09T02:29:32Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "test-platform-integration",
+          "conclusion": "skipped",
+          "head_sha": "7ed28e895c2db946d8a514c99fd24af5c3878d92",
+          "url": "https://github.com/cline/cline/actions/runs/34303406469/job/102315007818",
+          "started_at": "2026-09-09T02:29:32Z",
+          "completed_at": "2026-09-09T02:29:32Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Quality Checks",
+          "conclusion": "skipped",
+          "head_sha": "7ed28e895c2db946d8a514c99fd24af5c3878d92",
+          "url": "https://github.com/cline/cline/actions/runs/34303406469/job/102315007527",
+          "started_at": "2026-09-09T02:29:32Z",
+          "completed_at": "2026-09-09T02:29:32Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "test",
+          "conclusion": "success",
+          "head_sha": "7ed28e895c2db946d8a514c99fd24af5c3878d92",
+          "url": "https://github.com/cline/cline/actions/runs/34303406469/job/102315007045",
+          "started_at": "2026-09-09T02:29:35Z",
+          "completed_at": "2026-09-09T02:29:37Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "e2e",
+          "conclusion": "skipped",
+          "head_sha": "7ed28e895c2db946d8a514c99fd24af5c3878d92",
+          "url": "https://github.com/cline/cline/actions/runs/34303406510/job/102315006495",
+          "started_at": "2026-09-09T02:29:32Z",
+          "completed_at": "2026-09-09T02:29:31Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "matrix_prep",
+          "conclusion": "skipped",
+          "head_sha": "7ed28e895c2db946d8a514c99fd24af5c3878d92",
+          "url": "https://github.com/cline/cline/actions/runs/34303406510/job/102315006081",
+          "started_at": "2026-09-09T02:29:32Z",
+          "completed_at": "2026-09-09T02:29:31Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Socket Security: Pull Request Alerts",
+          "conclusion": "success",
+          "head_sha": "7ed28e895c2db946d8a514c99fd24af5c3878d92",
+          "url": "https://github.com/cline/cline/runs/102315001648",
+          "started_at": "2026-09-09T02:29:25Z",
+          "completed_at": "2026-09-09T02:29:31Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Mintlify Deployment",
+          "conclusion": "skipped",
+          "head_sha": "7ed28e895c2db946d8a514c99fd24af5c3878d92",
+          "url": "https://github.com/cline/cline/runs/102314983259",
+          "started_at": "2026-09-09T02:29:25Z",
+          "completed_at": "2026-09-09T02:29:25Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Greptile Review",
+          "conclusion": "success",
+          "head_sha": "7ed28e895c2db946d8a514c99fd24af5c3878d92",
+          "url": "https://github.com/cline/cline/runs/102314982901",
+          "started_at": "2026-09-09T02:29:25Z",
+          "completed_at": "2026-09-09T02:31:58Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Socket Security: Project Report",
+          "conclusion": "success",
+          "head_sha": "7ed28e895c2db946d8a514c99fd24af5c3878d92",
+          "url": "https://github.com/cline/cline/runs/102314971061",
+          "started_at": "2026-09-09T02:29:21Z",
+          "completed_at": "2026-09-09T02:29:25Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Detect Changes",
+          "conclusion": "success",
+          "head_sha": "7ed28e895c2db946d8a514c99fd24af5c3878d92",
+          "url": "https://github.com/cline/cline/actions/runs/34303406510/job/102314967967",
+          "started_at": "2026-09-09T02:29:24Z",
+          "completed_at": "2026-09-09T02:29:31Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Detect Changes",
+          "conclusion": "success",
+          "head_sha": "7ed28e895c2db946d8a514c99fd24af5c3878d92",
+          "url": "https://github.com/cline/cline/actions/runs/34303406469/job/102314967271",
+          "started_at": "2026-09-09T02:29:24Z",
+          "completed_at": "2026-09-09T02:29:31Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Analyze (javascript-typescript)",
+          "conclusion": "success",
+          "head_sha": "7ed28e895c2db946d8a514c99fd24af5c3878d92",
+          "url": "https://github.com/cline/cline/actions/runs/34303405333/job/102314966532",
+          "started_at": "2026-09-09T02:29:23Z",
+          "completed_at": "2026-09-09T02:31:17Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Analyze (actions)",
+          "conclusion": "success",
+          "head_sha": "7ed28e895c2db946d8a514c99fd24af5c3878d92",
+          "url": "https://github.com/cline/cline/actions/runs/34303405333/job/102314966514",
+          "started_at": "2026-09-09T02:29:24Z",
+          "completed_at": "2026-09-09T02:30:04Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Analyze (python)",
+          "conclusion": "success",
+          "head_sha": "7ed28e895c2db946d8a514c99fd24af5c3878d92",
+          "url": "https://github.com/cline/cline/actions/runs/34303405333/job/102314966506",
+          "started_at": "2026-09-09T02:29:23Z",
+          "completed_at": "2026-09-09T02:30:07Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Analyze (rust)",
+          "conclusion": "success",
+          "head_sha": "7ed28e895c2db946d8a514c99fd24af5c3878d92",
+          "url": "https://github.com/cline/cline/actions/runs/34303405333/job/102314966284",
+          "started_at": "2026-09-09T02:29:25Z",
+          "completed_at": "2026-09-09T02:37:07Z",
+          "completed_before_merge": true
+        }
+      ]
+    },
+    {
+      "case_id": "C3",
+      "repo": "RooCodeInc/Roo-Code",
+      "pr": 11409,
+      "title": "feat: implement ModelMessage storage layer with AI SDK response messages",
+      "url": "https://github.com/RooCodeInc/Roo-Code/pull/11409",
+      "ai_evidence_level": "B",
+      "ai_evidence_url": "https://github.com/RooCodeInc/Roo-Code/pull/11409",
+      "main_or_comparison": "main",
+      "created_at": "2026-02-11T17:07:15Z",
+      "merged_at": "2026-02-11T18:58:39Z",
+      "closed_at": "2026-02-11T18:58:39Z",
+      "status": "merged",
+      "head_sha": "984857e60fbc9786e1af46881e4b075ff9e6049b",
+      "merge_sha": "e6f0e79c389dc558338b243f6854c11c2854786f",
+      "merged_by": "daniel-lxs",
+      "changed_files": 103,
+      "additions": 2648,
+      "deletions": 3206,
+      "counts": {
+        "comments": 1,
+        "reviews": 9,
+        "review-comments": 8,
+        "commits": 11
+      },
+      "checks_total_reported": 16,
+      "checks_rows_captured": 16,
+      "checks_pagination_complete": true,
+      "check_conclusions": {
+        "skipped": 5,
+        "success": 11
+      },
+      "checks": [
+        {
+          "name": "publish-extension",
+          "conclusion": "skipped",
+          "head_sha": "984857e60fbc9786e1af46881e4b075ff9e6049b",
+          "url": "https://github.com/RooCodeInc/Roo-Code/actions/runs/21918839608/job/63293276802",
+          "started_at": "2026-02-11T18:58:51Z",
+          "completed_at": "2026-02-11T18:58:43Z",
+          "completed_before_merge": false
+        },
+        {
+          "name": "Auto approve and merge Bump version PRs",
+          "conclusion": "skipped",
+          "head_sha": "984857e60fbc9786e1af46881e4b075ff9e6049b",
+          "url": "https://github.com/RooCodeInc/Roo-Code/actions/runs/21918839622/job/63293262451",
+          "started_at": "2026-02-11T18:58:43Z",
+          "completed_at": "2026-02-11T18:58:43Z",
+          "completed_before_merge": false
+        },
+        {
+          "name": "changeset-pr-version-bump",
+          "conclusion": "success",
+          "head_sha": "984857e60fbc9786e1af46881e4b075ff9e6049b",
+          "url": "https://github.com/RooCodeInc/Roo-Code/actions/runs/21918839622/job/63293261658",
+          "started_at": "2026-02-11T18:58:46Z",
+          "completed_at": "2026-02-11T18:59:49Z",
+          "completed_before_merge": false
+        },
+        {
+          "name": "Auto approve and merge Bump version PRs",
+          "conclusion": "skipped",
+          "head_sha": "984857e60fbc9786e1af46881e4b075ff9e6049b",
+          "url": "https://github.com/RooCodeInc/Roo-Code/actions/runs/21918581352/job/63292379850",
+          "started_at": "2026-02-11T18:51:31Z",
+          "completed_at": "2026-02-11T18:51:21Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "changeset-pr-version-bump",
+          "conclusion": "skipped",
+          "head_sha": "984857e60fbc9786e1af46881e4b075ff9e6049b",
+          "url": "https://github.com/RooCodeInc/Roo-Code/actions/runs/21918581352/job/63292373151",
+          "started_at": "2026-02-11T18:51:27Z",
+          "completed_at": "2026-02-11T18:51:21Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "evals",
+          "conclusion": "skipped",
+          "head_sha": "984857e60fbc9786e1af46881e4b075ff9e6049b",
+          "url": "https://github.com/RooCodeInc/Roo-Code/actions/runs/21918581349/job/63292360477",
+          "started_at": "2026-02-11T18:51:21Z",
+          "completed_at": "2026-02-11T18:51:21Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "CodeQL",
+          "conclusion": "success",
+          "head_sha": "984857e60fbc9786e1af46881e4b075ff9e6049b",
+          "url": "https://github.com/RooCodeInc/Roo-Code/runs/63291755171",
+          "started_at": "2026-02-11T18:46:18Z",
+          "completed_at": "2026-02-11T18:46:20Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Rooview",
+          "conclusion": "success",
+          "head_sha": "984857e60fbc9786e1af46881e4b075ff9e6049b",
+          "url": "https://github.com/RooCodeInc/Roo-Code/runs/63291587385",
+          "started_at": "2026-02-11T18:44:54Z",
+          "completed_at": "2026-02-11T18:51:21Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "integration-test",
+          "conclusion": "success",
+          "head_sha": "984857e60fbc9786e1af46881e4b075ff9e6049b",
+          "url": "https://github.com/RooCodeInc/Roo-Code/actions/runs/21918347482/job/63291556921",
+          "started_at": "2026-02-11T18:44:41Z",
+          "completed_at": "2026-02-11T18:48:04Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "knip",
+          "conclusion": "success",
+          "head_sha": "984857e60fbc9786e1af46881e4b075ff9e6049b",
+          "url": "https://github.com/RooCodeInc/Roo-Code/actions/runs/21918347482/job/63291546648",
+          "started_at": "2026-02-11T18:44:36Z",
+          "completed_at": "2026-02-11T18:45:37Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Analyze (javascript-typescript)",
+          "conclusion": "success",
+          "head_sha": "984857e60fbc9786e1af46881e4b075ff9e6049b",
+          "url": "https://github.com/RooCodeInc/Roo-Code/actions/runs/21918347503/job/63291546570",
+          "started_at": "2026-02-11T18:44:36Z",
+          "completed_at": "2026-02-11T18:46:27Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "check-translations",
+          "conclusion": "success",
+          "head_sha": "984857e60fbc9786e1af46881e4b075ff9e6049b",
+          "url": "https://github.com/RooCodeInc/Roo-Code/actions/runs/21918347482/job/63291546466",
+          "started_at": "2026-02-11T18:44:36Z",
+          "completed_at": "2026-02-11T18:45:21Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "compile",
+          "conclusion": "success",
+          "head_sha": "984857e60fbc9786e1af46881e4b075ff9e6049b",
+          "url": "https://github.com/RooCodeInc/Roo-Code/actions/runs/21918347482/job/63291546440",
+          "started_at": "2026-02-11T18:44:36Z",
+          "completed_at": "2026-02-11T18:47:25Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "check-openrouter-api-key",
+          "conclusion": "success",
+          "head_sha": "984857e60fbc9786e1af46881e4b075ff9e6049b",
+          "url": "https://github.com/RooCodeInc/Roo-Code/actions/runs/21918347482/job/63291546418",
+          "started_at": "2026-02-11T18:44:36Z",
+          "completed_at": "2026-02-11T18:44:38Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "platform-unit-test (ubuntu-latest)",
+          "conclusion": "success",
+          "head_sha": "984857e60fbc9786e1af46881e4b075ff9e6049b",
+          "url": "https://github.com/RooCodeInc/Roo-Code/actions/runs/21918347482/job/63291546413",
+          "started_at": "2026-02-11T18:44:36Z",
+          "completed_at": "2026-02-11T18:50:57Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "platform-unit-test (windows-latest)",
+          "conclusion": "success",
+          "head_sha": "984857e60fbc9786e1af46881e4b075ff9e6049b",
+          "url": "https://github.com/RooCodeInc/Roo-Code/actions/runs/21918347482/job/63291546409",
+          "started_at": "2026-02-11T18:44:37Z",
+          "completed_at": "2026-02-11T18:56:03Z",
+          "completed_before_merge": true
+        }
+      ]
+    },
+    {
+      "case_id": "C4",
+      "repo": "aaif-goose/goose",
+      "pr": 11307,
+      "title": "fix(agents): fail fast when a recipe's structured response can't reach an ACP-bridged provider",
+      "url": "https://github.com/aaif-goose/goose/pull/11307",
+      "ai_evidence_level": "B",
+      "ai_evidence_url": "https://github.com/aaif-goose/goose/commit/5372cf21c4c043cb25959d08529c766012cdbd48",
+      "main_or_comparison": "main",
+      "created_at": "2026-08-18T05:19:10Z",
+      "merged_at": "2026-08-21T08:41:22Z",
+      "closed_at": "2026-08-21T08:41:22Z",
+      "status": "merged",
+      "head_sha": "ddf10a298497a493226908626cd45d1935ba8e90",
+      "merge_sha": "a5de37814adb1b8f7eab3046c53811d5808733fa",
+      "merged_by": "lifeizhou-ap",
+      "changed_files": 8,
+      "additions": 244,
+      "deletions": 20,
+      "counts": {
+        "comments": 1,
+        "reviews": 6,
+        "review-comments": 5,
+        "commits": 5
+      },
+      "checks_total_reported": 29,
+      "checks_rows_captured": 29,
+      "checks_pagination_complete": true,
+      "check_conclusions": {
+        "skipped": 13,
+        "success": 16
+      },
+      "checks": [
+        {
+          "name": "create-release-branch",
+          "conclusion": "skipped",
+          "head_sha": "ddf10a298497a493226908626cd45d1935ba8e90",
+          "url": "https://github.com/aaif-goose/goose/actions/runs/32464329860/job/96717653680",
+          "started_at": "2026-08-21T08:41:32Z",
+          "completed_at": "2026-08-21T08:41:25Z",
+          "completed_before_merge": false
+        },
+        {
+          "name": "Conformance 2025-11-25 / 0.2.0-alpha.10",
+          "conclusion": "success",
+          "head_sha": "ddf10a298497a493226908626cd45d1935ba8e90",
+          "url": "https://github.com/aaif-goose/goose/actions/runs/32462933720/job/96714292015",
+          "started_at": "2026-08-21T08:26:55Z",
+          "completed_at": "2026-08-21T08:27:42Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Conformance 2026-07-28 / 0.2.0-alpha.10",
+          "conclusion": "success",
+          "head_sha": "ddf10a298497a493226908626cd45d1935ba8e90",
+          "url": "https://github.com/aaif-goose/goose/actions/runs/32462933720/job/96714291985",
+          "started_at": "2026-08-21T08:26:55Z",
+          "completed_at": "2026-08-21T08:27:29Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Conformance 2025-11-25 / 0.1.16",
+          "conclusion": "success",
+          "head_sha": "ddf10a298497a493226908626cd45d1935ba8e90",
+          "url": "https://github.com/aaif-goose/goose/actions/runs/32462933720/job/96714291979",
+          "started_at": "2026-08-21T08:26:55Z",
+          "completed_at": "2026-08-21T08:27:36Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Build and Test TLS Backend (rustls-tls)",
+          "conclusion": "success",
+          "head_sha": "ddf10a298497a493226908626cd45d1935ba8e90",
+          "url": "https://github.com/aaif-goose/goose/actions/runs/32462933787/job/96713466967",
+          "started_at": "2026-08-21T08:23:21Z",
+          "completed_at": "2026-08-21T08:33:05Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Build and Test TLS Backend (native-tls)",
+          "conclusion": "success",
+          "head_sha": "ddf10a298497a493226908626cd45d1935ba8e90",
+          "url": "https://github.com/aaif-goose/goose/actions/runs/32462933787/job/96713466960",
+          "started_at": "2026-08-21T08:23:22Z",
+          "completed_at": "2026-08-21T08:32:39Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Check Generated Schemas are Up-to-Date",
+          "conclusion": "success",
+          "head_sha": "ddf10a298497a493226908626cd45d1935ba8e90",
+          "url": "https://github.com/aaif-goose/goose/actions/runs/32462933787/job/96713466920",
+          "started_at": "2026-08-21T08:23:21Z",
+          "completed_at": "2026-08-21T08:27:54Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Check Rust Code Format",
+          "conclusion": "success",
+          "head_sha": "ddf10a298497a493226908626cd45d1935ba8e90",
+          "url": "https://github.com/aaif-goose/goose/actions/runs/32462933787/job/96713466915",
+          "started_at": "2026-08-21T08:23:21Z",
+          "completed_at": "2026-08-21T08:23:46Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Test and Lint Electron Desktop App",
+          "conclusion": "success",
+          "head_sha": "ddf10a298497a493226908626cd45d1935ba8e90",
+          "url": "https://github.com/aaif-goose/goose/actions/runs/32462933787/job/96713466896",
+          "started_at": "2026-08-21T08:23:21Z",
+          "completed_at": "2026-08-21T08:25:37Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Check goose-sdk UniFFI",
+          "conclusion": "success",
+          "head_sha": "ddf10a298497a493226908626cd45d1935ba8e90",
+          "url": "https://github.com/aaif-goose/goose/actions/runs/32462933787/job/96713466875",
+          "started_at": "2026-08-21T08:23:21Z",
+          "completed_at": "2026-08-21T08:24:31Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Lint Rust Code",
+          "conclusion": "success",
+          "head_sha": "ddf10a298497a493226908626cd45d1935ba8e90",
+          "url": "https://github.com/aaif-goose/goose/actions/runs/32462933787/job/96713466872",
+          "started_at": "2026-08-21T08:23:21Z",
+          "completed_at": "2026-08-21T08:26:15Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Check MSRV",
+          "conclusion": "success",
+          "head_sha": "ddf10a298497a493226908626cd45d1935ba8e90",
+          "url": "https://github.com/aaif-goose/goose/actions/runs/32462933787/job/96713466865",
+          "started_at": "2026-08-21T08:23:21Z",
+          "completed_at": "2026-08-21T08:26:15Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Build and Test Rust Project",
+          "conclusion": "success",
+          "head_sha": "ddf10a298497a493226908626cd45d1935ba8e90",
+          "url": "https://github.com/aaif-goose/goose/actions/runs/32462933787/job/96713466853",
+          "started_at": "2026-08-21T08:23:21Z",
+          "completed_at": "2026-08-21T08:31:30Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Smoke Tests (Code Execution)",
+          "conclusion": "skipped",
+          "head_sha": "ddf10a298497a493226908626cd45d1935ba8e90",
+          "url": "https://github.com/aaif-goose/goose/actions/runs/32462933690/job/96713422356",
+          "started_at": "2026-08-21T08:23:07Z",
+          "completed_at": "2026-08-21T08:23:07Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "comment-on-pr",
+          "conclusion": "skipped",
+          "head_sha": "ddf10a298497a493226908626cd45d1935ba8e90",
+          "url": "https://github.com/aaif-goose/goose/actions/runs/32462933852/job/96713422028",
+          "started_at": "2026-08-21T08:23:07Z",
+          "completed_at": "2026-08-21T08:23:07Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Smoke Tests",
+          "conclusion": "skipped",
+          "head_sha": "ddf10a298497a493226908626cd45d1935ba8e90",
+          "url": "https://github.com/aaif-goose/goose/actions/runs/32462933690/job/96713421739",
+          "started_at": "2026-08-21T08:23:07Z",
+          "completed_at": "2026-08-21T08:23:07Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Compaction Tests",
+          "conclusion": "skipped",
+          "head_sha": "ddf10a298497a493226908626cd45d1935ba8e90",
+          "url": "https://github.com/aaif-goose/goose/actions/runs/32462933690/job/96713421715",
+          "started_at": "2026-08-21T08:23:07Z",
+          "completed_at": "2026-08-21T08:23:07Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Build Binary",
+          "conclusion": "skipped",
+          "head_sha": "ddf10a298497a493226908626cd45d1935ba8e90",
+          "url": "https://github.com/aaif-goose/goose/actions/runs/32462933690/job/96713421533",
+          "started_at": "2026-08-21T08:23:07Z",
+          "completed_at": "2026-08-21T08:23:07Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "bundle-desktop",
+          "conclusion": "skipped",
+          "head_sha": "ddf10a298497a493226908626cd45d1935ba8e90",
+          "url": "https://github.com/aaif-goose/goose/actions/runs/32462933852/job/96713421413",
+          "started_at": "2026-08-21T08:23:07Z",
+          "completed_at": "2026-08-21T08:23:07Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "check-commits",
+          "conclusion": "skipped",
+          "head_sha": "ddf10a298497a493226908626cd45d1935ba8e90",
+          "url": "https://github.com/aaif-goose/goose/actions/runs/32462933821/job/96713421384",
+          "started_at": "2026-08-21T08:23:07Z",
+          "completed_at": "2026-08-21T08:23:07Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "changes",
+          "conclusion": "skipped",
+          "head_sha": "ddf10a298497a493226908626cd45d1935ba8e90",
+          "url": "https://github.com/aaif-goose/goose/actions/runs/32462933690/job/96713421230",
+          "started_at": "2026-08-21T08:23:07Z",
+          "completed_at": "2026-08-21T08:23:07Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "check-fork",
+          "conclusion": "skipped",
+          "head_sha": "ddf10a298497a493226908626cd45d1935ba8e90",
+          "url": "https://github.com/aaif-goose/goose/actions/runs/32462933690/job/96713420761",
+          "started_at": "2026-08-21T08:23:07Z",
+          "completed_at": "2026-08-21T08:23:07Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "update-release-notes",
+          "conclusion": "skipped",
+          "head_sha": "ddf10a298497a493226908626cd45d1935ba8e90",
+          "url": "https://github.com/aaif-goose/goose/actions/runs/32462933680/job/96713420743",
+          "started_at": "2026-08-21T08:23:07Z",
+          "completed_at": "2026-08-21T08:23:07Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Build Rust Project on Windows",
+          "conclusion": "skipped",
+          "head_sha": "ddf10a298497a493226908626cd45d1935ba8e90",
+          "url": "https://github.com/aaif-goose/goose/actions/runs/32462933787/job/96713420719",
+          "started_at": "2026-08-21T08:23:07Z",
+          "completed_at": "2026-08-21T08:23:07Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "changes",
+          "conclusion": "success",
+          "head_sha": "ddf10a298497a493226908626cd45d1935ba8e90",
+          "url": "https://github.com/aaif-goose/goose/actions/runs/32462933787/job/96713420123",
+          "started_at": "2026-08-21T08:23:08Z",
+          "completed_at": "2026-08-21T08:23:19Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Build Conformance Binaries",
+          "conclusion": "success",
+          "head_sha": "ddf10a298497a493226908626cd45d1935ba8e90",
+          "url": "https://github.com/aaif-goose/goose/actions/runs/32462933720/job/96713419715",
+          "started_at": "2026-08-21T08:23:08Z",
+          "completed_at": "2026-08-21T08:26:53Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "machete",
+          "conclusion": "success",
+          "head_sha": "ddf10a298497a493226908626cd45d1935ba8e90",
+          "url": "https://github.com/aaif-goose/goose/actions/runs/32462933684/job/96713419672",
+          "started_at": "2026-08-21T08:23:08Z",
+          "completed_at": "2026-08-21T08:23:31Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "dependabot",
+          "conclusion": "skipped",
+          "head_sha": "ddf10a298497a493226908626cd45d1935ba8e90",
+          "url": "https://github.com/aaif-goose/goose/actions/runs/32462931771/job/96713414498",
+          "started_at": "2026-08-21T08:23:05Z",
+          "completed_at": "2026-08-21T08:23:05Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "check-quarantined",
+          "conclusion": "success",
+          "head_sha": "ddf10a298497a493226908626cd45d1935ba8e90",
+          "url": "https://github.com/aaif-goose/goose/actions/runs/32462931759/job/96713413240",
+          "started_at": "2026-08-21T08:23:07Z",
+          "completed_at": "2026-08-21T08:23:17Z",
+          "completed_before_merge": true
+        }
+      ]
+    },
+    {
+      "case_id": "O1",
+      "repo": "anomalyco/opencode",
+      "pr": 44281,
+      "title": "fix(provider): send Anthropic's dashed native slug through the AI Gateway",
+      "url": "https://github.com/anomalyco/opencode/pull/44281",
+      "ai_evidence_level": "B",
+      "ai_evidence_url": "https://github.com/anomalyco/opencode/commit/29dec99e6784f9277be14074b1f0c2b527c31126",
+      "main_or_comparison": "main",
+      "created_at": "2026-08-23T00:37:49Z",
+      "merged_at": "2026-08-24T21:15:27Z",
+      "closed_at": "2026-08-24T21:15:27Z",
+      "status": "merged",
+      "head_sha": "7183a7915464727578e3a7a459e0313d3e4f051c",
+      "merge_sha": "f8b4dd70ac26996436e259fc386917944c05f481",
+      "merged_by": "rekram1-node",
+      "changed_files": 2,
+      "additions": 19,
+      "deletions": 2,
+      "counts": {
+        "comments": 2,
+        "reviews": 0,
+        "review-comments": 0,
+        "commits": 3
+      },
+      "checks_total_reported": 8,
+      "checks_rows_captured": 8,
+      "checks_pagination_complete": true,
+      "check_conclusions": {
+        "success": 8
+      },
+      "checks": [
+        {
+          "name": "unit (windows)",
+          "conclusion": "success",
+          "head_sha": "7183a7915464727578e3a7a459e0313d3e4f051c",
+          "url": "https://github.com/anomalyco/opencode/actions/runs/32744944205/job/97587692356",
+          "started_at": "2026-08-24T20:51:22Z",
+          "completed_at": "2026-08-24T21:09:10Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "e2e (linux)",
+          "conclusion": "success",
+          "head_sha": "7183a7915464727578e3a7a459e0313d3e4f051c",
+          "url": "https://github.com/anomalyco/opencode/actions/runs/32744944205/job/97587692325",
+          "started_at": "2026-08-24T20:50:54Z",
+          "completed_at": "2026-08-24T20:54:29Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "unit (linux)",
+          "conclusion": "success",
+          "head_sha": "7183a7915464727578e3a7a459e0313d3e4f051c",
+          "url": "https://github.com/anomalyco/opencode/actions/runs/32744944205/job/97587692218",
+          "started_at": "2026-08-24T20:50:54Z",
+          "completed_at": "2026-08-24T20:58:51Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "e2e (windows)",
+          "conclusion": "success",
+          "head_sha": "7183a7915464727578e3a7a459e0313d3e4f051c",
+          "url": "https://github.com/anomalyco/opencode/actions/runs/32744944205/job/97587692080",
+          "started_at": "2026-08-24T20:51:09Z",
+          "completed_at": "2026-08-24T20:58:53Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "typecheck",
+          "conclusion": "success",
+          "head_sha": "7183a7915464727578e3a7a459e0313d3e4f051c",
+          "url": "https://github.com/anomalyco/opencode/actions/runs/32744944379/job/97587689431",
+          "started_at": "2026-08-24T20:50:54Z",
+          "completed_at": "2026-08-24T20:52:06Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "nix-eval",
+          "conclusion": "success",
+          "head_sha": "7183a7915464727578e3a7a459e0313d3e4f051c",
+          "url": "https://github.com/anomalyco/opencode/actions/runs/32744944154/job/97587687145",
+          "started_at": "2026-08-24T20:50:46Z",
+          "completed_at": "2026-08-24T20:51:27Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "check-compliance",
+          "conclusion": "success",
+          "head_sha": "7183a7915464727578e3a7a459e0313d3e4f051c",
+          "url": "https://github.com/anomalyco/opencode/actions/runs/32744940792/job/97488103370",
+          "started_at": "2026-08-24T15:27:15Z",
+          "completed_at": "2026-08-24T15:27:18Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "check-standards",
+          "conclusion": "success",
+          "head_sha": "7183a7915464727578e3a7a459e0313d3e4f051c",
+          "url": "https://github.com/anomalyco/opencode/actions/runs/32744940792/job/97488102993",
+          "started_at": "2026-08-24T15:27:15Z",
+          "completed_at": "2026-08-24T15:27:18Z",
+          "completed_before_merge": true
+        }
+      ]
+    },
+    {
+      "case_id": "L1",
+      "repo": "BerriAI/litellm",
+      "pr": 40785,
+      "title": "feat(guardrails): add Conduct Guard integration with validated hooks and forwarded params",
+      "url": "https://github.com/BerriAI/litellm/pull/40785",
+      "ai_evidence_level": "A",
+      "ai_evidence_url": "https://github.com/BerriAI/litellm/pull/40785#issuecomment-5640336188",
+      "main_or_comparison": "main",
+      "created_at": "2026-09-11T20:36:38Z",
+      "merged_at": "2026-09-12T17:04:55Z",
+      "closed_at": "2026-09-12T17:04:56Z",
+      "status": "merged",
+      "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+      "merge_sha": "e4f59a953cac0543515449d8485a94e7393c2636",
+      "merged_by": "yucheng-berri",
+      "changed_files": 10,
+      "additions": 693,
+      "deletions": 0,
+      "counts": {
+        "comments": 16,
+        "reviews": 17,
+        "review-comments": 16,
+        "commits": 27
+      },
+      "checks_total_reported": 94,
+      "checks_rows_captured": 94,
+      "checks_pagination_complete": true,
+      "check_conclusions": {
+        "success": 93,
+        "skipped": 1
+      },
+      "checks": [
+        {
+          "name": "Validate PR title",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34664489951/job/103473542064",
+          "started_at": "2026-09-12T01:19:42Z",
+          "completed_at": "2026-09-12T01:19:45Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Validate PR title",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34664162223/job/103472589657",
+          "started_at": "2026-09-12T01:13:20Z",
+          "completed_at": "2026-09-12T01:13:23Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Cursor Bugbot",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/runs/103472565539",
+          "started_at": "2026-09-12T01:13:09Z",
+          "completed_at": "2026-09-12T01:18:13Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "codecov/patch",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/runs/103471809806",
+          "started_at": "2026-09-12T01:08:10Z",
+          "completed_at": "2026-09-12T01:08:10Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Validate PR title",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663812112/job/103471573183",
+          "started_at": "2026-09-12T01:06:37Z",
+          "completed_at": "2026-09-12T01:06:41Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "misc / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307819/job/103471550357",
+          "started_at": "2026-09-12T01:06:29Z",
+          "completed_at": "2026-09-12T01:06:42Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Validate PR title",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663698571/job/103471228237",
+          "started_at": "2026-09-12T01:04:31Z",
+          "completed_at": "2026-09-12T01:04:35Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "All Other Providers / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307819/job/103471213015",
+          "started_at": "2026-09-12T01:04:26Z",
+          "completed_at": "2026-09-12T01:04:39Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "enterprise-package / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307819/job/103471185230",
+          "started_at": "2026-09-12T01:04:23Z",
+          "completed_at": "2026-09-12T01:04:37Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Validate PR title",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663678826/job/103471173768",
+          "started_at": "2026-09-12T01:04:11Z",
+          "completed_at": "2026-09-12T01:04:17Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "proxy-infra / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307819/job/103471063847",
+          "started_at": "2026-09-12T01:03:29Z",
+          "completed_at": "2026-09-12T01:03:42Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "integrations / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307819/job/103470937424",
+          "started_at": "2026-09-12T01:02:41Z",
+          "completed_at": "2026-09-12T01:02:49Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "proxy-endpoints / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307819/job/103470895461",
+          "started_at": "2026-09-12T01:02:24Z",
+          "completed_at": "2026-09-12T01:02:33Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "proxy-auth / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307819/job/103470858598",
+          "started_at": "2026-09-12T01:02:11Z",
+          "completed_at": "2026-09-12T01:02:21Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "core-utils / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307819/job/103470814588",
+          "started_at": "2026-09-12T01:01:55Z",
+          "completed_at": "2026-09-12T01:02:06Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Vertex AI / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307819/job/103470810372",
+          "started_at": "2026-09-12T01:01:53Z",
+          "completed_at": "2026-09-12T01:02:11Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "enterprise-routing / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307819/job/103470804924",
+          "started_at": "2026-09-12T01:01:51Z",
+          "completed_at": "2026-09-12T01:02:09Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "proxy-server / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307819/job/103470648940",
+          "started_at": "2026-09-12T01:00:52Z",
+          "completed_at": "2026-09-12T01:01:07Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "db-and-spend / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307884/job/103470644031",
+          "started_at": "2026-09-12T01:00:51Z",
+          "completed_at": "2026-09-12T01:01:04Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "responses-caching-types / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307819/job/103470631550",
+          "started_at": "2026-09-12T01:00:45Z",
+          "completed_at": "2026-09-12T01:00:54Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "proxy-runtime / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307884/job/103470591694",
+          "started_at": "2026-09-12T01:00:31Z",
+          "completed_at": "2026-09-12T01:00:43Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "custom-logging / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307884/job/103470560034",
+          "started_at": "2026-09-12T01:00:21Z",
+          "completed_at": "2026-09-12T01:00:35Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "key-generation / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307884/job/103470558796",
+          "started_at": "2026-09-12T01:00:20Z",
+          "completed_at": "2026-09-12T01:00:35Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "logging-misc / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307884/job/103470557976",
+          "started_at": "2026-09-12T01:00:21Z",
+          "completed_at": "2026-09-12T01:00:33Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "proxy-server-core / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307884/job/103470557436",
+          "started_at": "2026-09-12T01:00:19Z",
+          "completed_at": "2026-09-12T01:01:06Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "jwt-and-keys / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307884/job/103470553130",
+          "started_at": "2026-09-12T01:00:18Z",
+          "completed_at": "2026-09-12T01:00:27Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "budgets / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307884/job/103470550799",
+          "started_at": "2026-09-12T01:00:17Z",
+          "completed_at": "2026-09-12T01:00:28Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "auth-checks / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307884/job/103470531398",
+          "started_at": "2026-09-12T01:00:12Z",
+          "completed_at": "2026-09-12T01:00:21Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "endpoints-and-responses / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307884/job/103470526274",
+          "started_at": "2026-09-12T01:00:10Z",
+          "completed_at": "2026-09-12T01:00:19Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "CodSpeed Performance Analysis",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/runs/103470519396",
+          "started_at": "2026-09-12T01:00:05Z",
+          "completed_at": "2026-09-12T01:00:05Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "guardrails-hooks / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307884/job/103470507800",
+          "started_at": "2026-09-12T01:00:04Z",
+          "completed_at": "2026-09-12T01:00:14Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "caching-local / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307819/job/103470501950",
+          "started_at": "2026-09-12T01:00:02Z",
+          "completed_at": "2026-09-12T01:00:13Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "proxy-utils / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307884/job/103470488148",
+          "started_at": "2026-09-12T00:59:56Z",
+          "completed_at": "2026-09-12T01:00:06Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "proxy-extras / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307819/job/103470450589",
+          "started_at": "2026-09-12T00:59:41Z",
+          "completed_at": "2026-09-12T00:59:55Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "All Other Providers / Run tests",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307819/job/103470186634",
+          "started_at": "2026-09-12T00:57:55Z",
+          "completed_at": "2026-09-12T01:04:23Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "proxy-auth / Run tests",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307819/job/103470186620",
+          "started_at": "2026-09-12T00:57:56Z",
+          "completed_at": "2026-09-12T01:02:07Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "caching-local / Run tests",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307819/job/103470186615",
+          "started_at": "2026-09-12T00:57:56Z",
+          "completed_at": "2026-09-12T00:59:59Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "misc / Run tests",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307819/job/103470186613",
+          "started_at": "2026-09-12T00:57:55Z",
+          "completed_at": "2026-09-12T01:06:26Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "responses-caching-types / Run tests",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307819/job/103470186605",
+          "started_at": "2026-09-12T00:57:55Z",
+          "completed_at": "2026-09-12T01:00:43Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "proxy-extras / Run tests",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307819/job/103470186587",
+          "started_at": "2026-09-12T00:57:55Z",
+          "completed_at": "2026-09-12T00:59:38Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "enterprise-package / Run tests",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307819/job/103470186581",
+          "started_at": "2026-09-12T00:57:56Z",
+          "completed_at": "2026-09-12T01:04:12Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Vertex AI / Run tests",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307819/job/103470186576",
+          "started_at": "2026-09-12T00:57:55Z",
+          "completed_at": "2026-09-12T01:01:49Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "core-utils / Run tests",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307819/job/103470186572",
+          "started_at": "2026-09-12T00:57:57Z",
+          "completed_at": "2026-09-12T01:01:51Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "enterprise-routing / Run tests",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307819/job/103470186550",
+          "started_at": "2026-09-12T00:57:55Z",
+          "completed_at": "2026-09-12T01:01:47Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "proxy-endpoints / Run tests",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307819/job/103470186546",
+          "started_at": "2026-09-12T00:57:55Z",
+          "completed_at": "2026-09-12T01:02:21Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "proxy-infra / Run tests",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307819/job/103470186536",
+          "started_at": "2026-09-12T00:57:55Z",
+          "completed_at": "2026-09-12T01:03:26Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "proxy-server / Run tests",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307819/job/103470186515",
+          "started_at": "2026-09-12T00:57:55Z",
+          "completed_at": "2026-09-12T01:00:49Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "integrations / Run tests",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307819/job/103470186447",
+          "started_at": "2026-09-12T00:57:56Z",
+          "completed_at": "2026-09-12T01:02:37Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "budgets / Run tests",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307884/job/103470147949",
+          "started_at": "2026-09-12T00:57:39Z",
+          "completed_at": "2026-09-12T01:00:15Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "custom-logging / Run tests",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307884/job/103470147912",
+          "started_at": "2026-09-12T00:57:39Z",
+          "completed_at": "2026-09-12T01:00:17Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "endpoints-and-responses / Run tests",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307884/job/103470147830",
+          "started_at": "2026-09-12T00:57:38Z",
+          "completed_at": "2026-09-12T01:00:07Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "proxy-server-core / Run tests",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307884/job/103470147829",
+          "started_at": "2026-09-12T00:57:39Z",
+          "completed_at": "2026-09-12T01:00:16Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "logging-misc / Run tests",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307884/job/103470147796",
+          "started_at": "2026-09-12T00:57:39Z",
+          "completed_at": "2026-09-12T01:00:17Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "auth-checks / Run tests",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307884/job/103470147772",
+          "started_at": "2026-09-12T00:57:39Z",
+          "completed_at": "2026-09-12T01:00:09Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "proxy-runtime / Run tests",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307884/job/103470147764",
+          "started_at": "2026-09-12T00:57:39Z",
+          "completed_at": "2026-09-12T01:00:28Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "db-and-spend / Run tests",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307884/job/103470147757",
+          "started_at": "2026-09-12T00:57:38Z",
+          "completed_at": "2026-09-12T01:00:47Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "guardrails-hooks / Run tests",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307884/job/103470147751",
+          "started_at": "2026-09-12T00:57:38Z",
+          "completed_at": "2026-09-12T01:00:01Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "jwt-and-keys / Run tests",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307884/job/103470147696",
+          "started_at": "2026-09-12T00:57:39Z",
+          "completed_at": "2026-09-12T01:00:15Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "proxy-utils / Run tests",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307884/job/103470147695",
+          "started_at": "2026-09-12T00:57:38Z",
+          "completed_at": "2026-09-12T00:59:54Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "key-generation / Run tests",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307884/job/103470147638",
+          "started_at": "2026-09-12T00:58:14Z",
+          "completed_at": "2026-09-12T01:00:17Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Run changed e2e tests against the stage-mirror stack",
+          "conclusion": "skipped",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307746/job/103470139592",
+          "started_at": "2026-09-12T00:57:33Z",
+          "completed_at": "2026-09-12T00:57:32Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "e2e-changed-tests",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307746/job/103470139280",
+          "started_at": "2026-09-12T00:57:35Z",
+          "completed_at": "2026-09-12T00:57:39Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "rust-lint",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307821/job/103470127818",
+          "started_at": "2026-09-12T00:57:31Z",
+          "completed_at": "2026-09-12T00:57:58Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "rust-test",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307821/job/103470127583",
+          "started_at": "2026-09-12T00:57:30Z",
+          "completed_at": "2026-09-12T01:07:29Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "ui-unit-tests",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307831/job/103470112666",
+          "started_at": "2026-09-12T00:57:25Z",
+          "completed_at": "2026-09-12T01:02:38Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Verify schema.d.ts matches the proxy OpenAPI spec",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307723/job/103470112517",
+          "started_at": "2026-09-12T00:57:24Z",
+          "completed_at": "2026-09-12T00:59:25Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Provider endpoints vs proxy OpenAPI schema",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307741/job/103470112511",
+          "started_at": "2026-09-12T00:57:24Z",
+          "completed_at": "2026-09-12T00:58:54Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "lint",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307693/job/103470112451",
+          "started_at": "2026-09-12T00:57:24Z",
+          "completed_at": "2026-09-12T01:02:30Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "assert-shard-coverage",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307884/job/103470112449",
+          "started_at": "2026-09-12T00:57:25Z",
+          "completed_at": "2026-09-12T00:57:35Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "gofmt, vet, build, test",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307741/job/103470112434",
+          "started_at": "2026-09-12T00:57:24Z",
+          "completed_at": "2026-09-12T00:57:46Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "secret-scan",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307693/job/103470112433",
+          "started_at": "2026-09-12T00:57:25Z",
+          "completed_at": "2026-09-12T00:57:44Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "test",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307790/job/103470112380",
+          "started_at": "2026-09-12T00:57:24Z",
+          "completed_at": "2026-09-12T01:00:48Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "budget-ratchet",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307693/job/103470112362",
+          "started_at": "2026-09-12T00:57:24Z",
+          "completed_at": "2026-09-12T00:57:35Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "code-quality",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307807/job/103470112358",
+          "started_at": "2026-09-12T00:57:24Z",
+          "completed_at": "2026-09-12T01:00:38Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Detect changed e2e tests",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307746/job/103470112354",
+          "started_at": "2026-09-12T00:57:24Z",
+          "completed_at": "2026-09-12T00:57:32Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "osv-scan",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307816/job/103470112339",
+          "started_at": "2026-09-12T00:57:24Z",
+          "completed_at": "2026-09-12T00:57:36Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "frontend-lint",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307801/job/103470112286",
+          "started_at": "2026-09-12T00:57:24Z",
+          "completed_at": "2026-09-12T00:59:15Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "benchmarks",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307805/job/103470112281",
+          "started_at": "2026-09-12T00:57:26Z",
+          "completed_at": "2026-09-12T01:00:06Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "unit-test",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307778/job/103470112268",
+          "started_at": "2026-09-12T00:57:24Z",
+          "completed_at": "2026-09-12T00:57:39Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "schema-migration",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307707/job/103470112266",
+          "started_at": "2026-09-12T00:57:24Z",
+          "completed_at": "2026-09-12T01:02:39Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "proxy-behavior",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307707/job/103470112235",
+          "started_at": "2026-09-12T00:57:24Z",
+          "completed_at": "2026-09-12T01:01:47Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "python-310-import-smoke",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307807/job/103470112217",
+          "started_at": "2026-09-12T00:57:24Z",
+          "completed_at": "2026-09-12T00:59:49Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "ai-gateway release image",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307771/job/103470112203",
+          "started_at": "2026-09-12T00:57:24Z",
+          "completed_at": "2026-09-12T01:03:47Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "documentation",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307727/job/103470112154",
+          "started_at": "2026-09-12T00:57:36Z",
+          "completed_at": "2026-09-12T00:59:21Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "zizmor",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307774/job/103470112138",
+          "started_at": "2026-09-12T00:57:24Z",
+          "completed_at": "2026-09-12T00:57:43Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "proxy-security",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307707/job/103470112117",
+          "started_at": "2026-09-12T00:57:25Z",
+          "completed_at": "2026-09-12T01:00:43Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Validate PR title",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307794/job/103470112071",
+          "started_at": "2026-09-12T00:57:24Z",
+          "completed_at": "2026-09-12T00:58:03Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "assert-ci-coverage",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307758/job/103470112053",
+          "started_at": "2026-09-12T00:57:24Z",
+          "completed_at": "2026-09-12T00:58:08Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "semgrep",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307754/job/103470112016",
+          "started_at": "2026-09-12T00:57:24Z",
+          "completed_at": "2026-09-12T00:58:03Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "build-ui",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663307694/job/103470111917",
+          "started_at": "2026-09-12T00:57:23Z",
+          "completed_at": "2026-09-12T00:59:29Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "cost-map-guard",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663306576/job/103470109535",
+          "started_at": "2026-09-12T00:57:23Z",
+          "completed_at": "2026-09-12T00:59:28Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "ai-gateway release image",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663305271/job/103470105927",
+          "started_at": "2026-09-12T00:57:21Z",
+          "completed_at": "2026-09-12T01:03:48Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "rust-test",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663305234/job/103470105886",
+          "started_at": "2026-09-12T00:57:21Z",
+          "completed_at": "2026-09-12T01:01:16Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "rust-lint",
+          "conclusion": "success",
+          "head_sha": "0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34663305234/job/103470105757",
+          "started_at": "2026-09-12T00:57:22Z",
+          "completed_at": "2026-09-12T00:57:54Z",
+          "completed_before_merge": true
+        }
+      ]
+    },
+    {
+      "case_id": "L2",
+      "repo": "BerriAI/litellm",
+      "pr": 40841,
+      "title": "perf(proxy): one MGET and one pipeline for post-call spend counters, no team/user/org refetch on the response path",
+      "url": "https://github.com/BerriAI/litellm/pull/40841",
+      "ai_evidence_level": "A",
+      "ai_evidence_url": "https://github.com/BerriAI/litellm/pull/40841#issuecomment-5644537226",
+      "main_or_comparison": "main",
+      "created_at": "2026-09-12T07:44:40Z",
+      "merged_at": "2026-09-12T16:05:51Z",
+      "closed_at": "2026-09-12T16:05:51Z",
+      "status": "merged",
+      "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+      "merge_sha": "1c61c2606e36061db4fce10f7bb94745d76bc84f",
+      "merged_by": "yassin-berriai",
+      "changed_files": 21,
+      "additions": 1368,
+      "deletions": 157,
+      "counts": {
+        "comments": 17,
+        "reviews": 8,
+        "review-comments": 2,
+        "commits": 20
+      },
+      "checks_total_reported": 86,
+      "checks_rows_captured": 86,
+      "checks_pagination_complete": true,
+      "check_conclusions": {
+        "success": 85,
+        "skipped": 1
+      },
+      "checks": [
+        {
+          "name": "misc / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745975/job/103581143350",
+          "started_at": "2026-09-12T16:05:51Z",
+          "completed_at": "2026-09-12T16:06:03Z",
+          "completed_before_merge": false
+        },
+        {
+          "name": "All Other Providers / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745975/job/103580811120",
+          "started_at": "2026-09-12T16:03:25Z",
+          "completed_at": "2026-09-12T16:03:35Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "proxy-infra / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745975/job/103580704155",
+          "started_at": "2026-09-12T16:02:40Z",
+          "completed_at": "2026-09-12T16:02:54Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "proxy-endpoints / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745975/job/103580662377",
+          "started_at": "2026-09-12T16:02:19Z",
+          "completed_at": "2026-09-12T16:02:29Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "enterprise-package / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745975/job/103580569940",
+          "started_at": "2026-09-12T16:01:41Z",
+          "completed_at": "2026-09-12T16:01:54Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "integrations / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745975/job/103580497212",
+          "started_at": "2026-09-12T16:01:08Z",
+          "completed_at": "2026-09-12T16:01:20Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "proxy-auth / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745975/job/103580488933",
+          "started_at": "2026-09-12T16:01:05Z",
+          "completed_at": "2026-09-12T16:01:19Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "auth-checks / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745885/job/103580464008",
+          "started_at": "2026-09-12T16:00:55Z",
+          "completed_at": "2026-09-12T16:01:04Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "enterprise-routing / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745975/job/103580448648",
+          "started_at": "2026-09-12T16:00:50Z",
+          "completed_at": "2026-09-12T16:01:04Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "core-utils / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745975/job/103580432558",
+          "started_at": "2026-09-12T16:00:44Z",
+          "completed_at": "2026-09-12T16:00:55Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "db-and-spend / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745885/job/103580361974",
+          "started_at": "2026-09-12T16:00:15Z",
+          "completed_at": "2026-09-12T16:00:29Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Vertex AI / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745975/job/103580333954",
+          "started_at": "2026-09-12T16:00:03Z",
+          "completed_at": "2026-09-12T16:00:14Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "logging-misc / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745885/job/103580306901",
+          "started_at": "2026-09-12T15:59:50Z",
+          "completed_at": "2026-09-12T16:00:00Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "proxy-utils / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745885/job/103580298720",
+          "started_at": "2026-09-12T15:59:46Z",
+          "completed_at": "2026-09-12T15:59:57Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "proxy-server-core / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745885/job/103580297860",
+          "started_at": "2026-09-12T15:59:45Z",
+          "completed_at": "2026-09-12T15:59:59Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "responses-caching-types / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745975/job/103580292882",
+          "started_at": "2026-09-12T15:59:42Z",
+          "completed_at": "2026-09-12T15:59:56Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "endpoints-and-responses / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745885/job/103580286944",
+          "started_at": "2026-09-12T15:59:40Z",
+          "completed_at": "2026-09-12T15:59:49Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "jwt-and-keys / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745885/job/103580276776",
+          "started_at": "2026-09-12T15:59:34Z",
+          "completed_at": "2026-09-12T15:59:48Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "guardrails-hooks / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745885/job/103580276037",
+          "started_at": "2026-09-12T15:59:34Z",
+          "completed_at": "2026-09-12T15:59:47Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "proxy-runtime / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745885/job/103580272999",
+          "started_at": "2026-09-12T15:59:32Z",
+          "completed_at": "2026-09-12T15:59:40Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "budgets / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745885/job/103580265317",
+          "started_at": "2026-09-12T15:59:28Z",
+          "completed_at": "2026-09-12T15:59:37Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "proxy-server / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745975/job/103580252495",
+          "started_at": "2026-09-12T15:59:22Z",
+          "completed_at": "2026-09-12T15:59:36Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "key-generation / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745885/job/103580237599",
+          "started_at": "2026-09-12T15:59:14Z",
+          "completed_at": "2026-09-12T15:59:25Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "custom-logging / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745885/job/103580218319",
+          "started_at": "2026-09-12T15:59:06Z",
+          "completed_at": "2026-09-12T15:59:16Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Validate PR title",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703839732/job/103580203318",
+          "started_at": "2026-09-12T15:58:58Z",
+          "completed_at": "2026-09-12T15:59:04Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "caching-local / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745975/job/103580185903",
+          "started_at": "2026-09-12T15:58:49Z",
+          "completed_at": "2026-09-12T15:58:59Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "CodSpeed Performance Analysis",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/runs/103580177379",
+          "started_at": "2026-09-12T15:58:42Z",
+          "completed_at": "2026-09-12T15:58:42Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Cursor Bugbot",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/runs/103580164955",
+          "started_at": "2026-09-12T15:58:36Z",
+          "completed_at": "2026-09-12T16:06:52Z",
+          "completed_before_merge": false
+        },
+        {
+          "name": "proxy-extras / Upload coverage to Codecov",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745975/job/103580152460",
+          "started_at": "2026-09-12T15:58:33Z",
+          "completed_at": "2026-09-12T15:58:47Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Validate PR title",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703793574/job/103580072556",
+          "started_at": "2026-09-12T15:57:53Z",
+          "completed_at": "2026-09-12T15:57:57Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "custom-logging / Run tests",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745885/job/103579970926",
+          "started_at": "2026-09-12T15:57:05Z",
+          "completed_at": "2026-09-12T15:59:03Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "endpoints-and-responses / Run tests",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745885/job/103579970912",
+          "started_at": "2026-09-12T15:57:06Z",
+          "completed_at": "2026-09-12T15:59:36Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "guardrails-hooks / Run tests",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745885/job/103579970909",
+          "started_at": "2026-09-12T15:57:06Z",
+          "completed_at": "2026-09-12T15:59:30Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "proxy-utils / Run tests",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745885/job/103579970908",
+          "started_at": "2026-09-12T15:57:06Z",
+          "completed_at": "2026-09-12T15:59:42Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "budgets / Run tests",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745885/job/103579970892",
+          "started_at": "2026-09-12T15:57:05Z",
+          "completed_at": "2026-09-12T15:59:25Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "proxy-runtime / Run tests",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745885/job/103579970885",
+          "started_at": "2026-09-12T15:57:05Z",
+          "completed_at": "2026-09-12T15:59:29Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "db-and-spend / Run tests",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745885/job/103579970882",
+          "started_at": "2026-09-12T15:57:05Z",
+          "completed_at": "2026-09-12T16:00:12Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "key-generation / Run tests",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745885/job/103579970880",
+          "started_at": "2026-09-12T15:57:06Z",
+          "completed_at": "2026-09-12T15:59:11Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "logging-misc / Run tests",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745885/job/103579970859",
+          "started_at": "2026-09-12T15:57:06Z",
+          "completed_at": "2026-09-12T15:59:46Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "auth-checks / Run tests",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745885/job/103579970858",
+          "started_at": "2026-09-12T15:57:05Z",
+          "completed_at": "2026-09-12T16:00:52Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "proxy-server-core / Run tests",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745885/job/103579970833",
+          "started_at": "2026-09-12T15:57:05Z",
+          "completed_at": "2026-09-12T15:59:42Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "jwt-and-keys / Run tests",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745885/job/103579970824",
+          "started_at": "2026-09-12T15:57:05Z",
+          "completed_at": "2026-09-12T15:59:31Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Run changed e2e tests against the stage-mirror stack",
+          "conclusion": "skipped",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745610/job/103579966828",
+          "started_at": "2026-09-12T15:57:01Z",
+          "completed_at": "2026-09-12T15:57:00Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "e2e-changed-tests",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745610/job/103579966430",
+          "started_at": "2026-09-12T15:57:03Z",
+          "completed_at": "2026-09-12T15:57:05Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "enterprise-routing / Run tests",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745975/job/103579942829",
+          "started_at": "2026-09-12T15:56:52Z",
+          "completed_at": "2026-09-12T16:00:46Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Vertex AI / Run tests",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745975/job/103579942811",
+          "started_at": "2026-09-12T15:56:52Z",
+          "completed_at": "2026-09-12T16:00:00Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "responses-caching-types / Run tests",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745975/job/103579942784",
+          "started_at": "2026-09-12T15:56:52Z",
+          "completed_at": "2026-09-12T15:59:39Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "proxy-server / Run tests",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745975/job/103579942713",
+          "started_at": "2026-09-12T15:56:53Z",
+          "completed_at": "2026-09-12T15:59:19Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "proxy-auth / Run tests",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745975/job/103579942694",
+          "started_at": "2026-09-12T15:56:52Z",
+          "completed_at": "2026-09-12T16:01:02Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "proxy-endpoints / Run tests",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745975/job/103579942676",
+          "started_at": "2026-09-12T15:56:53Z",
+          "completed_at": "2026-09-12T16:02:16Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "proxy-infra / Run tests",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745975/job/103579942636",
+          "started_at": "2026-09-12T15:56:52Z",
+          "completed_at": "2026-09-12T16:02:36Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "misc / Run tests",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745975/job/103579942632",
+          "started_at": "2026-09-12T15:56:52Z",
+          "completed_at": "2026-09-12T16:05:48Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "proxy-extras / Run tests",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745975/job/103579942621",
+          "started_at": "2026-09-12T15:56:52Z",
+          "completed_at": "2026-09-12T15:58:30Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "integrations / Run tests",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745975/job/103579942618",
+          "started_at": "2026-09-12T15:56:52Z",
+          "completed_at": "2026-09-12T16:01:05Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "enterprise-package / Run tests",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745975/job/103579942606",
+          "started_at": "2026-09-12T15:56:52Z",
+          "completed_at": "2026-09-12T16:01:38Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "All Other Providers / Run tests",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745975/job/103579942593",
+          "started_at": "2026-09-12T15:56:53Z",
+          "completed_at": "2026-09-12T16:03:22Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "core-utils / Run tests",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745975/job/103579942588",
+          "started_at": "2026-09-12T15:56:52Z",
+          "completed_at": "2026-09-12T16:00:40Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "caching-local / Run tests",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745975/job/103579942511",
+          "started_at": "2026-09-12T15:56:52Z",
+          "completed_at": "2026-09-12T15:58:46Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Verify schema.d.ts matches the proxy OpenAPI spec",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703746111/job/103579942485",
+          "started_at": "2026-09-12T15:56:52Z",
+          "completed_at": "2026-09-12T15:58:57Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "assert-shard-coverage",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745885/job/103579941826",
+          "started_at": "2026-09-12T15:56:52Z",
+          "completed_at": "2026-09-12T15:57:02Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "proxy-behavior",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745810/job/103579941784",
+          "started_at": "2026-09-12T15:56:52Z",
+          "completed_at": "2026-09-12T16:00:24Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "proxy-security",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745810/job/103579941759",
+          "started_at": "2026-09-12T15:56:51Z",
+          "completed_at": "2026-09-12T15:59:52Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Validate PR title",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745815/job/103579941722",
+          "started_at": "2026-09-12T15:56:52Z",
+          "completed_at": "2026-09-12T15:56:55Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "semgrep",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745796/job/103579941716",
+          "started_at": "2026-09-12T15:56:52Z",
+          "completed_at": "2026-09-12T15:57:34Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "test",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745807/job/103579941695",
+          "started_at": "2026-09-12T15:56:52Z",
+          "completed_at": "2026-09-12T15:59:20Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "schema-migration",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745810/job/103579941658",
+          "started_at": "2026-09-12T15:56:52Z",
+          "completed_at": "2026-09-12T16:01:42Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "ai-gateway release image",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745728/job/103579941624",
+          "started_at": "2026-09-12T15:56:52Z",
+          "completed_at": "2026-09-12T16:04:11Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "documentation",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745741/job/103579941534",
+          "started_at": "2026-09-12T15:56:51Z",
+          "completed_at": "2026-09-12T15:58:15Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "build-ui",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745766/job/103579941494",
+          "started_at": "2026-09-12T15:56:52Z",
+          "completed_at": "2026-09-12T15:57:02Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Provider endpoints vs proxy OpenAPI schema",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745629/job/103579941480",
+          "started_at": "2026-09-12T15:56:52Z",
+          "completed_at": "2026-09-12T15:58:34Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "gofmt, vet, build, test",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745629/job/103579941404",
+          "started_at": "2026-09-12T15:56:52Z",
+          "completed_at": "2026-09-12T15:57:56Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "osv-scan",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745730/job/103579941386",
+          "started_at": "2026-09-12T15:56:52Z",
+          "completed_at": "2026-09-12T15:57:03Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "frontend-lint",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745665/job/103579941376",
+          "started_at": "2026-09-12T15:56:51Z",
+          "completed_at": "2026-09-12T15:57:02Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "secret-scan",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745638/job/103579941371",
+          "started_at": "2026-09-12T15:56:52Z",
+          "completed_at": "2026-09-12T15:57:09Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "code-quality",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745597/job/103579941365",
+          "started_at": "2026-09-12T15:56:52Z",
+          "completed_at": "2026-09-12T16:00:15Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "budget-ratchet",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745638/job/103579941354",
+          "started_at": "2026-09-12T15:56:52Z",
+          "completed_at": "2026-09-12T15:57:01Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "zizmor",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745643/job/103579941335",
+          "started_at": "2026-09-12T15:56:52Z",
+          "completed_at": "2026-09-12T15:57:15Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Detect changed e2e tests",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745610/job/103579941315",
+          "started_at": "2026-09-12T15:56:52Z",
+          "completed_at": "2026-09-12T15:57:00Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "python-310-import-smoke",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745597/job/103579941292",
+          "started_at": "2026-09-12T15:56:52Z",
+          "completed_at": "2026-09-12T15:59:26Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "lint",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745638/job/103579941257",
+          "started_at": "2026-09-12T15:56:52Z",
+          "completed_at": "2026-09-12T16:01:47Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "unit-test",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745632/job/103579941233",
+          "started_at": "2026-09-12T15:56:52Z",
+          "completed_at": "2026-09-12T15:57:07Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "assert-ci-coverage",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745607/job/103579941223",
+          "started_at": "2026-09-12T15:56:52Z",
+          "completed_at": "2026-09-12T15:57:39Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "benchmarks",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745534/job/103579941039",
+          "started_at": "2026-09-12T15:56:51Z",
+          "completed_at": "2026-09-12T15:58:41Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "ui-unit-tests",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703745513/job/103579940992",
+          "started_at": "2026-09-12T15:56:53Z",
+          "completed_at": "2026-09-12T15:57:04Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "cost-map-guard",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703743694/job/103579936965",
+          "started_at": "2026-09-12T15:56:49Z",
+          "completed_at": "2026-09-12T15:58:31Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "ai-gateway release image",
+          "conclusion": "success",
+          "head_sha": "b4f81a726269cc1248638007667858ba76768f28",
+          "url": "https://github.com/BerriAI/litellm/actions/runs/34703742365/job/103579933543",
+          "started_at": "2026-09-12T15:56:48Z",
+          "completed_at": "2026-09-12T16:04:12Z",
+          "completed_before_merge": true
+        }
+      ]
+    },
+    {
+      "case_id": "W1",
+      "repo": "anomalyco/opencode",
+      "pr": 47286,
+      "title": "fix(app): align desktop agent and model switching",
+      "url": "https://github.com/anomalyco/opencode/pull/47286",
+      "ai_evidence_level": "C",
+      "ai_evidence_url": "https://github.com/anomalyco/opencode/pull/47286",
+      "main_or_comparison": "comparison",
+      "created_at": "2026-09-04T13:03:21Z",
+      "merged_at": "2026-09-08T10:16:08Z",
+      "closed_at": "2026-09-08T10:16:08Z",
+      "status": "merged",
+      "head_sha": "d0fe0c2e97253b9488d96b2f4e6cfcf9e635266c",
+      "merge_sha": "f9bc2233ddcc11503a0804b317401bc221ef0e7f",
+      "merged_by": "Brendonovich",
+      "changed_files": 21,
+      "additions": 978,
+      "deletions": 237,
+      "counts": {
+        "comments": 1,
+        "reviews": 0,
+        "review-comments": 0,
+        "commits": 4
+      },
+      "checks_total_reported": 14,
+      "checks_rows_captured": 14,
+      "checks_pagination_complete": true,
+      "check_conclusions": {
+        "success": 14
+      },
+      "checks": [
+        {
+          "name": "check-standards",
+          "conclusion": "success",
+          "head_sha": "d0fe0c2e97253b9488d96b2f4e6cfcf9e635266c",
+          "url": "https://github.com/anomalyco/opencode/actions/runs/34198654992/job/101972131397",
+          "started_at": "2026-09-08T07:18:14Z",
+          "completed_at": "2026-09-08T07:18:18Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "check-compliance",
+          "conclusion": "success",
+          "head_sha": "d0fe0c2e97253b9488d96b2f4e6cfcf9e635266c",
+          "url": "https://github.com/anomalyco/opencode/actions/runs/34198654992/job/101972131110",
+          "started_at": "2026-09-08T07:18:14Z",
+          "completed_at": "2026-09-08T07:18:17Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "check-compliance",
+          "conclusion": "success",
+          "head_sha": "d0fe0c2e97253b9488d96b2f4e6cfcf9e635266c",
+          "url": "https://github.com/anomalyco/opencode/actions/runs/34198584436/job/101971898102",
+          "started_at": "2026-09-08T07:17:21Z",
+          "completed_at": "2026-09-08T07:17:26Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "check-standards",
+          "conclusion": "success",
+          "head_sha": "d0fe0c2e97253b9488d96b2f4e6cfcf9e635266c",
+          "url": "https://github.com/anomalyco/opencode/actions/runs/34198584436/job/101971897903",
+          "started_at": "2026-09-08T07:17:21Z",
+          "completed_at": "2026-09-08T07:17:25Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "check-standards",
+          "conclusion": "success",
+          "head_sha": "d0fe0c2e97253b9488d96b2f4e6cfcf9e635266c",
+          "url": "https://github.com/anomalyco/opencode/actions/runs/34196204393/job/101964365253",
+          "started_at": "2026-09-08T06:47:08Z",
+          "completed_at": "2026-09-08T06:47:12Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "check-compliance",
+          "conclusion": "success",
+          "head_sha": "d0fe0c2e97253b9488d96b2f4e6cfcf9e635266c",
+          "url": "https://github.com/anomalyco/opencode/actions/runs/34196204393/job/101964365141",
+          "started_at": "2026-09-08T06:47:08Z",
+          "completed_at": "2026-09-08T06:47:10Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "e2e (linux)",
+          "conclusion": "success",
+          "head_sha": "d0fe0c2e97253b9488d96b2f4e6cfcf9e635266c",
+          "url": "https://github.com/anomalyco/opencode/actions/runs/34195339626/job/101961779986",
+          "started_at": "2026-09-08T06:36:00Z",
+          "completed_at": "2026-09-08T06:40:18Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "e2e (windows)",
+          "conclusion": "success",
+          "head_sha": "d0fe0c2e97253b9488d96b2f4e6cfcf9e635266c",
+          "url": "https://github.com/anomalyco/opencode/actions/runs/34195339626/job/101961779980",
+          "started_at": "2026-09-08T06:38:26Z",
+          "completed_at": "2026-09-08T06:46:17Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "unit (linux)",
+          "conclusion": "success",
+          "head_sha": "d0fe0c2e97253b9488d96b2f4e6cfcf9e635266c",
+          "url": "https://github.com/anomalyco/opencode/actions/runs/34195339626/job/101961705388",
+          "started_at": "2026-09-08T06:35:40Z",
+          "completed_at": "2026-09-08T06:38:48Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "affected packages",
+          "conclusion": "success",
+          "head_sha": "d0fe0c2e97253b9488d96b2f4e6cfcf9e635266c",
+          "url": "https://github.com/anomalyco/opencode/actions/runs/34195339626/job/101961705351",
+          "started_at": "2026-09-08T06:35:40Z",
+          "completed_at": "2026-09-08T06:35:53Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "unit (windows)",
+          "conclusion": "success",
+          "head_sha": "d0fe0c2e97253b9488d96b2f4e6cfcf9e635266c",
+          "url": "https://github.com/anomalyco/opencode/actions/runs/34195339626/job/101961705133",
+          "started_at": "2026-09-08T06:36:05Z",
+          "completed_at": "2026-09-08T06:42:03Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "typecheck",
+          "conclusion": "success",
+          "head_sha": "d0fe0c2e97253b9488d96b2f4e6cfcf9e635266c",
+          "url": "https://github.com/anomalyco/opencode/actions/runs/34195339612/job/101961705012",
+          "started_at": "2026-09-08T06:35:40Z",
+          "completed_at": "2026-09-08T06:36:41Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "check-compliance",
+          "conclusion": "success",
+          "head_sha": "d0fe0c2e97253b9488d96b2f4e6cfcf9e635266c",
+          "url": "https://github.com/anomalyco/opencode/actions/runs/34195336676/job/101961695758",
+          "started_at": "2026-09-08T06:35:33Z",
+          "completed_at": "2026-09-08T06:35:35Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "check-standards",
+          "conclusion": "success",
+          "head_sha": "d0fe0c2e97253b9488d96b2f4e6cfcf9e635266c",
+          "url": "https://github.com/anomalyco/opencode/actions/runs/34195336676/job/101961695601",
+          "started_at": "2026-09-08T06:35:32Z",
+          "completed_at": "2026-09-08T06:35:35Z",
+          "completed_before_merge": true
+        }
+      ]
+    },
+    {
+      "case_id": "W2",
+      "repo": "anomalyco/opencode",
+      "pr": 47455,
+      "title": "fix(app): link background subagents to their sessions",
+      "url": "https://github.com/anomalyco/opencode/pull/47455",
+      "ai_evidence_level": "C",
+      "ai_evidence_url": "https://github.com/anomalyco/opencode/pull/47455",
+      "main_or_comparison": "comparison",
+      "created_at": "2026-09-05T07:43:09Z",
+      "merged_at": "2026-09-09T01:39:23Z",
+      "closed_at": "2026-09-09T01:39:23Z",
+      "status": "merged",
+      "head_sha": "99a101c2d67da0893964fdb37c7cc07e2b15870f",
+      "merge_sha": "f1ce69d2ceae4ed7e39c49210ae9264cbf86ffec",
+      "merged_by": "Brendonovich",
+      "changed_files": 4,
+      "additions": 194,
+      "deletions": 21,
+      "counts": {
+        "comments": 0,
+        "reviews": 0,
+        "review-comments": 0,
+        "commits": 2
+      },
+      "checks_total_reported": 10,
+      "checks_rows_captured": 10,
+      "checks_pagination_complete": true,
+      "check_conclusions": {
+        "success": 10
+      },
+      "checks": [
+        {
+          "name": "check-compliance",
+          "conclusion": "success",
+          "head_sha": "99a101c2d67da0893964fdb37c7cc07e2b15870f",
+          "url": "https://github.com/anomalyco/opencode/actions/runs/34219525449/job/102039100531",
+          "started_at": "2026-09-08T11:13:17Z",
+          "completed_at": "2026-09-08T11:13:22Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "check-standards",
+          "conclusion": "success",
+          "head_sha": "99a101c2d67da0893964fdb37c7cc07e2b15870f",
+          "url": "https://github.com/anomalyco/opencode/actions/runs/34219525449/job/102039100217",
+          "started_at": "2026-09-08T11:13:12Z",
+          "completed_at": "2026-09-08T11:13:16Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "e2e (linux)",
+          "conclusion": "success",
+          "head_sha": "99a101c2d67da0893964fdb37c7cc07e2b15870f",
+          "url": "https://github.com/anomalyco/opencode/actions/runs/34219424387/job/102038875474",
+          "started_at": "2026-09-08T11:12:29Z",
+          "completed_at": "2026-09-08T11:16:55Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "e2e (windows)",
+          "conclusion": "success",
+          "head_sha": "99a101c2d67da0893964fdb37c7cc07e2b15870f",
+          "url": "https://github.com/anomalyco/opencode/actions/runs/34219424387/job/102038875375",
+          "started_at": "2026-09-08T11:12:34Z",
+          "completed_at": "2026-09-08T11:21:11Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "unit (windows)",
+          "conclusion": "success",
+          "head_sha": "99a101c2d67da0893964fdb37c7cc07e2b15870f",
+          "url": "https://github.com/anomalyco/opencode/actions/runs/34219424387/job/102038774989",
+          "started_at": "2026-09-08T11:12:13Z",
+          "completed_at": "2026-09-08T11:18:19Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "unit (linux)",
+          "conclusion": "success",
+          "head_sha": "99a101c2d67da0893964fdb37c7cc07e2b15870f",
+          "url": "https://github.com/anomalyco/opencode/actions/runs/34219424387/job/102038774895",
+          "started_at": "2026-09-08T11:12:08Z",
+          "completed_at": "2026-09-08T11:15:15Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "affected packages",
+          "conclusion": "success",
+          "head_sha": "99a101c2d67da0893964fdb37c7cc07e2b15870f",
+          "url": "https://github.com/anomalyco/opencode/actions/runs/34219424387/job/102038774670",
+          "started_at": "2026-09-08T11:12:07Z",
+          "completed_at": "2026-09-08T11:12:21Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "check-standards",
+          "conclusion": "success",
+          "head_sha": "99a101c2d67da0893964fdb37c7cc07e2b15870f",
+          "url": "https://github.com/anomalyco/opencode/actions/runs/34219424369/job/102038774378",
+          "started_at": "2026-09-08T11:12:02Z",
+          "completed_at": "2026-09-08T11:12:04Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "check-compliance",
+          "conclusion": "success",
+          "head_sha": "99a101c2d67da0893964fdb37c7cc07e2b15870f",
+          "url": "https://github.com/anomalyco/opencode/actions/runs/34219424369/job/102038774164",
+          "started_at": "2026-09-08T11:12:02Z",
+          "completed_at": "2026-09-08T11:12:04Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "typecheck",
+          "conclusion": "success",
+          "head_sha": "99a101c2d67da0893964fdb37c7cc07e2b15870f",
+          "url": "https://github.com/anomalyco/opencode/actions/runs/34219424315/job/102038773848",
+          "started_at": "2026-09-08T11:12:06Z",
+          "completed_at": "2026-09-08T11:13:06Z",
+          "completed_before_merge": true
+        }
+      ]
+    },
+    {
+      "case_id": "W3",
+      "repo": "anomalyco/opentui",
+      "pr": 1481,
+      "title": "feat(core): support PCM through the shared audio stream interface",
+      "url": "https://github.com/anomalyco/opentui/pull/1481",
+      "ai_evidence_level": "C",
+      "ai_evidence_url": "https://github.com/anomalyco/opentui/pull/1481",
+      "main_or_comparison": "comparison",
+      "created_at": "2026-09-05T23:50:29Z",
+      "merged_at": "2026-09-07T10:30:19Z",
+      "closed_at": "2026-09-07T10:30:19Z",
+      "status": "merged",
+      "head_sha": "c6f3e7c30308e18f5f5b07f2b4a12ed49d7b1b68",
+      "merge_sha": "62a7c3828947a641927a39295889b5642c069006",
+      "merged_by": "kommander",
+      "changed_files": 14,
+      "additions": 1141,
+      "deletions": 101,
+      "counts": {
+        "comments": 0,
+        "reviews": 0,
+        "review-comments": 0,
+        "commits": 5
+      },
+      "checks_total_reported": 30,
+      "checks_rows_captured": 30,
+      "checks_pagination_complete": true,
+      "check_conclusions": {
+        "success": 30
+      },
+      "checks": [
+        {
+          "name": "Core - Build and Test",
+          "conclusion": "success",
+          "head_sha": "c6f3e7c30308e18f5f5b07f2b4a12ed49d7b1b68",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/34026819466/job/101470303785",
+          "started_at": "2026-09-06T10:22:47Z",
+          "completed_at": "2026-09-06T10:22:49Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Bun 1.3 compatibility",
+          "conclusion": "success",
+          "head_sha": "c6f3e7c30308e18f5f5b07f2b4a12ed49d7b1b68",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/34026819466/job/101469674091",
+          "started_at": "2026-09-06T10:17:41Z",
+          "completed_at": "2026-09-06T10:17:52Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Test (blacksmith-8vcpu-ubuntu-2404)",
+          "conclusion": "success",
+          "head_sha": "c6f3e7c30308e18f5f5b07f2b4a12ed49d7b1b68",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/34026819466/job/101469674056",
+          "started_at": "2026-09-06T10:17:41Z",
+          "completed_at": "2026-09-06T10:20:43Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Test (blacksmith-8vcpu-windows-2025)",
+          "conclusion": "success",
+          "head_sha": "c6f3e7c30308e18f5f5b07f2b4a12ed49d7b1b68",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/34026819466/job/101469674032",
+          "started_at": "2026-09-06T10:17:57Z",
+          "completed_at": "2026-09-06T10:22:41Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Test (blacksmith-12vcpu-macos-15)",
+          "conclusion": "success",
+          "head_sha": "c6f3e7c30308e18f5f5b07f2b4a12ed49d7b1b68",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/34026819466/job/101469674011",
+          "started_at": "2026-09-06T10:17:51Z",
+          "completed_at": "2026-09-06T10:21:34Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "SSH - Build and Test",
+          "conclusion": "success",
+          "head_sha": "c6f3e7c30308e18f5f5b07f2b4a12ed49d7b1b68",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/34026819417/job/101469524770",
+          "started_at": "2026-09-06T10:16:28Z",
+          "completed_at": "2026-09-06T10:16:30Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Solid - Build and Test",
+          "conclusion": "success",
+          "head_sha": "c6f3e7c30308e18f5f5b07f2b4a12ed49d7b1b68",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/34026819499/job/101469522344",
+          "started_at": "2026-09-06T10:16:26Z",
+          "completed_at": "2026-09-06T10:16:28Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Keymap - Build and Test",
+          "conclusion": "success",
+          "head_sha": "c6f3e7c30308e18f5f5b07f2b4a12ed49d7b1b68",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/34026819443/job/101469505434",
+          "started_at": "2026-09-06T10:16:19Z",
+          "completed_at": "2026-09-06T10:16:21Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "QRCode - Build and Test",
+          "conclusion": "success",
+          "head_sha": "c6f3e7c30308e18f5f5b07f2b4a12ed49d7b1b68",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/34026819446/job/101469500702",
+          "started_at": "2026-09-06T10:16:16Z",
+          "completed_at": "2026-09-06T10:16:18Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "React - Build and Test",
+          "conclusion": "success",
+          "head_sha": "c6f3e7c30308e18f5f5b07f2b4a12ed49d7b1b68",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/34026819482/job/101469483554",
+          "started_at": "2026-09-06T10:16:09Z",
+          "completed_at": "2026-09-06T10:16:11Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Build Native Libraries",
+          "conclusion": "success",
+          "head_sha": "c6f3e7c30308e18f5f5b07f2b4a12ed49d7b1b68",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/34026819466/job/101469216031",
+          "started_at": "2026-09-06T10:14:17Z",
+          "completed_at": "2026-09-06T10:17:34Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Format and Lint",
+          "conclusion": "success",
+          "head_sha": "c6f3e7c30308e18f5f5b07f2b4a12ed49d7b1b68",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/34026819528/job/101469187341",
+          "started_at": "2026-09-06T10:13:52Z",
+          "completed_at": "2026-09-06T10:13:54Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Native Benchmark Smoke",
+          "conclusion": "success",
+          "head_sha": "c6f3e7c30308e18f5f5b07f2b4a12ed49d7b1b68",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/34026819578/job/101469153213",
+          "started_at": "2026-09-06T10:13:45Z",
+          "completed_at": "2026-09-06T10:15:28Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Test (blacksmith-8vcpu-windows-2025)",
+          "conclusion": "success",
+          "head_sha": "c6f3e7c30308e18f5f5b07f2b4a12ed49d7b1b68",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/34026819443/job/101469153142",
+          "started_at": "2026-09-06T10:13:42Z",
+          "completed_at": "2026-09-06T10:16:12Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Format Check",
+          "conclusion": "success",
+          "head_sha": "c6f3e7c30308e18f5f5b07f2b4a12ed49d7b1b68",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/34026819528/job/101469153081",
+          "started_at": "2026-09-06T10:13:35Z",
+          "completed_at": "2026-09-06T10:13:45Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Packed Consumer Smoke",
+          "conclusion": "success",
+          "head_sha": "c6f3e7c30308e18f5f5b07f2b4a12ed49d7b1b68",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/34026819499/job/101469153031",
+          "started_at": "2026-09-06T10:13:35Z",
+          "completed_at": "2026-09-06T10:15:21Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Node Source Lane",
+          "conclusion": "success",
+          "head_sha": "c6f3e7c30308e18f5f5b07f2b4a12ed49d7b1b68",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/34026819499/job/101469153019",
+          "started_at": "2026-09-06T10:13:35Z",
+          "completed_at": "2026-09-06T10:15:18Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Bun Test (blacksmith-8vcpu-windows-2025)",
+          "conclusion": "success",
+          "head_sha": "c6f3e7c30308e18f5f5b07f2b4a12ed49d7b1b68",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/34026819499/job/101469153012",
+          "started_at": "2026-09-06T10:13:42Z",
+          "completed_at": "2026-09-06T10:16:20Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Lint Check",
+          "conclusion": "success",
+          "head_sha": "c6f3e7c30308e18f5f5b07f2b4a12ed49d7b1b68",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/34026819528/job/101469152963",
+          "started_at": "2026-09-06T10:13:35Z",
+          "completed_at": "2026-09-06T10:13:43Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Bun Test (blacksmith-8vcpu-ubuntu-2404)",
+          "conclusion": "success",
+          "head_sha": "c6f3e7c30308e18f5f5b07f2b4a12ed49d7b1b68",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/34026819499/job/101469152925",
+          "started_at": "2026-09-06T10:13:35Z",
+          "completed_at": "2026-09-06T10:15:13Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Test (blacksmith-8vcpu-ubuntu-2404)",
+          "conclusion": "success",
+          "head_sha": "c6f3e7c30308e18f5f5b07f2b4a12ed49d7b1b68",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/34026819482/job/101469152920",
+          "started_at": "2026-09-06T10:13:35Z",
+          "completed_at": "2026-09-06T10:15:07Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Test (blacksmith-8vcpu-ubuntu-2404)",
+          "conclusion": "success",
+          "head_sha": "c6f3e7c30308e18f5f5b07f2b4a12ed49d7b1b68",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/34026819443/job/101469152895",
+          "started_at": "2026-09-06T10:13:35Z",
+          "completed_at": "2026-09-06T10:15:10Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Test (blacksmith-8vcpu-ubuntu-2404)",
+          "conclusion": "success",
+          "head_sha": "c6f3e7c30308e18f5f5b07f2b4a12ed49d7b1b68",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/34026819446/job/101469152877",
+          "started_at": "2026-09-06T10:13:35Z",
+          "completed_at": "2026-09-06T10:15:09Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Test (blacksmith-8vcpu-windows-2025)",
+          "conclusion": "success",
+          "head_sha": "c6f3e7c30308e18f5f5b07f2b4a12ed49d7b1b68",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/34026819482/job/101469152824",
+          "started_at": "2026-09-06T10:13:40Z",
+          "completed_at": "2026-09-06T10:16:02Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Packed Consumer Smoke",
+          "conclusion": "success",
+          "head_sha": "c6f3e7c30308e18f5f5b07f2b4a12ed49d7b1b68",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/34026819443/job/101469152819",
+          "started_at": "2026-09-06T10:13:35Z",
+          "completed_at": "2026-09-06T10:15:19Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Test (blacksmith-8vcpu-windows-2025)",
+          "conclusion": "success",
+          "head_sha": "c6f3e7c30308e18f5f5b07f2b4a12ed49d7b1b68",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/34026819446/job/101469152797",
+          "started_at": "2026-09-06T10:13:40Z",
+          "completed_at": "2026-09-06T10:16:09Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Test (blacksmith-8vcpu-windows-2025)",
+          "conclusion": "success",
+          "head_sha": "c6f3e7c30308e18f5f5b07f2b4a12ed49d7b1b68",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/34026819417/job/101469152777",
+          "started_at": "2026-09-06T10:13:40Z",
+          "completed_at": "2026-09-06T10:16:21Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Packed Node Consumer",
+          "conclusion": "success",
+          "head_sha": "c6f3e7c30308e18f5f5b07f2b4a12ed49d7b1b68",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/34026819417/job/101469152743",
+          "started_at": "2026-09-06T10:13:35Z",
+          "completed_at": "2026-09-06T10:15:18Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Test (blacksmith-12vcpu-macos-15)",
+          "conclusion": "success",
+          "head_sha": "c6f3e7c30308e18f5f5b07f2b4a12ed49d7b1b68",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/34026819417/job/101469152712",
+          "started_at": "2026-09-06T10:13:45Z",
+          "completed_at": "2026-09-06T10:15:46Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Test (blacksmith-8vcpu-ubuntu-2404)",
+          "conclusion": "success",
+          "head_sha": "c6f3e7c30308e18f5f5b07f2b4a12ed49d7b1b68",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/34026819417/job/101469152577",
+          "started_at": "2026-09-06T10:13:35Z",
+          "completed_at": "2026-09-06T10:15:30Z",
+          "completed_before_merge": true
+        }
+      ]
+    },
+    {
+      "case_id": "W4",
+      "repo": "anomalyco/opentui",
+      "pr": 1314,
+      "title": "fix(core): emit render errors",
+      "url": "https://github.com/anomalyco/opentui/pull/1314",
+      "ai_evidence_level": "C",
+      "ai_evidence_url": "https://github.com/anomalyco/opentui/pull/1314",
+      "main_or_comparison": "comparison",
+      "created_at": "2026-07-31T18:31:14Z",
+      "merged_at": "2026-08-02T22:28:57Z",
+      "closed_at": "2026-08-02T22:28:57Z",
+      "status": "merged",
+      "head_sha": "d42e6cebf3564f12a43b409e57d644d984ebb628",
+      "merge_sha": "db3137a35aed5c958194364acee3841e7ba12f91",
+      "merged_by": "kommander",
+      "changed_files": 4,
+      "additions": 154,
+      "deletions": 1,
+      "counts": {
+        "comments": 0,
+        "reviews": 0,
+        "review-comments": 0,
+        "commits": 4
+      },
+      "checks_total_reported": 29,
+      "checks_rows_captured": 29,
+      "checks_pagination_complete": true,
+      "check_conclusions": {
+        "success": 29
+      },
+      "checks": [
+        {
+          "name": "Core - Build and Test",
+          "conclusion": "success",
+          "head_sha": "d42e6cebf3564f12a43b409e57d644d984ebb628",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/30765499637/job/91543814903",
+          "started_at": "2026-08-02T20:27:50Z",
+          "completed_at": "2026-08-02T20:27:54Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "SSH - Build and Test",
+          "conclusion": "success",
+          "head_sha": "d42e6cebf3564f12a43b409e57d644d984ebb628",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/30765499662/job/91543625598",
+          "started_at": "2026-08-02T20:26:00Z",
+          "completed_at": "2026-08-02T20:26:03Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "React - Build and Test",
+          "conclusion": "success",
+          "head_sha": "d42e6cebf3564f12a43b409e57d644d984ebb628",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/30765499660/job/91543610389",
+          "started_at": "2026-08-02T20:25:51Z",
+          "completed_at": "2026-08-02T20:25:55Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "QRCode - Build and Test",
+          "conclusion": "success",
+          "head_sha": "d42e6cebf3564f12a43b409e57d644d984ebb628",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/30765499672/job/91543580649",
+          "started_at": "2026-08-02T20:25:35Z",
+          "completed_at": "2026-08-02T20:25:39Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Solid - Build and Test",
+          "conclusion": "success",
+          "head_sha": "d42e6cebf3564f12a43b409e57d644d984ebb628",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/30765499641/job/91543574151",
+          "started_at": "2026-08-02T20:25:31Z",
+          "completed_at": "2026-08-02T20:25:35Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Keymap - Build and Test",
+          "conclusion": "success",
+          "head_sha": "d42e6cebf3564f12a43b409e57d644d984ebb628",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/30765499643/job/91543544459",
+          "started_at": "2026-08-02T20:25:17Z",
+          "completed_at": "2026-08-02T20:25:21Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Test (blacksmith-8vcpu-windows-2025)",
+          "conclusion": "success",
+          "head_sha": "d42e6cebf3564f12a43b409e57d644d984ebb628",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/30765499637/job/91543522042",
+          "started_at": "2026-08-02T20:25:25Z",
+          "completed_at": "2026-08-02T20:27:42Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Test (blacksmith-8vcpu-ubuntu-2404)",
+          "conclusion": "success",
+          "head_sha": "d42e6cebf3564f12a43b409e57d644d984ebb628",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/30765499637/job/91543522040",
+          "started_at": "2026-08-02T20:25:01Z",
+          "completed_at": "2026-08-02T20:27:13Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Test (blacksmith-12vcpu-macos-15)",
+          "conclusion": "success",
+          "head_sha": "d42e6cebf3564f12a43b409e57d644d984ebb628",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/30765499637/job/91543522035",
+          "started_at": "2026-08-02T20:25:10Z",
+          "completed_at": "2026-08-02T20:27:00Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Format and Lint",
+          "conclusion": "success",
+          "head_sha": "d42e6cebf3564f12a43b409e57d644d984ebb628",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/30765499656/job/91543390229",
+          "started_at": "2026-08-02T20:23:46Z",
+          "completed_at": "2026-08-02T20:23:50Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Test (blacksmith-8vcpu-ubuntu-2404)",
+          "conclusion": "success",
+          "head_sha": "d42e6cebf3564f12a43b409e57d644d984ebb628",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/30765499672/job/91543355069",
+          "started_at": "2026-08-02T20:23:28Z",
+          "completed_at": "2026-08-02T20:24:05Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Test (blacksmith-8vcpu-windows-2025)",
+          "conclusion": "success",
+          "head_sha": "d42e6cebf3564f12a43b409e57d644d984ebb628",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/30765499662/job/91543355042",
+          "started_at": "2026-08-02T20:23:59Z",
+          "completed_at": "2026-08-02T20:25:52Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Test (blacksmith-8vcpu-windows-2025)",
+          "conclusion": "success",
+          "head_sha": "d42e6cebf3564f12a43b409e57d644d984ebb628",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/30765499672/job/91543355004",
+          "started_at": "2026-08-02T20:23:54Z",
+          "completed_at": "2026-08-02T20:25:27Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Test (blacksmith-8vcpu-ubuntu-2404)",
+          "conclusion": "success",
+          "head_sha": "d42e6cebf3564f12a43b409e57d644d984ebb628",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/30765499662/job/91543354997",
+          "started_at": "2026-08-02T20:23:28Z",
+          "completed_at": "2026-08-02T20:24:34Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Test (blacksmith-12vcpu-macos-15)",
+          "conclusion": "success",
+          "head_sha": "d42e6cebf3564f12a43b409e57d644d984ebb628",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/30765499662/job/91543354980",
+          "started_at": "2026-08-02T20:23:37Z",
+          "completed_at": "2026-08-02T20:24:54Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Native Benchmark Smoke",
+          "conclusion": "success",
+          "head_sha": "d42e6cebf3564f12a43b409e57d644d984ebb628",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/30765499673/job/91543354962",
+          "started_at": "2026-08-02T20:23:36Z",
+          "completed_at": "2026-08-02T20:24:53Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Packed Node Consumer",
+          "conclusion": "success",
+          "head_sha": "d42e6cebf3564f12a43b409e57d644d984ebb628",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/30765499662/job/91543354921",
+          "started_at": "2026-08-02T20:23:28Z",
+          "completed_at": "2026-08-02T20:24:24Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Test (blacksmith-8vcpu-ubuntu-2404)",
+          "conclusion": "success",
+          "head_sha": "d42e6cebf3564f12a43b409e57d644d984ebb628",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/30765499660/job/91543354915",
+          "started_at": "2026-08-02T20:23:29Z",
+          "completed_at": "2026-08-02T20:24:02Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Test (blacksmith-8vcpu-windows-2025)",
+          "conclusion": "success",
+          "head_sha": "d42e6cebf3564f12a43b409e57d644d984ebb628",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/30765499660/job/91543354893",
+          "started_at": "2026-08-02T20:23:51Z",
+          "completed_at": "2026-08-02T20:25:43Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Bun Test (blacksmith-8vcpu-windows-2025)",
+          "conclusion": "success",
+          "head_sha": "d42e6cebf3564f12a43b409e57d644d984ebb628",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/30765499641/job/91543354846",
+          "started_at": "2026-08-02T20:23:37Z",
+          "completed_at": "2026-08-02T20:25:23Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Node Source Lane",
+          "conclusion": "success",
+          "head_sha": "d42e6cebf3564f12a43b409e57d644d984ebb628",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/30765499641/job/91543354837",
+          "started_at": "2026-08-02T20:23:29Z",
+          "completed_at": "2026-08-02T20:24:11Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Bun Test (blacksmith-8vcpu-ubuntu-2404)",
+          "conclusion": "success",
+          "head_sha": "d42e6cebf3564f12a43b409e57d644d984ebb628",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/30765499641/job/91543354834",
+          "started_at": "2026-08-02T20:23:29Z",
+          "completed_at": "2026-08-02T20:24:13Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Packed Consumer Smoke",
+          "conclusion": "success",
+          "head_sha": "d42e6cebf3564f12a43b409e57d644d984ebb628",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/30765499641/job/91543354824",
+          "started_at": "2026-08-02T20:23:29Z",
+          "completed_at": "2026-08-02T20:24:17Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Format Check",
+          "conclusion": "success",
+          "head_sha": "d42e6cebf3564f12a43b409e57d644d984ebb628",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/30765499656/job/91543354786",
+          "started_at": "2026-08-02T20:23:29Z",
+          "completed_at": "2026-08-02T20:23:38Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Lint Check",
+          "conclusion": "success",
+          "head_sha": "d42e6cebf3564f12a43b409e57d644d984ebb628",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/30765499656/job/91543354770",
+          "started_at": "2026-08-02T20:23:28Z",
+          "completed_at": "2026-08-02T20:23:37Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Test (blacksmith-8vcpu-windows-2025)",
+          "conclusion": "success",
+          "head_sha": "d42e6cebf3564f12a43b409e57d644d984ebb628",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/30765499643/job/91543354768",
+          "started_at": "2026-08-02T20:23:34Z",
+          "completed_at": "2026-08-02T20:25:06Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Test (blacksmith-8vcpu-ubuntu-2404)",
+          "conclusion": "success",
+          "head_sha": "d42e6cebf3564f12a43b409e57d644d984ebb628",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/30765499643/job/91543354756",
+          "started_at": "2026-08-02T20:23:29Z",
+          "completed_at": "2026-08-02T20:24:06Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Packed Consumer Smoke",
+          "conclusion": "success",
+          "head_sha": "d42e6cebf3564f12a43b409e57d644d984ebb628",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/30765499643/job/91543354710",
+          "started_at": "2026-08-02T20:23:29Z",
+          "completed_at": "2026-08-02T20:24:13Z",
+          "completed_before_merge": true
+        },
+        {
+          "name": "Build Native Libraries",
+          "conclusion": "success",
+          "head_sha": "d42e6cebf3564f12a43b409e57d644d984ebb628",
+          "url": "https://github.com/anomalyco/opentui/actions/runs/30765499637/job/91543354667",
+          "started_at": "2026-08-02T20:23:33Z",
+          "completed_at": "2026-08-02T20:24:52Z",
+          "completed_before_merge": true
+        }
+      ]
+    }
+  ]
+}

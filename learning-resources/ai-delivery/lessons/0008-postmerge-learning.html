@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>บทที่ 8: เรียนจากสิ่งที่หลุดหลัง merge — ส่งงานที่ตรวจรับได้</title>
+  <link rel="stylesheet" href="../assets/course.css">
+</head>
+<body data-lesson="L08">
+  <main class="page-shell">
+    <header class="masthead">
+      <div class="brand">AI delivery lab · บทเรียนสั้น</div>
+      <div class="progress">บท <strong>8 / 8</strong> · <a href="../START-HERE.html">หน้าหลัก</a></div>
+    </header>
+
+    <article class="lesson-card">
+      <div class="lesson-header">
+        <div class="lesson-number">08</div>
+        <div>
+          <p class="eyebrow">ทักษะที่ใช้กับงานจริง</p>
+          <h1 class="lesson-title">เรียนจากสิ่งที่หลุดหลัง merge</h1>
+          <p class="lesson-subtitle">artifact ที่ติดตั้งจริงต้องถูกตรวจด้วย consumer จริง</p>
+        </div>
+      </div>
+
+      <div class="mission-strip">
+        <strong>ผลที่ฝึกได้ในบทนี้</strong>
+        คุณจะออกแบบ post-merge verification ที่ไม่หยุดแค่ build หรือ manual workaround
+      </div>
+
+      <div class="two-col">
+        <section>
+          <p>หลัง merge ให้ถามว่า artifact ที่ผู้ใช้ได้รับเหมือนสิ่งที่เรา test ไหม ถ้างานคือ installer ให้รัน installer; ถ้างานคือ migration ให้เริ่มจาก state เก่า; ถ้างานคือ hardware fix ให้ consumer อย่าง libinput อ่านค่าที่ติดตั้งจริง</p>
+<p>Omarchy #5435 ผ่านการทดสอบแบบ manual edit แต่หลัง merge packaged install path วางไฟล์ผิดที่ touchpad จึงยังไม่ทำงาน รอบแก้ #6388 จงใจวางไฟล์ .quirks ที่ผิดรูปแบบใน directory ที่ต้องการตรวจ แล้วเห็น parser ล้ม จึงยืนยันว่าระบบอ่านไฟล์นั้นจริง จากนั้นมีการตรวจบน hardware จริง โดย PR นี้ยังเปิดอยู่ ณ วันที่เก็บข้อมูล</p>
+<div class="callout"><strong>รายงานอย่างซื่อสัตย์</strong><br>แยก “path fix ได้รับการยืนยัน” ออกจาก “ทุกเครื่องมีสาเหตุเดียวกัน” และ “อาการดีขึ้นหลัง reboot” ออกจาก causality ที่พิสูจน์แล้ว</div>
+<pre>postmerge = packaged artifact
+          + real consumer
+          + stale state / non-target
+          + observed limitation</pre>
+        </section>
+        <div class="stack">
+          <aside class="source-card">
+  <span class="tag">แหล่งต้นทางหลัก</span>
+  <p><a href="https://github.com/omacom/omarchy/pull/6388#issuecomment-5321029803">Omarchy #6388 — hardware and consumer verification</a></p>
+  <p class="small">อ่านเพื่อดู: ดูการทดลองบน B9406 จริงและการแยกสิ่งที่ยืนยันได้ออกจากสมมติฐาน</p>
+</aside>
+          <aside class="callout warn">
+            <span class="tag">จำไว้</span>
+            <p>การที่อาการดีขึ้นหลังเปลี่ยน BIOS หรือหลายตัวแปรพร้อมกันยังไม่พิสูจน์ว่า patch เป็นสาเหตุ</p>
+          </aside>
+        </div>
+      </div>
+
+      <section class="quiz" data-answer="a" data-explanation="การตรวจ artifact ที่ติดตั้งจริงด้วย consumer จริงจับช่องว่างที่ manual workaround และการอ่าน diff อาจพลาด" data-hint="คิดถึงสิ่งที่ผู้ใช้ได้รับจริง และตัวโปรแกรมที่ต้องอ่านหรือใช้สิ่งนั้น" aria-labelledby="quiz-title">
+        <h3 id="quiz-title">ลองตอบก่อนดูเฉลย</h3>
+        <p>งานประเภทใดควรเป็นตัวหลักในการตรวจหลัง merge</p>
+        <div class="choice-grid">
+      <button type="button" data-option="b" aria-pressed="false">อ่าน diff ก่อน merge แล้ว</button>
+      <button type="button" data-option="c" aria-pressed="false">นับ comment หลัง merge เสร็จ</button>
+      <button type="button" data-option="a" aria-pressed="false">ทดสอบ artifact หลัง การ ติดตั้งจริง</button>
+        </div>
+        <p class="quiz-feedback" role="status" aria-live="polite">เลือกคำตอบหนึ่งข้อ</p>
+      </section>
+
+      <section class="practice" aria-labelledby="practice-title">
+        <h3 id="practice-title">ลงมือกับงานของคุณ</h3>
+        <p>เลือกงานหนึ่งชิ้นที่คุณเคย merge แล้วออกแบบ post-merge probe: artifact, consumer, stale/non-target case และ limitation</p>
+        <textarea aria-label="คำตอบแบบฝึกหัด" placeholder="เขียนคำตอบสั้น ๆ ตรงนี้…"></textarea>
+        <div class="practice-actions">
+          <button type="button" data-toggle-rubric aria-expanded="false">เปิดเกณฑ์ตรวจ</button>
+          <button type="button" data-mark-complete aria-pressed="false">ทำบทนี้เสร็จ</button>
+        </div>
+        <div class="rubric">
+          <strong>เกณฑ์ตรวจตนเอง</strong>
+          <ul>
+      <li>ตรวจ artifact เดียวกับที่ผู้ใช้จะได้รับ</li>
+      <li>มี consumer หรือเส้นทางใช้งานจริง</li>
+      <li>มี stale state หรือ non-target case</li>
+      <li>แยกผลที่สังเกตได้ออกจาก causal claim</li>
+          </ul>
+        </div>
+      </section>
+
+      <p class="teacher-note"><strong>ถามครูได้เสมอ:</strong> ถ้าคำศัพท์หรือหลักฐานชิ้นไหนยังไม่ชัด ให้ถามต่อพร้อมคัดลอกประโยคหรือ link ที่ติดขัด ครูจะช่วยแยกข้อเท็จจริงจากข้อสังเคราะห์ให้</p>
+
+      <footer class="lesson-footer">
+        <div class="nav"><a class="button-link" href="../lessons/0007-merge-decision.html">← บทก่อน</a> <a class="button-link" href="../START-HERE.html">กลับหน้าหลัก ↑</a></div>
+        <div class="nav"><a class="button-link" href="../reference/glossary.html">ศัพท์สำคัญ</a><a class="button-link" href="../reference/checklist.html">เช็กลิสต์</a></div>
+      </footer>
+    </article>
+  </main>
+  <script src="../assets/lesson.js"></script>
+</body>
+</html>
