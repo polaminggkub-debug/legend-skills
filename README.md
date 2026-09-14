@@ -5,7 +5,7 @@ Portable agent skills for Codex and Claude Code.
 | Component | Codex | Claude Code | Requirement |
 |---|---:|---:|---|
 | General skills | Yes | Yes | None |
-| Matt guided workflow router | Yes | Yes | Stable `mattpocock/skills` suite |
+| Matt workflow coordinator | Yes | Yes | Bundled Chris; optional pinned helper suite |
 | Steve Design Suite | Yes | Yes | None |
 
 ## Learning resources
@@ -25,8 +25,8 @@ Follow every compatibility, backup, ownership, and verification rule.
 ```
 
 Installing files from this repository requires no installer runtime. The same
-instruction works on Windows, macOS, and Linux. If `matt` prerequisites are
-missing, their separate upstream installation requires Node.js and `npx`.
+instruction works on Windows, macOS, and Linux. Installing Matt's optional
+upstream helper bundle requires Node.js and `npx`.
 
 General skills: `chris`, `formpress`, `margaret`, `matt`, `ship`, `steve`,
 `ui-ux-pro-max`, and `update-all`.
@@ -37,31 +37,41 @@ library with pinned source links; cases are read only when relevant. It preserve
 the explicit user-request requirement for a Full E2E run. For Codex, install one
 global copy at `~/.agents/skills/chris`; the [installation guide](INSTALL_FOR_AI.md#chris-global-installation) covers duplicate cleanup and preservation of an existing invocation preference.
 
-`matt` uses current evidence to identify the next safe workflow action and its
-approval boundary. Guided mode asks before starting an AFK-ready action;
-Autopilot must be explicitly enabled for the current request and still stops at
-scope, architecture, merge, deploy, Production, and destructive boundaries. On
-first use Matt checks for the reviewed stable skills from
-[`mattpocock/skills`](https://github.com/mattpocock/skills), asks before any
-external installation, and captures tracker/spec defaults.
+`matt` coordinates work from a broad goal or the current task state:
+inspect, choose, act, verify, and reassess. A request to build or fix authorizes
+ordinary implementation, relevant verification, and in-scope rework without
+repeated phase approvals. Advice-only requests remain advice. Material unresolved
+decisions and actions beyond existing authority still require the user's decision.
 
-On each invocation, Matt assesses the active task and the context already
-available. It consults [Context Discovery](matt/references/context-discovery.md)
-for missing or conflicting knowledge, targeted code/contract discovery, and
-handoff verification. Applicable, current context can be reused across tasks in
-the same session; a task change does not require a session reset or a full repository read.
+Matt selects and reads Chris for acceptance, testing, and TDD; the user does not
+need to choose the testing stage. Diagnosis and whole-diff review helpers retain
+their separate roles. Customized helpers are checked for tracker/spec/test-policy
+compatibility before use. Matt does not route testing through a second `$tdd`
+policy or change a helper's configuration to fit a task.
 
-For repositories using GitHub Projects, Matt loads a
-[shared workflow reference](matt/references/github-projects.md) for readiness,
-dependencies, agent handoff, and acceptance backed by current evidence. The
-global skill reuses each repository's Project mapping and policy; installing it
-does not migrate tasks or change an existing tracker default.
+Examples:
 
-For a complete `matt` installation, tell the installing agent to read and
-follow `matt/INSTALL_FOR_AI.md`. Copying or downloading the directory alone is
-only a partial installation. The installer verifies the pinned GitHub manifest,
-downloads every missing upstream dependency after one approval, and completes
-configuration immediately or on the first `$matt` invocation.
+- “Use $matt to build Search; handle the implementation and verification.”
+- “Use $matt to inspect where this task stands and recommend the next step.”
+- “Use $chris to check whether this change meets its acceptance criteria.”
+
+[Context Discovery](matt/references/context-discovery.md) is selected for missing,
+conflicting, stale, or handed-off knowledge. Applicable context is reused; a new
+task or message does not force a session reset or a full repository read.
+[GitHub Projects](matt/references/github-projects.md) supplies readiness,
+dependencies, handoff, and evidence-backed acceptance when Projects is selected.
+Its global availability does not migrate tasks or change tracker defaults.
+
+Follow [Matt's installer](matt/INSTALL_FOR_AI.md) for installation/update. The
+core workflow installs Matt and Chris; the pinned upstream suite supplies optional
+specialized helpers. Routine work checks its selected helper rather than auditing
+all 25. Existing defaults are preserved; missing setup files do not block
+independent work, and tracker identity is resolved before writes.
+
+The [design note](docs/plans/2026-09-14-matt-chris-workflow.md) records the
+simplification, official prompting/model sources, and validation limits. These
+skills specify a workflow; they do not install an autonomous background runner
+or guarantee identical performance across models.
 
 ## Repository rename
 

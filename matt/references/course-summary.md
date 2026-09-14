@@ -1,5 +1,9 @@
 # AI Coding for Real Engineers
 
+> Historical course reference. Current execution, authorization, and routing rules
+> live in [Matt](../SKILL.md). Consult relevant sections for explanation; examples
+> of checkpoints and session resets are not additional mandatory workflow stages.
+
 ## Summary of Concepts and Workflows for Working with Coding Agents
 
 ## Executive Summary

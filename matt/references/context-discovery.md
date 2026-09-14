@@ -1,6 +1,6 @@
 # Context discovery
 
-Use this reference to resolve the knowledge needed for Matt's next transition. It applies across trackers and repositories. The workflow is a synthesis from public artifacts, not a reconstruction of hidden agent searches. Matt's task contract and authorization rules continue to govern implementation and other downstream actions.
+Use this reference to resolve the knowledge needed for Matt's next transition. It applies across trackers and repositories. The workflow is a synthesis from public artifacts, not a reconstruction of hidden agent searches. Matt's task record and authorization rules govern implementation and other downstream actions.
 
 ## Assess what is already known
 
@@ -8,7 +8,7 @@ Start from the active task, agreed outcome/scope, current workspace/revision, an
 
 Check relevance and freshness before searching. Carry forward sources that still apply; refresh the specific path, contract, or result affected by a change. Having read a reference earlier does not establish that repository facts are still current. A new session or worker should verify its handoff against the actual checkout and current task.
 
-Identify the unanswered question that changes the next action. Discoverable facts call for a targeted read or bounded investigation; an unresolved product/authority decision calls for the appropriate human decision after available evidence is inspected. Use Matt's diagnosis routes for the resulting action. Context sufficiency can justify proposing implementation; it does not establish acceptance or grant execution permission.
+Identify the unanswered question that changes the next action. Discoverable facts call for a targeted read or bounded investigation; an unresolved product/authority decision calls for the appropriate human decision after available evidence is inspected. Use Matt's diagnosis routes for the resulting action. Context sufficiency can justify implementation within existing task authorization; it does not establish acceptance or grant additional permission.
 
 ## Discover only what answers the question
 

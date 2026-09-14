@@ -1,6 +1,6 @@
 # GitHub Projects workflow
 
-Use this reference when Matt routes work tracked with repository Issues and GitHub Projects. These are reusable conventions synthesized from public work and GitHub capabilities, not a claim that every cited team follows this protocol. Matt's Guided control, repository authority policy, and runtime permissions govern actions here too.
+Use this reference when Matt routes work tracked with repository Issues and GitHub Projects. These are reusable conventions synthesized from public work and GitHub capabilities, not a claim that every cited team follows this protocol. Matt's task authorization, applicable repository policy, and runtime permissions govern actions here too.
 
 Read the section needed for the next transition: **Repository mapping**, **Ready and decomposition**, **Assignment and handoff**, **Review and acceptance**, or **Automation and recovery**. Sources explain provenance and product behavior; load them when those facts need checking.
 
@@ -48,7 +48,7 @@ Split when separate assignment, prerequisite ordering, or independent verificati
 
 Use sub-issues for containment and native dependencies for prerequisites. Parent completion requires its combined outcome and integration evidence, not only all children closed. Describe what each prerequisite must deliver; an auto-closed blocker may still leave the consumer's required contract unproven.
 
-For approved task creation, create the Issues, capture their returned identities, then add hierarchy/dependencies and Project membership. Read back every declared relationship and the intended ready frontier. Use the installed CLI/API's current supported operations. If the installed `$to-tickets` only creates Beads, name that mismatch and propose the equivalent bounded GitHub action under Matt's approval rules; preserve the Beads skill and the selected spec.
+For approved task creation, create the Issues, capture their returned identities, then add hierarchy/dependencies and Project membership. Read back every declared relationship and the intended ready frontier. Use the installed CLI/API's current supported operations. If the installed `$to-tickets` only creates Beads, name that mismatch and use an authorized equivalent bounded GitHub action under Matt's task scope; preserve the Beads skill and the selected spec.
 
 For a preparation-only request, finish the requested draft Issue payloads and dependency mapping from available facts before seeking execution approval. Leave missing facts explicit. Preparing a reviewable draft and writing it to GitHub are separate actions; a request to defer execution does not defer the authorized drafting work.
 
@@ -84,7 +84,7 @@ Before accepting, verify:
 3. Required owner/product acceptance is present and the task's delivery target is achieved.
 4. Evidence links and decisions are accessible to the next reviewer/agent.
 
-These conditions supplement Matt's transition guards. `merge-ready` is not Done for a task whose target is merge; merge is not Done for a task that also promises deployment, docs, or downstream integration. Use the target actually agreed for the task, not a universal deploy requirement. Matt's human merge/deploy boundaries still apply.
+These conditions define the tracker acceptance transition. `merge-ready` is not Done for a task whose target is merge; merge is not Done for a task that also promises deployment, docs, or downstream integration. Use the target actually agreed for the task, not a universal deploy requirement. Matt's action-specific authorization boundaries still apply.
 
 Record one identifiable acceptance receipt on the Issue. Keep it as small as the decision permits; link an existing PR checklist or report instead of retyping it. A useful shape is:
 

@@ -16,11 +16,13 @@ approval.
 
 ## 2. Install general skills
 
-Copy the requested repository directories into the platform skill destination:
+Copy the requested repository directories into the platform skill destination,
+except Chris on Codex: use the user-scoped `~/.agents/skills/chris` location
+described below, not a second copy under the Codex skill directory.
 
 | Source | Destination name |
 |---|---|
-| `chris` | `chris` |
+| `chris` | Codex: `~/.agents/skills/chris`; Claude Code: `chris` under its platform destination |
 | `formpress` | `formpress` |
 | `margaret` | `margaret` |
 | `matt` | `matt` |
@@ -58,18 +60,20 @@ for user and repository scopes and refresh behavior.
 ### Matt prerequisite and setup
 
 When `matt` is requested, read and follow [matt/INSTALL_FOR_AI.md](matt/INSTALL_FOR_AI.md).
-Installation is incomplete until its interactive bootstrap is completed or
-explicitly reported as deferred. This prerequisite may require Node.js and
-`npx`; copying Legend Skills itself does not.
+Install Matt with the bundled Chris skill for its acceptance/testing workflow.
+Preserve existing invocation policies and tracker/spec defaults. Report the core
+installation, optional upstream helper bundle, and configuration separately.
+Only helper downloads need Node.js and `npx`; routine use has no full-suite
+bootstrap gate.
 
 ## 3. Verify
 
 Read back every requested destination. Confirm that each skill has its expected
 `SKILL.md` and, when present in the source, its UI metadata and references.
 When `chris` was requested for Codex, confirm the intended global entry and
-resolve every local reference. When `matt` was requested, confirm its locked
-prerequisites are available to every selected agent and report whether global
-defaults were configured or deferred.
+resolve every local reference. When `matt` was requested, confirm Matt and Chris are available to each selected
+agent. Verify all locked helpers only when the full bundle was requested, and
+report whether global defaults were configured, preserved, or left unset.
 
 Report installed paths, backups, skipped conflicts, and any manual action still
 required. These rules apply equally on Windows, macOS, and Linux.
