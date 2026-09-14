@@ -1,0 +1,3 @@
+review_id,trigger,impact,decision,reason,fix_commit,verification,verified_revision,result,remaining_work
+R1,,,,,,,,,
+R2,,,,,,,,,

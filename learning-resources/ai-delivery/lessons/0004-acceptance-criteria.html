@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>บทที่ 4: เขียน acceptance criteria ให้จับความผิดได้ — ส่งงานที่ตรวจรับได้</title>
+  <link rel="stylesheet" href="../assets/course.css">
+</head>
+<body data-lesson="L04">
+  <main class="page-shell">
+    <header class="masthead">
+      <div class="brand">AI delivery lab · บทเรียนสั้น</div>
+      <div class="progress">บท <strong>4 / 8</strong> · <a href="../START-HERE.html">หน้าหลัก</a></div>
+    </header>
+
+    <article class="lesson-card">
+      <div class="lesson-header">
+        <div class="lesson-number">04</div>
+        <div>
+          <p class="eyebrow">ทักษะที่ใช้กับงานจริง</p>
+          <h1 class="lesson-title">เขียน acceptance criteria ให้จับความผิดได้</h1>
+          <p class="lesson-subtitle">AC เป็น requirement; test เป็นเพียงวิธีหนึ่งในการหาหลักฐาน</p>
+        </div>
+      </div>
+
+      <div class="mission-strip">
+        <strong>ผลที่ฝึกได้ในบทนี้</strong>
+        คุณจะเขียน AC แบบ Given/When/Then พร้อม boundary และ negative case
+      </div>
+
+      <div class="two-col">
+        <section>
+          <p>AC ที่ดีบอก behavior ที่รับได้ก่อนเห็น patch ใช้รูปแบบ <strong>Given → When → Then</strong> และเลือก observable ที่แยก “ถูก” กับ “ยังผิด” ได้ เช่นไม่ใช่ “reset สำเร็จ” แต่เป็น “ระหว่างงานกำลังคลายตัว DB ยังเปิด และเมื่อถึง bound จึงปิด”</p>
+<p>ใส่กรณีปกติ, boundary, failure และ non-target อย่างน้อยหนึ่งแบบ ระวัง test ที่ mirror implementation: ถ้า implementation ผิดแต่ test ยังเขียว แปลว่า assertion อ่อนเกินไป</p>
+<div class="callout rose"><strong>Dyad เป็นบทเรียนตรงจุด</strong><br>test เดิมตรวจเพียงว่า promise resolve จึงผ่านแม้ระบบไม่รอ cleanup จริง การเพิ่ม test ที่ตรวจลำดับ side effect ทำให้ AC จับ defect ได้</div>
+<pre>Given: งานยังคลายตัว
+When: consumer ขอปิด resource
+Then: resource ยังเปิดจนถึง completion หรือ bound</pre>
+        </section>
+        <div class="stack">
+          <aside class="source-card">
+  <span class="tag">แหล่งต้นทางหลัก</span>
+  <p><a href="https://github.com/dyad-sh/dyad/commit/0f10c2326d132f9d8b54ab4d51774bac65453b64">Dyad disposal regression commit</a></p>
+  <p class="small">อ่านเพื่อดู: ดูการเปลี่ยน assertion จากแค่ resolve เป็นการตรวจลำดับพฤติกรรม</p>
+</aside>
+          <aside class="callout warn">
+            <span class="tag">จำไว้</span>
+            <p>จำนวน test ที่เพิ่มไม่ใช่ acceptance criteria; ถ้าไม่บอก observable เราไม่รู้ว่าทดสอบอะไร</p>
+          </aside>
+        </div>
+      </div>
+
+      <section class="quiz" data-answer="a" data-explanation="AC ที่ดีเชื่อมสถานการณ์ การกระทำ และผลที่คาดหวัง รวมถึงผลข้างเคียงที่ต้องไม่เกิด" data-hint="คำว่ารองรับหรือใช้งานได้ยังตัดสินไม่ได้ ให้หา trigger และ assertion ที่ตรวจได้" aria-labelledby="quiz-title">
+        <h3 id="quiz-title">ลองตอบก่อนดูเฉลย</h3>
+        <p>ส่วนใดทำให้ AC จับ implementation ที่ผิดแต่ยังดูเหมือนผ่านได้</p>
+        <div class="choice-grid">
+      <button type="button" data-option="a" aria-pressed="false">observable ก่อน หลัง boundary</button>
+      <button type="button" data-option="b" aria-pressed="false">คำชม จาก reviewer ล่าสุด</button>
+      <button type="button" data-option="c" aria-pressed="false">จำนวน test ที่เพิ่ม มาก</button>
+        </div>
+        <p class="quiz-feedback" role="status" aria-live="polite">เลือกคำตอบหนึ่งข้อ</p>
+      </section>
+
+      <section class="practice" aria-labelledby="practice-title">
+        <h3 id="practice-title">ลงมือกับงานของคุณ</h3>
+        <p>เขียน AC สองข้อให้ feature เดียว: หนึ่ง happy path และหนึ่ง failure/boundary case พร้อมระบุสิ่งที่ต้องสังเกต</p>
+        <textarea aria-label="คำตอบแบบฝึกหัด" placeholder="เขียนคำตอบสั้น ๆ ตรงนี้…"></textarea>
+        <div class="practice-actions">
+          <button type="button" data-toggle-rubric aria-expanded="false">เปิดเกณฑ์ตรวจ</button>
+          <button type="button" data-mark-complete aria-pressed="false">ทำบทนี้เสร็จ</button>
+        </div>
+        <div class="rubric">
+          <strong>เกณฑ์ตรวจตนเอง</strong>
+          <ul>
+      <li>มี Given, When และ Then ครบ</li>
+      <li>Then เป็น observable ที่วัด/สังเกตได้</li>
+      <li>มีกรณีที่อยู่นอก happy path</li>
+      <li>คนอื่นอ่านแล้วเลือกวิธีตรวจได้โดยไม่ต้องเดา</li>
+          </ul>
+        </div>
+      </section>
+
+      <p class="teacher-note"><strong>ถามครูได้เสมอ:</strong> ถ้าคำศัพท์หรือหลักฐานชิ้นไหนยังไม่ชัด ให้ถามต่อพร้อมคัดลอกประโยคหรือ link ที่ติดขัด ครูจะช่วยแยกข้อเท็จจริงจากข้อสังเคราะห์ให้</p>
+
+      <footer class="lesson-footer">
+        <div class="nav"><a class="button-link" href="../lessons/0003-decomposition.html">← บทก่อน</a> <a class="button-link" href="../lessons/0005-evidence.html">บทถัดไป →</a></div>
+        <div class="nav"><a class="button-link" href="../reference/glossary.html">ศัพท์สำคัญ</a><a class="button-link" href="../reference/checklist.html">เช็กลิสต์</a></div>
+      </footer>
+    </article>
+  </main>
+  <script src="../assets/lesson.js"></script>
+</body>
+</html>

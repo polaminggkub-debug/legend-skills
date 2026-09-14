@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>บทที่ 5: จับคู่ AC กับหลักฐานที่ตรวจซ้ำได้ — ส่งงานที่ตรวจรับได้</title>
+  <link rel="stylesheet" href="../assets/course.css">
+</head>
+<body data-lesson="L05">
+  <main class="page-shell">
+    <header class="masthead">
+      <div class="brand">AI delivery lab · บทเรียนสั้น</div>
+      <div class="progress">บท <strong>5 / 8</strong> · <a href="../START-HERE.html">หน้าหลัก</a></div>
+    </header>
+
+    <article class="lesson-card">
+      <div class="lesson-header">
+        <div class="lesson-number">05</div>
+        <div>
+          <p class="eyebrow">ทักษะที่ใช้กับงานจริง</p>
+          <h1 class="lesson-title">จับคู่ AC กับหลักฐานที่ตรวจซ้ำได้</h1>
+          <p class="lesson-subtitle">อย่าเขียน ‘ทดสอบแล้ว’ ทับทั้งแผน ผลรัน และข้อจำกัด</p>
+        </div>
+      </div>
+
+      <div class="mission-strip">
+        <strong>ผลที่ฝึกได้ในบทนี้</strong>
+        คุณจะสร้าง evidence row ที่มี AC, assertion, revision, ผล และข้อจำกัด
+      </div>
+
+      <div class="two-col">
+        <section>
+          <p>แยกสี่คำนี้ให้ได้: <strong>AC</strong> คือสิ่งที่ต้องเป็นจริง, <strong>verification</strong> คือวิธีตรวจ, <strong>evidence</strong> คือผลที่เกิดขึ้นจริง, และ <strong>completion criterion</strong> คือเงื่อนไขที่ agent หยุดขั้นตอนได้</p>
+<p>evidence row ที่ใช้ได้ควรมี <code>AC → path/assertion → command or action → revision → result → limitation</code> เช่น “Responses input ถูก scan → request assertion + log metadata → run ที่ SHA นี้ → 400 + rule id → ยังไม่มี production log artifact”</p>
+<div class="definition-card"><strong>แยกชั้นหลักฐาน</strong><br>PR body อ้างว่ารัน ≠ check-run สำเร็จ ≠ reviewer ยอมรับ ≠ user journey ใช้งานได้จริง ให้เขียนเจ้าของผลและเวลาทุกครั้งที่เป็นไปได้</div>
+<p>OpenHands #8310 แสดงว่ารายงาน eval ต้องมี denominator, config และ missing cases: 169/487 กับ 180/500 ไม่ใช่ตัวเลขชุดเดียวกันที่เอามาเปรียบตรง ๆ ได้</p>
+        </section>
+        <div class="stack">
+          <aside class="source-card">
+  <span class="tag">แหล่งต้นทางหลัก</span>
+  <p><a href="https://github.com/OpenHands/OpenHands/pull/8310#pullrequestreview-2847914134">OpenHands #8310 — independent re-evaluation</a></p>
+  <p class="small">อ่านเพื่อดู: ดูการผูก benchmark กับ config, denominator และข้อจำกัดก่อนตีความผล</p>
+</aside>
+          <aside class="callout warn">
+            <span class="tag">จำไว้</span>
+            <p>check สีเขียวพิสูจน์ workflow นั้นผ่าน ไม่ได้พิสูจน์ business behavior ทุก AC</p>
+          </aside>
+        </div>
+      </div>
+
+      <section class="quiz" data-answer="a" data-explanation="หลักฐานต้องอาจหักล้าง implementation ได้ และผูกผลทดสอบกับ revision ที่ตรวจจริง" data-hint="test ผ่านยังไม่พอ หาก test ใช้คำตอบที่คำนวณจากโค้ดเดียวกับสิ่งที่กำลังตรวจ" aria-labelledby="quiz-title">
+        <h3 id="quiz-title">ลองตอบก่อนดูเฉลย</h3>
+        <p>evidence row ที่ครบควรผูกสิ่งใดเข้าด้วยกัน</p>
+        <div class="choice-grid">
+      <button type="button" data-option="b" aria-pressed="false">PR title branch name author avatar</button>
+      <button type="button" data-option="c" aria-pressed="false">green badge commit count reviewer total</button>
+      <button type="button" data-option="a" aria-pressed="false">AC assertion command revision result limitation</button>
+        </div>
+        <p class="quiz-feedback" role="status" aria-live="polite">เลือกคำตอบหนึ่งข้อ</p>
+      </section>
+
+      <section class="practice" aria-labelledby="practice-title">
+        <h3 id="practice-title">ลงมือกับงานของคุณ</h3>
+        <p>เลือก AC จากบทที่ 4 แล้วเขียน evidence row หนึ่งแถว โดยระบุ SHA ที่ตรวจ, ผลจริง และสิ่งที่ยังพิสูจน์ไม่ได้</p>
+        <textarea aria-label="คำตอบแบบฝึกหัด" placeholder="เขียนคำตอบสั้น ๆ ตรงนี้…"></textarea>
+        <div class="practice-actions">
+          <button type="button" data-toggle-rubric aria-expanded="false">เปิดเกณฑ์ตรวจ</button>
+          <button type="button" data-mark-complete aria-pressed="false">ทำบทนี้เสร็จ</button>
+        </div>
+        <div class="rubric">
+          <strong>เกณฑ์ตรวจตนเอง</strong>
+          <ul>
+      <li>มี AC และวิธีตรวจที่ตรงกัน</li>
+      <li>มี revision หรือเวลาอ้างอิง</li>
+      <li>รายงานผลจริงแยกจากคำว่า plan</li>
+      <li>มี limitation เมื่อ log หรือ environment ไม่ครบ</li>
+          </ul>
+        </div>
+      </section>
+
+      <p class="teacher-note"><strong>ถามครูได้เสมอ:</strong> ถ้าคำศัพท์หรือหลักฐานชิ้นไหนยังไม่ชัด ให้ถามต่อพร้อมคัดลอกประโยคหรือ link ที่ติดขัด ครูจะช่วยแยกข้อเท็จจริงจากข้อสังเคราะห์ให้</p>
+
+      <footer class="lesson-footer">
+        <div class="nav"><a class="button-link" href="../lessons/0004-acceptance-criteria.html">← บทก่อน</a> <a class="button-link" href="../lessons/0006-review-loop.html">บทถัดไป →</a></div>
+        <div class="nav"><a class="button-link" href="../reference/glossary.html">ศัพท์สำคัญ</a><a class="button-link" href="../reference/checklist.html">เช็กลิสต์</a></div>
+      </footer>
+    </article>
+  </main>
+  <script src="../assets/lesson.js"></script>
+</body>
+</html>

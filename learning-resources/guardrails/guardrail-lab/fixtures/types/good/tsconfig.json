@@ -1,0 +1,4 @@
+{
+  "extends": "../bad/tsconfig.json",
+  "include": ["example.ts"]
+}

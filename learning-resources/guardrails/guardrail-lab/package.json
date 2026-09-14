@@ -1,0 +1,12 @@
+{
+  "name": "guardrail-learning-lab",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=24" },
+  "scripts": { "verify": "node verify.mjs" },
+  "devDependencies": {
+    "eslint": "10.10.0",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.70.0"
+  }
+}

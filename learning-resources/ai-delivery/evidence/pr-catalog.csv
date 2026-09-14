@@ -1,0 +1,17 @@
+case_id,repo,pr,type,ai_evidence_level,ai_evidence_url,status,head_sha,merged_at,merge_sha,commits,conversation_comments,inline_comments,review_submissions
+P1,dyad-sh/dyad,4187,main,B,https://github.com/dyad-sh/dyad/pull/4187#discussion_r3717925547,merged,6e5abff6dad5355c5ebffb7c884ea54a57aacf52,2026-08-14T18:57:09Z,ba782f433205935979de8a9cc2d606944fe534a1,126,27,343,235
+P2,OpenHands/OpenHands,8310,main,A,https://github.com/OpenHands/OpenHands/issues/8304#issuecomment-2855275930,merged,bb767e8a1809f7815875d15c5ea09ffd406e710d,2025-05-17T04:37:45Z,c17b0ebfc6195fd37bea999abbc629da4335c0ad,27,39,14,15
+P3,omacom/omarchy,5435,main,B,https://github.com/omacom/omarchy/commit/e28d4955caac33ecda8bf8b50f8d0c1c90325762,merged,e28d4955caac33ecda8bf8b50f8d0c1c90325762,2026-04-26T16:31:43Z,b164549b51d790d42a725baa21fc86a34111b00f,2,6,13,10
+P3,omacom/omarchy,6093,main,B,https://github.com/omacom/omarchy/pull/6093,closed-unmerged,ac1dd5983fbc140acf3a5bf9d362910969c610ee,,,2,1,3,1
+P3,omacom/omarchy,6388,main,B,https://github.com/omacom/omarchy/pull/6388,open,85abe52784428519a7bb0a4324a6f81b7834d2b9,,,1,3,0,1
+C1,cline/cline,13968,main,B,https://github.com/cline/cline/pull/13968,merged,8b8e975b044e7691131e82d059c239893e107faa,2026-09-08T23:04:15Z,62ba65397fca8d583540319fa574a62d1ac7d498,5,2,8,7
+C2,cline/cline,13969,main,B,https://github.com/cline/cline/commit/e3b2e375c7f4e0c09cfef277ce5031c0bf8d5168,merged,7ed28e895c2db946d8a514c99fd24af5c3878d92,2026-09-09T02:45:25Z,23f2197c535f904bb4bbe17012fc81cdf3b2b8ac,11,1,8,8
+C3,RooCodeInc/Roo-Code,11409,main,B,https://github.com/RooCodeInc/Roo-Code/pull/11409,merged,984857e60fbc9786e1af46881e4b075ff9e6049b,2026-02-11T18:58:39Z,e6f0e79c389dc558338b243f6854c11c2854786f,11,1,8,9
+C4,aaif-goose/goose,11307,main,B,https://github.com/aaif-goose/goose/commit/5372cf21c4c043cb25959d08529c766012cdbd48,merged,ddf10a298497a493226908626cd45d1935ba8e90,2026-08-21T08:41:22Z,a5de37814adb1b8f7eab3046c53811d5808733fa,5,1,5,6
+O1,anomalyco/opencode,44281,main,B,https://github.com/anomalyco/opencode/commit/29dec99e6784f9277be14074b1f0c2b527c31126,merged,7183a7915464727578e3a7a459e0313d3e4f051c,2026-08-24T21:15:27Z,f8b4dd70ac26996436e259fc386917944c05f481,3,2,0,0
+L1,BerriAI/litellm,40785,main,A,https://github.com/BerriAI/litellm/pull/40785#issuecomment-5640336188,merged,0ded7b43d2f7af6be4489e183ee86ddd2ff0b1ce,2026-09-12T17:04:55Z,e4f59a953cac0543515449d8485a94e7393c2636,27,16,16,17
+L2,BerriAI/litellm,40841,main,A,https://github.com/BerriAI/litellm/pull/40841#issuecomment-5644537226,merged,b4f81a726269cc1248638007667858ba76768f28,2026-09-12T16:05:51Z,1c61c2606e36061db4fce10f7bb94745d76bc84f,20,17,2,8
+W1,anomalyco/opencode,47286,comparison,C,https://github.com/anomalyco/opencode/pull/47286,merged,d0fe0c2e97253b9488d96b2f4e6cfcf9e635266c,2026-09-08T10:16:08Z,f9bc2233ddcc11503a0804b317401bc221ef0e7f,4,1,0,0
+W2,anomalyco/opencode,47455,comparison,C,https://github.com/anomalyco/opencode/pull/47455,merged,99a101c2d67da0893964fdb37c7cc07e2b15870f,2026-09-09T01:39:23Z,f1ce69d2ceae4ed7e39c49210ae9264cbf86ffec,2,0,0,0
+W3,anomalyco/opentui,1481,comparison,C,https://github.com/anomalyco/opentui/pull/1481,merged,c6f3e7c30308e18f5f5b07f2b4a12ed49d7b1b68,2026-09-07T10:30:19Z,62a7c3828947a641927a39295889b5642c069006,5,0,0,0
+W4,anomalyco/opentui,1314,comparison,C,https://github.com/anomalyco/opentui/pull/1314,merged,d42e6cebf3564f12a43b409e57d644d984ebb628,2026-08-02T22:28:57Z,db3137a35aed5c958194364acee3841e7ba12f91,4,0,0,0

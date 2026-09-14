@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>บทที่ 6: เปลี่ยน review comment ให้เป็นลูปแก้ที่ปิดได้ — ส่งงานที่ตรวจรับได้</title>
+  <link rel="stylesheet" href="../assets/course.css">
+</head>
+<body data-lesson="L06">
+  <main class="page-shell">
+    <header class="masthead">
+      <div class="brand">AI delivery lab · บทเรียนสั้น</div>
+      <div class="progress">บท <strong>6 / 8</strong> · <a href="../START-HERE.html">หน้าหลัก</a></div>
+    </header>
+
+    <article class="lesson-card">
+      <div class="lesson-header">
+        <div class="lesson-number">06</div>
+        <div>
+          <p class="eyebrow">ทักษะที่ใช้กับงานจริง</p>
+          <h1 class="lesson-title">เปลี่ยน review comment ให้เป็นลูปแก้ที่ปิดได้</h1>
+          <p class="lesson-subtitle">finding → ตรวจความจริง → decision → patch → ตรวจซ้ำ</p>
+        </div>
+      </div>
+
+      <div class="mission-strip">
+        <strong>ผลที่ฝึกได้ในบทนี้</strong>
+        คุณจะตอบ reviewer แต่ละ finding ด้วยสถานะและหลักฐาน ไม่ใช่แค่ ‘addressed’
+      </div>
+
+      <div class="two-col">
+        <section>
+          <p>เริ่มจาก finding ที่มี <strong>trigger → behavior ที่ผิด → ผลเสีย</strong> แล้วตัดสินว่า valid, invalid หรือ deferred ถ้า valid ให้ชี้ commit และการตรวจซ้ำ ถ้า invalid ให้แสดงหลักฐานหักล้าง ถ้า deferred ให้บอก follow-up กับเหตุผลที่งานปัจจุบันยังรับได้</p>
+<p>ใน LiteLLM #40785 review ค้นพบว่า Responses <code>input</code> ไม่ถึง guardrail และ tool-call-only turn อาจ bypass policy แต่ละ finding กลายเป็น commit แยกที่มี test/behavior เพิ่ม ไม่ได้กลบด้วยคำอธิบายยาว ๆ</p>
+<p><em>ตารางตัวอย่างที่สังเคราะห์เพื่อฝึก ไม่ใช่คำคัดลอกจาก thread:</em></p><div class="table-scroll" tabindex="0" role="region" aria-label="ตารางตัวอย่าง เลื่อนแนวนอนเพื่อดูครบ"><table><thead><tr><th>Finding</th><th>Decision</th><th>Evidence</th></tr></thead><tbody><tr><td>R1: input ว่าง</td><td>valid</td><td>bridge commit + 400 assertion</td></tr><tr><td>R2: import ใน test</td><td>invalid</td><td>path และ sibling tests</td></tr><tr><td>R3: flag ยังไม่ใช้</td><td>deferred</td><td>caveat + follow-up</td></tr></tbody></table></div>
+        </section>
+        <div class="stack">
+          <aside class="source-card">
+  <span class="tag">แหล่งต้นทางหลัก</span>
+  <p><a href="https://github.com/BerriAI/litellm/pull/40785#discussion_r3993251914">LiteLLM #40785 — review finding on Responses input</a></p>
+  <p class="small">อ่านเพื่อดู: ดูตัวอย่าง finding ที่ระบุ trigger, ผลเสีย และ commit แก้ตามลำดับ</p>
+</aside>
+          <aside class="callout warn">
+            <span class="tag">จำไว้</span>
+            <p>การตอบว่าปิดแล้วโดยไม่ผูกกับ final revision เปิดช่องให้ finding ยังอยู่ใน diff ใหม่</p>
+          </aside>
+        </div>
+      </div>
+
+      <section class="quiz" data-answer="a" data-explanation="การปิด finding ต้องมีคำตัดสิน เหตุผล การเปลี่ยน และหลักฐานตรวจซ้ำ หรือเหตุผลพร้อมหลักฐานที่หักล้าง finding" data-hint="คำว่า fixed ไม่บอกว่าแก้จุดไหนหรือปัญหาหายไปอย่างไร ลองหาผลตรวจที่ reviewer ตามดูได้" aria-labelledby="quiz-title">
+        <h3 id="quiz-title">ลองตอบก่อนดูเฉลย</h3>
+        <p>ลำดับใดทำให้ review เปลี่ยนเป็น feedback loop ที่ตรวจซ้ำได้</p>
+        <div class="choice-grid">
+      <button type="button" data-option="b" aria-pressed="false">comment approval merge release</button>
+      <button type="button" data-option="a" aria-pressed="false">finding decision patch evidence</button>
+      <button type="button" data-option="c" aria-pressed="false">prompt model output tokens</button>
+        </div>
+        <p class="quiz-feedback" role="status" aria-live="polite">เลือกคำตอบหนึ่งข้อ</p>
+      </section>
+
+      <section class="practice" aria-labelledby="practice-title">
+        <h3 id="practice-title">ลงมือกับงานของคุณ</h3>
+        <p>เขียนคำตอบต่อ review finding สมมติหนึ่งข้อให้ครบ trigger, decision, code change, evidence และข้อจำกัด</p>
+        <textarea aria-label="คำตอบแบบฝึกหัด" placeholder="เขียนคำตอบสั้น ๆ ตรงนี้…"></textarea>
+        <div class="practice-actions">
+          <button type="button" data-toggle-rubric aria-expanded="false">เปิดเกณฑ์ตรวจ</button>
+          <button type="button" data-mark-complete aria-pressed="false">ทำบทนี้เสร็จ</button>
+        </div>
+        <div class="rubric">
+          <strong>เกณฑ์ตรวจตนเอง</strong>
+          <ul>
+      <li>finding มีอาการที่ reproduce หรือชี้ตำแหน่งได้</li>
+      <li>decision เป็น valid/invalid/deferred พร้อมเหตุผล</li>
+      <li>มี revision/commit ของการเปลี่ยน</li>
+      <li>บอกวิธีตรวจซ้ำและสิ่งที่ยังเหลือ</li>
+          </ul>
+        </div>
+      </section>
+
+      <p class="teacher-note"><strong>ถามครูได้เสมอ:</strong> ถ้าคำศัพท์หรือหลักฐานชิ้นไหนยังไม่ชัด ให้ถามต่อพร้อมคัดลอกประโยคหรือ link ที่ติดขัด ครูจะช่วยแยกข้อเท็จจริงจากข้อสังเคราะห์ให้</p>
+
+      <footer class="lesson-footer">
+        <div class="nav"><a class="button-link" href="../lessons/0005-evidence.html">← บทก่อน</a> <a class="button-link" href="../lessons/0007-merge-decision.html">บทถัดไป →</a></div>
+        <div class="nav"><a class="button-link" href="../reference/glossary.html">ศัพท์สำคัญ</a><a class="button-link" href="../reference/checklist.html">เช็กลิสต์</a></div>
+      </footer>
+    </article>
+  </main>
+  <script src="../assets/lesson.js"></script>
+</body>
+</html>

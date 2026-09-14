@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>บทที่ 2: เปลี่ยนคำขอกว้างให้เป็นเป้าหมายและขอบเขต — ส่งงานที่ตรวจรับได้</title>
+  <link rel="stylesheet" href="../assets/course.css">
+</head>
+<body data-lesson="L02">
+  <main class="page-shell">
+    <header class="masthead">
+      <div class="brand">AI delivery lab · บทเรียนสั้น</div>
+      <div class="progress">บท <strong>2 / 8</strong> · <a href="../START-HERE.html">หน้าหลัก</a></div>
+    </header>
+
+    <article class="lesson-card">
+      <div class="lesson-header">
+        <div class="lesson-number">02</div>
+        <div>
+          <p class="eyebrow">ทักษะที่ใช้กับงานจริง</p>
+          <h1 class="lesson-title">เปลี่ยนคำขอกว้างให้เป็นเป้าหมายและขอบเขต</h1>
+          <p class="lesson-subtitle">เริ่มจากผู้ใช้และผลที่สังเกตได้ ก่อนพูดถึงไฟล์</p>
+        </div>
+      </div>
+
+      <div class="mission-strip">
+        <strong>ผลที่ฝึกได้ในบทนี้</strong>
+        คุณจะเขียน task brief หนึ่งย่อหน้าที่บอก target, non-target และจุดหยุดได้
+      </div>
+
+      <div class="two-col">
+        <section>
+          <p>“ช่วยแก้ให้เสถียร” ยังไม่บอกว่าใครจะเห็นอะไรเมื่อเสร็จ ให้เริ่มด้วย <strong>ผู้ใช้ + สถานการณ์ + ผลที่ต้องเห็น</strong> เช่น “เมื่อผู้ใช้กดส่งคำขอซ้ำหลังเครือข่ายหลุด ระบบคืนคำขอเดิมและมี record เดียว”</p>
+<p>จากนั้นเติมขอบเขต 4 ช่อง: เส้นทางที่จะแก้, พฤติกรรมเดิมที่ต้องรักษา, สิ่งที่เลื่อนไปงานถัดไป และจุดที่ต้องขอการตัดสินใจ ถ้า target ยังไม่ชัด ให้ agent ทำ reproduction และถามก่อนขยาย public interface</p>
+<div class="callout"><strong>ตัวอย่างจาก Omarchy</strong><br>ผู้ดูแลเลือกจำกัด workaround ไว้ที่ ExpertBook เพราะยังไม่มีหลักฐานว่าเครื่อง ASUS รุ่นอื่นต้องใช้ตัวแก้เดียวกัน ขอบเขตจึงมีเหตุผลจากความเสี่ยง ไม่ใช่จำนวนไฟล์</div>
+<pre>target: ผู้ใช้กลุ่มใด + เห็นผลอะไร
+non-target: ใคร/เส้นทางใดต้องไม่เปลี่ยน
+stop: ต้องถามเมื่อเจอเงื่อนไขใด</pre>
+        </section>
+        <div class="stack">
+          <aside class="source-card">
+  <span class="tag">แหล่งต้นทางหลัก</span>
+  <p><a href="https://github.com/omacom/omarchy/issues/5423#issuecomment-4313024503">Omarchy issue #5423 — scope decision</a></p>
+  <p class="small">อ่านเพื่อดู: ดูการตัดสินใจจำกัดงานไว้เฉพาะ ExpertBook ก่อนเปิด PR</p>
+</aside>
+          <aside class="callout warn">
+            <span class="tag">จำไว้</span>
+            <p>การจำกัด scope ไม่ใช่การตัดความรับผิดชอบ ต้องบอกด้วยว่างานที่ตัดออกไปอยู่ที่ไหนและเพราะอะไร</p>
+          </aside>
+        </div>
+      </div>
+
+      <section class="quiz" data-answer="a" data-explanation="เป้าหมายที่ตรวจรับได้บอกการเปลี่ยนพฤติกรรมที่ต้องการ พร้อมขอบเขตและเงื่อนไขสำเร็จ" data-hint="ลองถามว่า reviewer จะตัดสินผ่านหรือไม่ผ่านจากผลที่สังเกตได้อย่างไร" aria-labelledby="quiz-title">
+        <h3 id="quiz-title">ลองตอบก่อนดูเฉลย</h3>
+        <p>ประโยคเริ่มต้นแบบใดช่วยให้เห็นผลลัพธ์ของงานได้เร็วที่สุด</p>
+        <div class="choice-grid">
+      <button type="button" data-option="b" aria-pressed="false">ไฟล์ จำนวน เวลา นักเขียน</button>
+      <button type="button" data-option="a" aria-pressed="false">ผู้ใช้ สถานการณ์ ผลลัพธ์ ขอบเขต</button>
+      <button type="button" data-option="c" aria-pressed="false">โมเดล ราคา รุ่น ค่าย</button>
+        </div>
+        <p class="quiz-feedback" role="status" aria-live="polite">เลือกคำตอบหนึ่งข้อ</p>
+      </section>
+
+      <section class="practice" aria-labelledby="practice-title">
+        <h3 id="practice-title">ลงมือกับงานของคุณ</h3>
+        <p>เลือกงานจริงหนึ่งชิ้นแล้วเขียน 4 บรรทัด: target user, observable outcome, non-target และเงื่อนไขที่คุณจะหยุดถามผู้ใช้</p>
+        <textarea aria-label="คำตอบแบบฝึกหัด" placeholder="เขียนคำตอบสั้น ๆ ตรงนี้…"></textarea>
+        <div class="practice-actions">
+          <button type="button" data-toggle-rubric aria-expanded="false">เปิดเกณฑ์ตรวจ</button>
+          <button type="button" data-mark-complete aria-pressed="false">ทำบทนี้เสร็จ</button>
+        </div>
+        <div class="rubric">
+          <strong>เกณฑ์ตรวจตนเอง</strong>
+          <ul>
+      <li>มีผู้ใช้หรือ actor ที่ชัด</li>
+      <li>ผลลัพธ์เป็นสิ่งที่สังเกตหรือวัดได้</li>
+      <li>ระบุกรณีนอกขอบเขตอย่างน้อยหนึ่งกรณี</li>
+      <li>มีจุดตัดสินใจที่ไม่ควรให้ AI เดาเอง</li>
+          </ul>
+        </div>
+      </section>
+
+      <p class="teacher-note"><strong>ถามครูได้เสมอ:</strong> ถ้าคำศัพท์หรือหลักฐานชิ้นไหนยังไม่ชัด ให้ถามต่อพร้อมคัดลอกประโยคหรือ link ที่ติดขัด ครูจะช่วยแยกข้อเท็จจริงจากข้อสังเคราะห์ให้</p>
+
+      <footer class="lesson-footer">
+        <div class="nav"><a class="button-link" href="../lessons/0001-ai-provenance.html">← บทก่อน</a> <a class="button-link" href="../lessons/0003-decomposition.html">บทถัดไป →</a></div>
+        <div class="nav"><a class="button-link" href="../reference/glossary.html">ศัพท์สำคัญ</a><a class="button-link" href="../reference/checklist.html">เช็กลิสต์</a></div>
+      </footer>
+    </article>
+  </main>
+  <script src="../assets/lesson.js"></script>
+</body>
+</html>

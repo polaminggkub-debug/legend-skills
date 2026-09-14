@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Checklist — จาก brief ถึง post-merge</title>
+  <link rel="stylesheet" href="../assets/course.css">
+</head>
+<body>
+  <main class="page-shell">
+    <header class="masthead">
+      <div class="brand">AI delivery lab · reference</div>
+      <div class="progress"><a href="../START-HERE.html">หน้าหลัก</a> · <a href="glossary.html">ศัพท์สำคัญ</a></div>
+    </header>
+    <section class="hero">
+      <p class="eyebrow">Reference 02</p>
+      <h1>เช็กลิสต์จาก brief ถึง post-merge</h1>
+      <p class="lede">ใช้เป็นแผ่นตรวจรับงานหนึ่งชิ้น เขียนหลักฐานหรือช่องว่างลงไป อย่าใช้เครื่องหมายถูกแทนผลรันจริง</p>
+    </section>
+    <article class="reference-card" style="margin-top:1rem">
+      <div class="table-scroll" tabindex="0" role="region" aria-label="ตารางอ้างอิง เลื่อนแนวนอนเพื่อดูครบ"><table>
+        <thead><tr><th>ช่วง</th><th>ต้องตอบ</th><th>หลักฐานที่ควรเก็บ</th><th>สถานะ/ช่องว่าง</th></tr></thead>
+        <tbody>
+          <tr><td><strong>1. Provenance</strong><br><a href="../lessons/0001-ai-provenance.html">บท 1</a></td><td>ใคร/ระบบใดสร้างหรือรีวิว contribution?</td><td>PR actor, opening comment, commit trailer, session URL</td><td>เขียน fact และข้อจำกัด</td></tr>
+          <tr><td><strong>2. Goal & scope</strong><br><a href="../lessons/0002-goal-scope.html">บท 2</a></td><td>ผู้ใช้เห็นผลอะไร? ใครอยู่นอกขอบเขต?</td><td>reproduction, target, non-target, deferred work</td><td>มีจุดหยุดถามหรือไม่?</td></tr>
+          <tr><td><strong>3. Decomposition</strong><br><a href="../lessons/0003-decomposition.html">บท 3</a></td><td>งานย่อยส่งต่อกันอย่างไร? contract ใครเป็นเจ้าของ?</td><td>owner, output, dependency, completion criterion</td><td>ชนกันตรง interface หรือไม่?</td></tr>
+          <tr><td><strong>4. AC</strong><br><a href="../lessons/0004-acceptance-criteria.html">บท 4</a></td><td>พฤติกรรมผ่าน/ไม่ผ่านสังเกตอย่างไร?</td><td>Given/When/Then, boundary, failure, negative case</td><td>สร้าง implementation ผิดที่ยังผ่านได้ไหม?</td></tr>
+          <tr><td><strong>5. Evidence</strong><br><a href="../lessons/0005-evidence.html">บท 5</a></td><td>ตรวจด้วยอะไร ที่ revision ไหน ผลเป็นอย่างไร?</td><td>AC → assertion → command → SHA/time → result → limitation</td><td>แยก claim จาก run จริง</td></tr>
+          <tr><td><strong>6. Review</strong><br><a href="../lessons/0006-review-loop.html">บท 6</a></td><td>finding แต่ละข้อ valid, invalid หรือ deferred?</td><td>trigger, decision, patch commit, rerun result, follow-up</td><td>final head ยังมี finding เก่าหรือไม่?</td></tr>
+          <tr><td><strong>7. Merge</strong><br><a href="../lessons/0007-merge-decision.html">บท 7</a></td><td>อะไรผ่านจริงบน revision ที่จะรับ?</td><td>check status, skipped/failure, approval, final diff, merge event</td><td>stale SHA หรือ missing log?</td></tr>
+          <tr><td><strong>8. Post-merge</strong><br><a href="../lessons/0008-postmerge-learning.html">บท 8</a></td><td>artifact ที่ผู้ใช้ได้รับทำงานกับ consumer จริงหรือไม่?</td><td>packaged install, migration from old state, probe, hardware/user report</td><td>แยก observation จาก causal claim</td></tr>
+        </tbody>
+      </table></div>
+      <div class="two-col">
+        <div class="callout warn">
+          <strong>คำตัดสินรับงาน</strong>
+          <p>พร้อมรับเมื่อ AC ที่จำเป็นผ่านด้วย evidence ที่ผูกกับ final revision ส่วนข้อยกเว้นต้องมีคำตัดสินจากผู้รับผิดชอบพร้อมเหตุผลและผลกระทบ การเขียนช่องว่างไว้เฉย ๆ ยังไม่ทำให้พร้อมรับ</p>
+        </div>
+        <div class="callout rose">
+          <strong>สัญญาณให้ส่งกลับ</strong>
+          <p>PR body บอกว่าผ่านแต่ไม่มี run, review ผูกกับ head เก่า, test mirror implementation, หรือ manual workaround แทน artifact ที่จะ merge</p>
+        </div>
+      </div>
+      <h3>แบบฟอร์ม evidence row</h3>
+      <pre>AC: 
+เส้นทาง/assertion: 
+คำสั่งหรือการกระทำ: 
+revision/head SHA: 
+ผลที่สังเกต: 
+ผู้รัน/เวลา: 
+ข้อจำกัดหรือ follow-up: </pre>
+      <p class="small">ตัวเลขใน PR หรือ comment เป็นข้อมูลที่ผู้เขียนรายงาน หากไม่มี log ให้เขียนว่า “author-claimed” แทนการยกระดับเป็นผลตรวจอิสระ</p>
+    </article>
+    <footer class="lesson-footer"><a class="button-link" href="glossary.html">← ศัพท์สำคัญ</a><a class="button-link" href="../START-HERE.html">กลับหน้าหลัก ↑</a></footer>
+  </main>
+</body>
+</html>

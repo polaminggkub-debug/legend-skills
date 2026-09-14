@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Glossary — ส่งงานที่ตรวจรับได้</title>
+  <link rel="stylesheet" href="../assets/course.css">
+</head>
+<body>
+  <main class="page-shell">
+    <header class="masthead">
+      <div class="brand">AI delivery lab · reference</div>
+      <div class="progress"><a href="../START-HERE.html">หน้าหลัก</a> · <a href="checklist.html">เช็กลิสต์</a></div>
+    </header>
+    <section class="hero">
+      <p class="eyebrow">Reference 01</p>
+      <h1>ศัพท์ที่ใช้ตรงกัน</h1>
+      <p class="lede">นิยามสั้นสำหรับอ่าน issue, PR, review และหลักฐานโดยไม่ใช้คำเดียวกันคนละความหมาย</p>
+    </section>
+    <article class="reference-card" style="margin-top:1rem">
+      <div class="table-scroll" tabindex="0" role="region" aria-label="ตารางอ้างอิง เลื่อนแนวนอนเพื่อดูครบ"><table>
+        <thead><tr><th>คำ</th><th>หมายถึง</th><th>คำถามตรวจ</th></tr></thead>
+        <tbody>
+          <tr id="provenance"><td><strong>AI provenance</strong></td><td>ร่องรอยที่บอกว่าใคร/ระบบใดผลิตหรือแก้ contribution เช่น bot actor, session, commit trailer</td><td>หลักฐานนี้ผูกกับ PR หรือ revision ใด และสรุปได้แค่ไหน?</td></tr>
+          <tr id="ai-review"><td><strong>AI review</strong></td><td>ความเห็นหรือรายงานจากระบบตรวจ เช่น Greptile, Cursor Bugbot, Codex หรือ Codecov</td><td>ระบบนี้ตรวจอะไร และเป็นผู้เขียน patch ด้วยหรือไม่?</td></tr>
+          <tr id="scope"><td><strong>scope</strong></td><td>ขอบเขตสิ่งที่งานรับผิดชอบ รวม target, non-target และงานที่เลื่อนไป</td><td>อะไรต้องเปลี่ยน และอะไรต้องไม่เปลี่ยน?</td></tr>
+          <tr id="non-target"><td><strong>non-target</strong></td><td>กรณี ผู้ใช้ เส้นทาง หรืออุปกรณ์ที่อยู่นอกงานและต้องรักษาพฤติกรรมเดิม</td><td>มี negative case ที่ตรวจได้หรือยัง?</td></tr>
+          <tr id="dependency"><td><strong>dependency</strong></td><td>สิ่งที่งานหนึ่งต้องได้รับจากอีกงาน เช่น contract, schema, fixture หรือ revision</td><td>ใครเป็น owner ของ contract และงานนี้เริ่มได้เมื่อใด?</td></tr>
+          <tr id="ac"><td><strong>acceptance criteria (AC)</strong></td><td>ข้อกำหนดพฤติกรรมที่รับได้ก่อนเห็น patch มักเขียนเป็น Given/When/Then</td><td>ถ้า implementation ผิด test ยังเขียวได้ไหม?</td></tr>
+          <tr id="verification"><td><strong>verification</strong></td><td>วิธีที่ใช้ตรวจ AC เช่น assertion, command, manual step, benchmark หรือ probe</td><td>วิธีนี้ตรวจ behavior ที่ AC พูดถึงจริงหรือเปล่า?</td></tr>
+          <tr id="evidence"><td><strong>evidence</strong></td><td>ผลตรวจที่เกิดขึ้นจริง พร้อม revision, เวลา, ผู้รัน และข้อจำกัด</td><td>ผลนี้เป็น run จริงหรือเป็นเพียง test plan/คำอ้างใน PR?</td></tr>
+          <tr id="revision"><td><strong>revision / head SHA</strong></td><td>จุดของโค้ดที่ผลตรวจผูกอยู่ ต้องระบุเมื่อ branch มีการ push เพิ่ม</td><td>ผลตรวจเป็นของ head ที่จะ merge หรือเป็นของ commit เก่า?</td></tr>
+          <tr id="finding"><td><strong>finding</strong></td><td>ข้อสังเกตจาก reviewer ที่มี trigger, behavior ที่ผิด และผลเสีย</td><td>เปิด reproduction หรือ code path ที่ทำให้ finding เกิดได้ไหม?</td></tr>
+          <tr id="valid"><td><strong>valid / invalid / deferred</strong></td><td>สถานะการตัดสิน finding: จริงและต้องแก้ / ไม่จริงพร้อมหลักฐาน / เลื่อนไปพร้อมเหตุผลและ owner</td><td>การตัดสินใจมีหลักฐานหักล้างหรือ follow-up หรือไม่?</td></tr>
+          <tr id="stale"><td><strong>stale review/check</strong></td><td>ผลตรวจที่ผูกกับ commit เก่าและอาจไม่ครอบคลุม diff หลัง push</td><td>ระบบรันใหม่บน final head แล้วหรือยัง?</td></tr>
+          <tr id="merge"><td><strong>merge event</strong></td><td>เหตุการณ์และ commit ที่บอกว่าโค้ดใดถูกนำเข้า branch เป้าหมายจริง</td><td>มี <code>merged_at</code> และ merge SHA หรือยัง?</td></tr>
+          <tr id="postmerge"><td><strong>post-merge verification</strong></td><td>การตรวจ artifact ที่ผู้ใช้ได้รับกับ consumer/เส้นทางจริงหลัง merge</td><td>ทดสอบ installer, migration, package หรือ hardware path จริงหรือยัง?</td></tr>
+          <tr id="completion"><td><strong>completion criterion</strong></td><td>เงื่อนไขที่บอก agent ว่าขั้นตอนนี้จบและหยุดได้ โดยทุก AC มีหลักฐานหรือช่องว่างที่ประกาศ</td><td>คนอื่นบอกได้ไหมว่ายังขาดอะไร?</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout">
+        <strong>เส้นทางอ่านเร็ว</strong><br>
+        <a href="../lessons/0001-ai-provenance.html">หลักฐาน AI</a> →
+        <a href="../lessons/0002-goal-scope.html">เป้าหมาย/ขอบเขต</a> →
+        <a href="../lessons/0004-acceptance-criteria.html">AC</a> →
+        <a href="../lessons/0005-evidence.html">evidence</a> →
+        <a href="../lessons/0006-review-loop.html">review</a> →
+        <a href="../lessons/0007-merge-decision.html">merge</a> →
+        <a href="../lessons/0008-postmerge-learning.html">post-merge</a>
+      </div>
+    </article>
+    <footer class="lesson-footer"><a class="button-link" href="../START-HERE.html">← กลับหน้าหลัก</a><a class="button-link" href="checklist.html">ไปเช็กลิสต์ →</a></footer>
+  </main>
+</body>
+</html>
