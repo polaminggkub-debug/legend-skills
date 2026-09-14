@@ -150,4 +150,3 @@ PR body ระบุว่าเป็นงานต่อจาก #40834 ซ�
 | timeline events | 65 | stacked/base update, rerun review, auto-merge, merge |
 | final head check-runs | 86 | 85 success / 1 skipped ณ snapshot; 84 เสร็จก่อน merge และ 2 หลัง merge |
 | final merge SHA | `1c61c2606e36061db4fce10f7bb94745d76bc84f` | หลักฐานว่า merge แล้ว |
-

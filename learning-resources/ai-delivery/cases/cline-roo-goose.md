@@ -4,7 +4,7 @@
 
 **ระดับหลักฐาน AI: B** · หลักฐานเฉพาะ contribution ที่เปิดเผยหรือมีร่องรอยลงมือ ไม่ยืนยันทุกบรรทัดหรือทุก commit · [ดูหลักฐาน](https://github.com/cline/cline/pull/13968)
 
-PR: [cline/cline#13968](https://github.com/cline/cline/pull/13968)  
+PR: [cline/cline#13968](https://github.com/cline/cline/pull/13968)\
 สร้าง 2026-09-08 22:28:46Z โดย saoudrizwan; 5 commits, 8 files, +438/-2; merge 23:04:15Z โดย saoudrizwan ที่ [62ba6539](https://github.com/cline/cline/commit/62ba65397fca8d583540319fa574a62d1ac7d498)
 
 ### หลักฐาน AI
@@ -64,7 +64,7 @@ CI ที่ตรวจพบ:
 
 **ระดับหลักฐาน AI: B** · หลักฐานเฉพาะ contribution ที่เปิดเผยหรือมีร่องรอยลงมือ ไม่ยืนยันทุกบรรทัดหรือทุก commit · [ดูหลักฐาน](https://github.com/cline/cline/commit/e3b2e375c7f4e0c09cfef277ce5031c0bf8d5168)
 
-PR: [cline/cline#13969](https://github.com/cline/cline/pull/13969)  
+PR: [cline/cline#13969](https://github.com/cline/cline/pull/13969)\
 สร้าง 2026-09-08 22:34:54Z โดย saoudrizwan; 11 commits, 7 files, +877/-19; merge 2026-09-09 02:45:25Z ที่ [23f2197c](https://github.com/cline/cline/commit/23f2197c535f904bb4bbe17012fc81cdf3b2b8ac)
 
 ### หลักฐาน AI และ scope
@@ -106,7 +106,7 @@ CI final head:
 
 **ระดับหลักฐาน AI: B** · หลักฐานเฉพาะ contribution ที่เปิดเผยหรือมีร่องรอยลงมือ ไม่ยืนยันทุกบรรทัดหรือทุก commit · [ดูหลักฐาน](https://github.com/RooCodeInc/Roo-Code/pull/11409)
 
-PR: [RooCodeInc/Roo-Code#11409](https://github.com/RooCodeInc/Roo-Code/pull/11409)  
+PR: [RooCodeInc/Roo-Code#11409](https://github.com/RooCodeInc/Roo-Code/pull/11409)\
 สร้าง 2026-02-11 17:07:15Z โดย daniel-lxs; 11 commits, 103 files, +2,648/-3,206; merge 18:58:39Z ที่ [e6f0e79c](https://github.com/RooCodeInc/Roo-Code/commit/e6f0e79c389dc558338b243f6854c11c2854786f)
 
 ### เป้าหมายและหลักฐาน AI
@@ -153,7 +153,7 @@ CI ก่อน merge:
 
 **ระดับหลักฐาน AI: B** · หลักฐานเฉพาะ contribution ที่เปิดเผยหรือมีร่องรอยลงมือ ไม่ยืนยันทุกบรรทัดหรือทุก commit · [ดูหลักฐาน](https://github.com/aaif-goose/goose/commit/5372cf21c4c043cb25959d08529c766012cdbd48)
 
-PR: [aaif-goose/goose#11307](https://github.com/aaif-goose/goose/pull/11307)  
+PR: [aaif-goose/goose#11307](https://github.com/aaif-goose/goose/pull/11307)\
 สร้าง 2026-08-18 05:19:10Z โดย Wolfe-Jam; 5 commits, 8 files, +244/-20; merge 2026-08-21 08:41:22Z โดย lifeizhou-ap ที่ [a5de3781](https://github.com/aaif-goose/goose/commit/a5de37814adb1b8f7eab3046c53811d5808733fa)
 
 commit แรก [5372cf2](https://github.com/aaif-goose/goose/commit/5372cf21c4c043cb25959d08529c766012cdbd48) เวลา 04:44:55Z มี Co-Authored-By: Claude Sonnet 5
@@ -189,5 +189,3 @@ CI:
 ช่องว่างคือ one failing test เป็นคำกล่าวของผู้เขียนว่า pre-existing และ raw check summary ไม่ได้แสดง independent baseline reproduction ส่วน issue #10955 ยังไม่ได้แก้
 
 บทเรียน: นิยาม acceptance ด้วยตำแหน่งเวลาใน execution path (“ก่อน inference”), บอก execution paths ทั้งสอง, ตั้งชื่อ capability ตาม contract จริง และทดสอบ recovery instruction ตามตัวอักษร
-
-

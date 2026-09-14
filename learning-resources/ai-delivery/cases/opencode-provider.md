@@ -21,4 +21,3 @@ PR: [fix(provider): send Anthropic's dashed native slug through the AI Gateway](
 ข้อจำกัดคือ reviewer ที่ระบุว่า AI ไม่ใช่หลักฐานว่า implementation ทั้งหมดมาจาก AI และ PR นี้ไม่มี inline review comment มีเพียง issue/PR conversation สองชุด อีกทั้ง live verification ขึ้นกับ gateway ภายนอกและการ sanity pass branch อื่นไม่ได้เทียบเท่า test matrix ครบทุก provider
 
 บทเรียนสำหรับการสั่ง AI คือให้กำหนด test oracle ที่เป็นอิสระ, ระบุ invariants ที่เหตุผลของการแปลงข้อมูลพึ่งพา และให้ agent ตอบ review ทีละข้อโดยเลือกได้ว่าจะรับหรือปฏิเสธพร้อมเหตุผล กรณีนี้ทำให้เห็นว่า “AI มีส่วนเขียน” กับ “AI review ถูกทุกข้อ” เป็นคนละคำถาม และคุณภาพเกิดจากการรักษา boundary ระหว่างสองอย่างนี้
-

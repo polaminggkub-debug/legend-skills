@@ -81,4 +81,3 @@ PR: [fix(core): emit render errors](https://github.com/anomalyco/opentui/pull/13
 ผู้ผลิตรายงาน native 1,708 passed/6 skipped, JS 5,205 passed/23 skipped, format และ lint ผ่าน รวม benchmark เปรียบเทียบ 15.093 กับ 15.041 ns/renderable และรายงาน RSD ไม่ต่ำพอจะสรุป performance improvement ใหญ่ ๆ API ตรวจสอบได้ว่าหัว PR มี check-runs สำเร็จ 29 รายการ ทั้ง Core, SSH, React, QRCode, Solid, Keymap, Windows/macOS/Ubuntu, benchmark, packed consumer และ lint/format ใน [Actions run 30765499637](https://github.com/anomalyco/opentui/actions/runs/30765499637)
 
 เคสนี้มีประโยชน์เพราะเป็น control: PR identity เป็น bot แต่ทุก commit มี kommander เป็น author/committer (commits.json) จึงไม่ควรตีความว่า AI เขียนโค้ดจาก bot author เพียงอย่างเดียว หลักฐานที่ปลอดภัยคือ repository มี agent-mediated PR path และมนุษย์ใช้ path นั้นส่งงานเข้า review/CI
-
