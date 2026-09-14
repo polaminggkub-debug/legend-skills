@@ -38,6 +38,12 @@ first use Matt checks for the reviewed stable skills from
 [`mattpocock/skills`](https://github.com/mattpocock/skills), asks before any
 external installation, and captures tracker/spec defaults.
 
+On each invocation, Matt assesses the active task and the context already
+available. It consults [Context Discovery](matt/references/context-discovery.md)
+for missing or conflicting knowledge, targeted code/contract discovery, and
+handoff verification. Applicable, current context can be reused across tasks in
+the same session; a task change does not require a session reset or a full repository read.
+
 For repositories using GitHub Projects, Matt loads a
 [shared workflow reference](matt/references/github-projects.md) for readiness,
 dependencies, agent handoff, and acceptance backed by current evidence. The

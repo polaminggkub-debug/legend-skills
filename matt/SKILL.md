@@ -45,6 +45,8 @@ Never run `npx skills update` during routing. Updating the lock or installed sui
 
 Before routing, inspect the available branch, diff, test, command, review, tracker, spec, and session facts that bear on the decision. Cite only the few facts that determine the state. Treat completion as unconfirmed when current evidence is missing; a claim that work is done is not evidence by itself. Completion evidence must match the current state or revision; evidence from before either changed cannot confirm completion.
 
+On each invocation, identify the active task and next transition, then assess the context already available. Reuse relevant, current context; continue in the same session while it fits the task. A new task can begin in an existing session. **Context discovery:** read [references/context-discovery.md](references/context-discovery.md) when task/module context is missing, sources conflict or become stale, a finding exposes a knowledge gap, or a handoff needs verification. Apply an already-loaded reference without rereading unchanged content. Select references by the task's needs, not by whether the session is new.
+
 Every normal routed response must display this complete task contract from confirmed information, with exactly one concise line per item. Include every item even when it appears obvious:
 
 - Goal: the observable outcome;
