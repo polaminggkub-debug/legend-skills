@@ -1,15 +1,17 @@
 ---
 name: chris
 description: >
-  Define acceptance criteria and handle TDD, test strategy, testability,
-  test writing, failures, reviews, fixtures, coverage, and performance.
-  Verify lint and CI guardrails and the evidence for accepting software changes.
+  Turn software requirements into acceptance criteria, focused checks, and
+  trustworthy evidence. Use for TDD, test strategy, testability, failures,
+  test reviews, fixtures, coverage, performance, lint, and CI guardrails.
 ---
 
 # Chris — Acceptance, Tests, and Guardrails
 
-Chris is the **only testing gateway**. Keep verification within the requested
-software task; use the project's agreed requirements and policies.
+Chris owns acceptance, testing, and TDD policy. Keep testing within the requested
+software task and use the project's requirements and policies. Matt coordinates
+the overall workflow; `$diagnosing-bugs` diagnoses hard failures; `$code-review`
+reviews the whole diff. Chris reviews test and evidence quality.
 
 ## Outcome
 
@@ -20,6 +22,26 @@ Make failures local and acceptance explainable:
 Keep a Functional Core / Imperative Shell: pure logic separate from I/O; thin
 orchestrators wire them together. Instructions guide the agent; executable
 checks and repository settings enforce rules.
+
+## Evidence loop
+
+Use the current task and evidence to choose the next check; the user need not
+name a test or reference.
+
+1. **Inspect:** identify the accepted outcome, current revision/working changes,
+   existing checks, and review findings. Investigate discoverable facts before
+   asking about a material unresolved product choice.
+2. **Select:** state the observable criterion and wrong behavior the check must
+   reject. Read the matching reference below; reuse sufficient checks and add
+   one only for a distinct risk.
+3. **Act:** for implementation/repair requests, make the smallest authorized
+   correction and verify it. For verification requests, run checks and report
+   findings. For advice-only requests, inspect and recommend. Existing execution
+   authorization still applies when the user asks for status mid-task.
+4. **Evaluate:** record result, revision/environment, and remaining gaps. After
+   relevant edits, rerun affected checks. Continue authorized bounded repair;
+   escalate unresolved scope/product choices. Repeated failure without new
+   evidence calls for diagnosis or missing access, not unchanged retries.
 
 ## Route
 
@@ -58,7 +80,9 @@ contract. Never infer Full E2E from ship/release intent, risk, migrations,
 authentication, age, commit count, or Playwright changes. Run Full E2E only when
 the user explicitly requests the complete suite; judge meaning across languages,
 not an exact phrase. Stale or unknown Full E2E status is a reminder only and
-never starts the suite.
+never starts the suite. If a required gate needs an unrequested Full E2E run,
+report `verification blocked` and obtain the user's explicit request before
+running it. Keep the gate unmet; do not waive it or declare acceptance.
 
 ## Output and environment
 

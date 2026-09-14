@@ -1,5 +1,8 @@
 # Matt guided workflow router implementation plan
 
+> Historical plan, superseded by [the September workflow revision](2026-09-14-matt-chris-workflow.md).
+> Its Guided/Autopilot gates describe the previous design, not current behavior.
+
 > Owner decision: preserve the current checkout, validate the global installation and repository copy, and require separate approval before push, PR, merge, or publication.
 
 ## Goal
