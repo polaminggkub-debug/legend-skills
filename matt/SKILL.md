@@ -19,7 +19,7 @@ Before normal routing:
 
 1. Read [dependency-lock.json](dependency-lock.json).
 2. Resolve the OS-native user configuration directory without hard-coding a home path. Look for `legend-skills/matt.md` there.
-3. If global defaults are absent, ask once for agent targets, default tracker, and default spec system. Supported defaults are none, GitHub Issues, Beads, or a named custom tracker; and Markdown PRD/plan, OpenSpec, none, or a named custom spec system. Show this English block before writing it:
+3. If global defaults are absent, ask once for agent targets, default tracker, and default spec system. Supported defaults are none, GitHub Issues, GitHub Projects (with repository Issues), Beads, or a named custom tracker; and Markdown PRD/plan, OpenSpec, none, or a named custom spec system. Show this English block before writing it:
 
    ```text
    # BEGIN legend-skills:matt
@@ -33,9 +33,11 @@ Before normal routing:
 4. Verify every required skill exists in the active agent's skill directories and that its frontmatter name matches the lock. Use the registry or installer lock when it records source `mattpocock/skills`.
 5. When registry provenance is absent, inspect the pinned GitHub manifest at `upstream.installSource` and confirm the corresponding Engineering or Productivity path exists. A matching local skill name plus an official pinned path satisfies the gate. Report local content differences as preserved modifications; do not block routing or propose replacement solely because an installation receipt is missing. Explicit provenance for another source remains a conflict and requires user direction.
 6. If any prerequisite is missing, stop routing and list every missing name. Build `npx skills@latest add https://github.com/mattpocock/skills/tree/5b15a47f2d7150f545fbcacbfe381787fc0230dc --global`, followed by one `--skill` argument per missing required skill and one `--agent` argument per configured target. Confirm that the URL exactly equals `upstream.installSource`, explain that completing the Matt installation requires these dependencies, and ask once before running it. After approval, run the command and re-check every configured target; remain blocked until all 25 are present. If explicit provenance names another source, preserve it and ask whether to replace that conflict separately. Report `Current state: prerequisites blocked`, `Recommended skill: none`, and `Autonomy: HITL` while blocked. Never substitute another workflow silently.
-7. In a repository, read `docs/agents/issue-tracker.md`. If absent, make `$setup-matt-pocock-skills` the first recommended step. Read `docs/agents/matt-workflow.md`; if absent, ask for the repository's spec system and show a managed English block containing only `Spec system: <value>`. Write it only after confirmation, with the same backup and conflict rules. Repository values override global defaults.
+7. In a repository, read `docs/agents/issue-tracker.md`. If absent, make `$setup-matt-pocock-skills` the first recommended step. Read `docs/agents/matt-workflow.md`; if absent, ask for the repository's spec system and show a managed English block containing only `Spec system: <value>`. Write it only after confirmation, with the same backup and conflict rules. Repository values override global defaults. After these gates pass, an explicit tracker/spec choice for the current task takes precedence without rewriting either configuration.
 
 Outside a repository, use global defaults and skip repository setup.
+
+**GitHub Projects:** when the selected tracker uses Projects, or the request is to set up or migrate to Projects, read [references/github-projects.md](references/github-projects.md) before tracker setup, task decomposition, assignment/handoff, review disposition, or completion. It supplies reusable workflow guidance; resolve the actual Project, fields, commands, and acceptance authority from the target repository. Installing this global reference does not select a Project or migrate other repositories.
 
 Never run `npx skills update` during routing. Updating the lock or installed suite requires a separately reviewed release: verify the upstream version, commit, manifest, and stable skill set together before changing the lock or proposing an update.
 
@@ -106,6 +108,8 @@ Use these transition guards when they apply:
 ## Choose the next transition
 
 Lead with the single next action. Recommend the shortest safe, verifiable transition and do not duplicate a downstream skill's checklist. After each completed phase, inspect fresh evidence and classify again rather than assuming the earlier path remains valid.
+
+Before proposing a tracker- or spec-dependent skill, read its installed instructions for compatibility with the selected systems. Local customizations may bind `$to-tickets` to Beads or `$implement` to OpenSpec. Preserve those customizations; explain a mismatch and propose a bounded action using the selected tracker/spec and available tools instead. Apply the same Guided control and approval boundaries to that action.
 
 Include a three-to-seven-phase path only when the user asks for it or when multiple phases materially help planning or coordination. Skip irrelevant phases and use conditional branches only where the next phase genuinely depends on an unresolved result.
 
