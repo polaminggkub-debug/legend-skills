@@ -8,6 +8,8 @@ approval.
 
 1. Identify the requested platform: Codex or Claude Code.
 2. Identify the requested components from the general-skills table below.
+   For OpenCode Worker, follow [its dedicated installer](opencode-worker/INSTALL_FOR_AI.md)
+   on macOS/Windows; its templated skill must not be copied with the general procedure.
 3. Resolve the platform skill destination:
    - Codex: `${CODEX_HOME:-~/.codex}/skills`
    - Claude Code: `${CLAUDE_CODE_SKILLS_DIR:-~/.claude/skills}`

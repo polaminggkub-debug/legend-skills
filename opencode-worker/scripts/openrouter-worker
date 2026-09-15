@@ -1,0 +1,8 @@
+#!/usr/bin/env python3
+"""Run OpenCode with required provenance, usage accounting, and a local commit."""
+from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from worker_runtime import main
+if __name__ == '__main__':
+    sys.exit(main())
