@@ -198,7 +198,7 @@ class WorkerWorkflowTests(unittest.TestCase):
         write_code = (
             "import json, os; from pathlib import Path; "
             "p=Path('docs/metadata.json'); p.parent.mkdir(parents=True, exist_ok=True); "
-            "p.write_text(json.dumps({'source_commit': os.environ['WORKER_SOURCE_COMMIT']}, sort_keys=True)+'\\n')"
+            "p.write_bytes((json.dumps({'source_commit': os.environ['WORKER_SOURCE_COMMIT']}, sort_keys=True)+'\\n').encode('utf-8'))"
         )
         verify_code = (
             "import json, subprocess; from pathlib import Path; "

@@ -98,8 +98,9 @@ class DeliveryTests(unittest.TestCase):
             self.assertEqual(stdout_path.name, "stdout.log")
             self.assertEqual(stderr_path.name, "stderr.log")
             self.assertTrue(stdout_path.is_relative_to(root / "run" / "checks"))
-            self.assertEqual(stdout_path.stat().st_mode & 0o777, 0o600)
-            self.assertEqual(stdout_path.parent.stat().st_mode & 0o777, 0o700)
+            if os.name != 'nt':
+                self.assertEqual(stdout_path.stat().st_mode & 0o777, 0o600)
+                self.assertEqual(stdout_path.parent.stat().st_mode & 0o777, 0o700)
             observed = json.loads(stdout_path.read_text(encoding="utf-8"))
             self.assertEqual(observed, {
                 "api": None,

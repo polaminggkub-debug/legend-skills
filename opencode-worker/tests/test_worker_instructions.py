@@ -122,7 +122,7 @@ class WorkerInstructionTests(unittest.TestCase):
             config = json.loads(env["OPENCODE_CONFIG_CONTENT"])
             self.assertEqual(config["model"], model)
             self.assertEqual(config["small_model"], model)
-            self.assertEqual(config["instructions"], [str(snapshot.resolve())])
+            self.assertEqual(config["instructions"], [snapshot.resolve().as_posix()])
             self.assertTrue(Path(config["instructions"][0]).is_absolute())
             self.assertEqual(env["OPENCODE_DISABLE_PROJECT_CONFIG"], "true")
             self.assertEqual(env["OPENCODE_DISABLE_EXTERNAL_SKILLS"], "true")

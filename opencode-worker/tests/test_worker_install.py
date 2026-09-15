@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 from pathlib import Path
 import sys
 import tempfile
@@ -84,7 +85,8 @@ class WorkerInstallTests(unittest.TestCase):
         self.assertIn(str(self.base / "openrouter-worker"), skill)
         self.assertIn(str(self.base / "README.md"), skill)
         self.assertIn(sys.executable, skill)
-        self.assertEqual((self.base / "openrouter-worker").stat().st_mode & 0o777, 0o700)
+        if os.name != 'nt':
+            self.assertEqual((self.base / "openrouter-worker").stat().st_mode & 0o777, 0o700)
 
         settings = json.loads((self.base / "settings.json").read_text(encoding="utf-8"))
         self.assertIn("default_model", settings)

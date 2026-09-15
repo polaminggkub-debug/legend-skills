@@ -90,6 +90,9 @@ It should read exact files from A, verify any required prepared semantic review,
 and write only declared metadata paths. It must fail on missing/mismatched
 evidence, not manufacture a review verdict. The worker only records that the
 command passed; the project owns the meaning of that validation.
+If checks compare file bytes with Git blobs, the project must account for Git's
+newline filters; use canonical byte writes or appropriate `.gitattributes` when
+byte-for-byte equality is required across Windows and macOS.
 
 The worker verifies A is unchanged, commits metadata as B, and runs the final
 checks on B. If metadata writes nothing, A remains the final revision. If the
