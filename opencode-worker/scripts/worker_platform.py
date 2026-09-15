@@ -10,6 +10,7 @@ from __future__ import annotations
 import ctypes
 import errno
 import getpass
+import json
 import os
 from pathlib import Path
 import re
@@ -426,6 +427,34 @@ def stop_process(process: Any) -> None:
         pass
 
 
+def _verified_opencode_binary(shim: Path) -> Optional[Path]:
+    """Resolve the native executable shipped by official opencode-ai 1.18.31."""
+    try:
+        source = shim.read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return None
+    if not re.search(r"opencode-ai[\\/]+bin[\\/]+opencode\.exe", source, re.I):
+        return None
+    for parent in (shim.parent,) + tuple(shim.parents):
+        for package in (parent / "node_modules" / "opencode-ai", parent / "opencode-ai"):
+            binary = package / "bin" / "opencode.exe"
+            try:
+                manifest = json.loads((package / "package.json").read_text(encoding="utf-8"))
+                if manifest.get("name") != "opencode-ai":
+                    continue
+                entry = manifest.get("bin", {})
+                entry = entry.get("opencode") if isinstance(entry, dict) else entry
+                if entry not in ("./bin/opencode.exe", "bin/opencode.exe"):
+                    continue
+                with binary.open("rb") as stream:
+                    if stream.read(2) != b"MZ":
+                        continue
+                return binary
+            except (OSError, ValueError, AttributeError):
+                continue
+    return None
+
+
 def _verified_npm_launcher(shim: Path) -> Optional[Path]:
     """Resolve a known npm shim only after checking its source and target."""
 
@@ -521,11 +550,16 @@ def cli_command(path: os.PathLike[str] | str) -> List[str]:
     """Build a shell-free argv prefix for a worker CLI executable."""
 
     value = str(path)
+    if Path(value).name == value:
+        value = shutil.which(value) or value
     suffix = Path(value).suffix.lower()
     if suffix == ".py":
         return [sys.executable, value]
     if suffix == ".cmd":
         shim = Path(value)
+        native = _verified_opencode_binary(shim)
+        if native is not None:
+            return [str(native)]
         if shim.name.lower() == "npm.cmd":
             launcher = _verified_npm_cli(shim)
         else:

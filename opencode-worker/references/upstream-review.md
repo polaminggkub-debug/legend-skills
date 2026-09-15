@@ -69,6 +69,26 @@ complete provider billing, or instruction compliance.
    Strict parsing now rejects a new step after a terminal stop; identical repeated
    finish events are still deduplicated without double-counting usage.
 
+3. **The pinned Windows npm entry point is a native executable behind a shim.**
+   The exact [npm registry manifest for `opencode-ai@1.18.31`](https://registry.npmjs.org/opencode-ai/1.18.31)
+   declares `bin/opencode.exe`. OpenCode's pinned
+   [`postinstall.mjs`](https://github.com/anomalyco/opencode/blob/014614d35b397775e5d397a490fc72368c894ec2/packages/opencode/script/postinstall.mjs#L23-L29)
+   selects `opencode.exe` for Windows and copies the selected optional native
+   package into that path before verifying it with `--version`
+   ([selection and copy](https://github.com/anomalyco/opencode/blob/014614d35b397775e5d397a490fc72368c894ec2/packages/opencode/script/postinstall.mjs#L96-L139),
+   [verification](https://github.com/anomalyco/opencode/blob/014614d35b397775e5d397a490fc72368c894ec2/packages/opencode/script/postinstall.mjs#L146-L163)).
+   npm documents that Windows installs create a `.cmd` file for a package's
+   `bin` entry, and the pinned [`cmd-shim`](https://github.com/npm/cmd-shim/blob/v8.0.0/lib/index.js)
+   source says a target without a shebang is treated as a compiled executable and
+   called directly ([target selection](https://github.com/npm/cmd-shim/blob/v8.0.0/lib/index.js#L38-L55),
+   [direct command form](https://github.com/npm/cmd-shim/blob/v8.0.0/lib/index.js#L67-L73)).
+   The shell-free resolver should therefore verify the shim's trusted
+   `opencode-ai/bin/opencode.exe` reference, package manifest, and PE `MZ` header,
+   then execute the native path directly with `shell=False`; it should reject
+   arbitrary `.cmd`/`.bat` files and never route this entry point through
+   `cmd.exe`. Node-backed resolution remains appropriate only for genuinely
+   script-backed shims such as `npm.cmd`.
+
 ## Validation limits
 
 - The upstream refs and star counts are time-sensitive. Stars are rounded here;

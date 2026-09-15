@@ -33,7 +33,7 @@ copy the templated `SKILL.md` through the generic skill-copy procedure.
 
 On Windows, use an argument vector or PowerShell's call operator for a quoted
 Python path. The worker supports the official npm OpenCode shim through its
-Node entrypoint. Unknown batch shims are rejected: use the program's real
+native executable (or a recognized older Node entrypoint). Unknown batch shims are rejected: use the program's real
 executable or a repository script launched with an explicit interpreter.
 
 ## Update and recovery

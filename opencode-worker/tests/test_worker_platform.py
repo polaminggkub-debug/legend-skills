@@ -11,6 +11,7 @@ import tempfile
 import unittest
 import uuid
 import ctypes
+import json
 from unittest import mock
 from types import SimpleNamespace
 NativePath = type(Path())
@@ -168,6 +169,26 @@ class ProcessTests(unittest.TestCase):
 
 
 class CommandTests(unittest.TestCase):
+    def test_current_official_npm_shim_resolves_native_exe_without_node_or_shell(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            shim = root / 'opencode.cmd'
+            package = root / 'node_modules' / 'opencode-ai'
+            binary = package / 'bin' / 'opencode.exe'
+            binary.parent.mkdir(parents=True)
+            (package / 'package.json').write_text(json.dumps({
+                'name': 'opencode-ai', 'bin': {'opencode': './bin/opencode.exe'},
+            }), encoding='utf-8')
+            shim.write_text('@echo off\n"%~dp0%\\node_modules\\opencode-ai\\bin\\opencode.exe" %*\n', encoding='utf-8')
+            binary.write_bytes(b'MZ' + b'fixture-not-executed')
+            with mock.patch.object(worker_platform.shutil, 'which', return_value=None):
+                self.assertEqual(worker_platform.cli_command(shim), [str(binary)])
+            with mock.patch.object(worker_platform.shutil, 'which', return_value=str(shim)):
+                self.assertEqual(worker_platform.cli_command('opencode'), [str(binary)])
+            binary.write_bytes(b'not-a-Windows-executable')
+            with self.assertRaises(ValueError):
+                worker_platform.cli_command(shim)
+
     def test_python_fixture_is_invoked_without_a_shell(self):
         command = worker_platform.cli_command(Path("fixture script.py"))
         self.assertEqual(command, [sys.executable, "fixture script.py"])
