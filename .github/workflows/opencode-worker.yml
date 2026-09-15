@@ -1,0 +1,48 @@
+name: OpenCode worker
+
+on:
+  pull_request:
+    paths:
+      - 'opencode-worker/**'
+      - '.github/workflows/opencode-worker.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'opencode-worker/**'
+      - '.github/workflows/opencode-worker.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  offline-tests:
+    name: ${{ matrix.os }} / Python ${{ matrix.python }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, windows-latest]
+        python: ['3.9', '3.12']
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    env:
+      PYTHONUTF8: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Offline runtime, workflow, and installer acceptance tests
+        run: python -m unittest discover -s opencode-worker/tests -v
+      - uses: actions/setup-node@v4
+        if: matrix.python == '3.12'
+        with:
+          node-version: '22'
+      - name: Install pinned official CLI for compatibility probe
+        if: matrix.python == '3.12'
+        run: npm install --global opencode-ai@1.18.31
+      - name: Probe real CLI entrypoint and flags without a model request
+        if: matrix.python == '3.12'
+        env:
+          OPENCODE_WORKER_TEST_CLI: '1'
+        run: python -m unittest discover -s opencode-worker/tests -p test_official_cli.py -v
