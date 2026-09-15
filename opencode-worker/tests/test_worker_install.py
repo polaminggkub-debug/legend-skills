@@ -21,7 +21,7 @@ import install  # noqa: E402
 class WorkerInstallTests(unittest.TestCase):
     def setUp(self):
         self.temp_dir = tempfile.TemporaryDirectory(prefix="worker-install-tests-")
-        self.tmp = Path(self.temp_dir.name)
+        self.tmp = Path(self.temp_dir.name).resolve()
         self.package = self.tmp / "package"
         self.base = self.tmp / "worker-state"
         self.codex_home = self.tmp / "codex-home"

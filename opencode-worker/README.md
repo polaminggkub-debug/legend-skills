@@ -49,6 +49,12 @@ same executable plan. A new technology or special release process may need a
 project command/adapter once; the generic worker cannot infer hidden policy or
 prove arbitrary application correctness.
 
+Project configuration stays isolated from the worker's provider/model setup.
+Applicable root-to-working-directory guidance is snapshotted privately and
+loaded through OpenCode's explicit `instructions` setting; paths and hashes
+are recorded. More specific directory guidance still applies when editing
+there. Oversized guidance fails preflight instead of being silently truncated.
+
 Read [the workflow contract](references/workflow.md) when selecting checks or
 setting up a source/metadata/final-build sequence. Never copy an example without
 checking the project's actual commands. Contract creation is setup work: commit

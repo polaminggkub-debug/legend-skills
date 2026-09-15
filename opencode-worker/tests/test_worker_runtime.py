@@ -395,7 +395,7 @@ class WorkerRuntimeAcceptanceTests(unittest.TestCase):
 
     def setUp(self):
         self.temp_dir = tempfile.TemporaryDirectory(prefix="worker-runtime-tests-")
-        self.tmp = Path(self.temp_dir.name)
+        self.tmp = Path(self.temp_dir.name).resolve()
         self.base = self.tmp / "worker-state"
         self.base.mkdir()
         self.fake = self.tmp / "fake-opencode.py"

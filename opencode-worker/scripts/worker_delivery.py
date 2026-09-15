@@ -93,9 +93,8 @@ def sanitize_step_id(value: Any) -> str:
     """Return one safe directory component for a step identifier.
 
     The result contains no path separators, is bounded for Windows paths, and
-    avoids special or reserved directory names.  Collision handling is done
-    by :func:`_step_directory_name` because it needs the other IDs in this
-    invocation.
+    avoids special or reserved directory names.  Directory names also include
+    a digest in :func:`_step_directory_name` so sanitization cannot merge IDs.
     """
 
     text = str(value)
@@ -110,20 +109,38 @@ def sanitize_step_id(value: Any) -> str:
     return safe
 
 
-def _step_directory_name(value: Any, used: set[str]) -> str:
-    safe = sanitize_step_id(value)
-    if safe not in used:
-        used.add(safe)
-        return safe
-    digest = hashlib.sha256(str(value).encode("utf-8", "surrogatepass")).hexdigest()[:12]
-    candidate = (safe[:67] + "-" + digest).rstrip(" .")
-    suffix = 2
-    while candidate in used:
-        extra = f"-{suffix}"
-        candidate = (safe[: max(1, 80 - len(extra))] + extra).rstrip(" .")
-        suffix += 1
-    used.add(candidate)
-    return candidate
+def _step_directory_name(value: Any, stage: Any, used: set[str]) -> str:
+    """Build a readable, bounded, collision-resistant directory component."""
+
+    original = str(value)
+    stage_text = str(stage)
+    readable = sanitize_step_id(stage_text + "-" + original)
+    digest_source = (stage_text + "\0" + original).encode("utf-8", "surrogatepass")
+    digest = hashlib.sha256(digest_source).hexdigest()[:12]
+    digest_suffix = "-" + digest
+
+    def bounded(prefix: str, suffix: str) -> str:
+        room = max(1, 80 - len(suffix))
+        return (prefix[:room].rstrip(" .") or "step") + suffix
+
+    candidate = bounded(readable, digest_suffix)
+    folded = candidate.casefold()
+    if folded not in used:
+        used.add(folded)
+        return candidate
+
+    # Exact duplicate IDs are invalid at the project-contract layer, but keep
+    # this executor safe when called directly and when a caller reuses a run
+    # directory.  Compare case-folded names because Windows does.
+    suffix_number = 2
+    while True:
+        number_suffix = digest_suffix + "-" + str(suffix_number)
+        candidate = bounded(readable, number_suffix)
+        folded = candidate.casefold()
+        if folded not in used:
+            used.add(folded)
+            return candidate
+        suffix_number += 1
 
 
 def _display_step_id(step: Any, index: int) -> Any:
@@ -494,7 +511,7 @@ def run_steps(
     try:
         for index, step in enumerate(iterator):
             step_id = _display_step_id(step, index)
-            directory_name = _step_directory_name(step_id, used_directories)
+            directory_name = _step_directory_name(step_id, stage, used_directories)
             result, started_clock = _initial_result(
                 step,
                 index=index,

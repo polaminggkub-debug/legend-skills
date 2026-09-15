@@ -238,6 +238,50 @@ class DeliveryTests(unittest.TestCase):
             self.assertEqual(len(raised.exception.results), 1)
             self.assertEqual(raised.exception.results[0]["status"], "interrupted")
 
+    def test_stage_and_digest_keep_colliding_log_directories_distinct(self):
+        def command(label):
+            return {
+                "id": label,
+                "kind": "test",
+                "argv": ["{python}", "-c", "import sys; print(sys.argv[1])", label],
+            }
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            project = types.SimpleNamespace(command_argv=self._resolver())
+            with mock.patch.object(worker_delivery, "worker_project", project):
+                same_stage = worker_delivery.run_steps(
+                    [command("unit/a"), command("unit_a"), command("Check"), command("check")],
+                    repo=root,
+                    run_dir=root / "run",
+                    stage="before_commit",
+                )
+                before = worker_delivery.run_steps(
+                    [command("same")],
+                    repo=root,
+                    run_dir=root / "run",
+                    stage="before_commit",
+                )[0]
+                after = worker_delivery.run_steps(
+                    [command("same")],
+                    repo=root,
+                    run_dir=root / "run",
+                    stage="after_commit",
+                )[0]
+
+            same_paths = [Path(item["stdout_path"]) for item in same_stage]
+            self.assertEqual(len({path.parent.name.casefold() for path in same_paths}), 4)
+            for item in same_stage:
+                self.assertEqual(
+                    Path(item["stdout_path"]).read_text(encoding="utf-8").strip(),
+                    item["id"],
+                )
+            self.assertNotEqual(Path(before["stdout_path"]).parent, Path(after["stdout_path"]).parent)
+            self.assertIn("before_commit", Path(before["stdout_path"]).parent.name)
+            self.assertIn("after_commit", Path(after["stdout_path"]).parent.name)
+            self.assertEqual(Path(before["stdout_path"]).read_text(encoding="utf-8").strip(), "same")
+            self.assertEqual(Path(after["stdout_path"]).read_text(encoding="utf-8").strip(), "same")
+
 
 if __name__ == "__main__":
     unittest.main()

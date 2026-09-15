@@ -711,7 +711,10 @@ def _resolve_cwd(root: Path, step: Mapping[str, Any]) -> Path:
 def cli_command(path: os.PathLike[str] | str) -> List[str]:
     """Delegate platform-specific executable handling without a shell."""
 
-    return worker_platform.cli_command(path)
+    try:
+        return worker_platform.cli_command(path)
+    except ValueError as exc:
+        raise ProjectError(str(exc)) from exc
 
 
 platform_cli_command = cli_command

@@ -14,6 +14,7 @@ import time
 import uuid
 import getpass
 import shutil
+from contextlib import closing
 
 from worker_metrics import MetricsError, parse_events, validate_report
 from worker_monitor import ProcessMonitor
@@ -79,7 +80,7 @@ def safe_report_directory(repo):
 def save_report(base, run_dir, report):
     write_json(run_dir / 'report.json', report)
     database = base / 'runs.sqlite3'
-    with sqlite3.connect(str(database), timeout=20) as conn:
+    with closing(sqlite3.connect(str(database), timeout=20)) as conn, conn:
         conn.execute('CREATE TABLE IF NOT EXISTS runs '
                      '(run_id TEXT PRIMARY KEY, status TEXT NOT NULL, report_json TEXT NOT NULL)')
         conn.execute('INSERT OR REPLACE INTO runs VALUES (?, ?, ?)',
@@ -92,7 +93,7 @@ def observed_models(base, session_id):
     if not database.is_file() or not session_id:
         return []
     try:
-        with sqlite3.connect(database.resolve().as_uri() + '?mode=ro', uri=True) as conn:
+        with closing(sqlite3.connect(database.resolve().as_uri() + '?mode=ro', uri=True)) as conn:
             rows = conn.execute('SELECT data FROM message WHERE session_id=?', (session_id,))
             models = set()
             for row in rows:
@@ -107,11 +108,51 @@ def observed_models(base, session_id):
         return []
 
 
-def child_environment(base, model, key, run_dir):
+def prepare_instructions(repo, directory, run_dir):
+    """Snapshot applicable project guidance without enabling project config."""
+    directory = Path(directory).resolve()
+    relative = directory.relative_to(repo)
+    folders = [repo]
+    for part in relative.parts:
+        folders.append(folders[-1] / part)
+    sections, sources, size = [], [], 0
+    for folder in folders:
+        for name in ('AGENTS.md', 'CLAUDE.md', 'CONTEXT.md'):
+            path = folder / name
+            if not path.exists():
+                continue
+            try:
+                path.resolve().relative_to(repo)
+                raw = path.read_bytes()
+                content = raw.decode('utf-8')
+            except (ValueError, OSError) as exc:
+                raise GuardrailError('Project guidance must be a readable UTF-8 file inside the repository') from exc
+            size += len(raw)
+            if size > 131072:
+                raise GuardrailError('Applicable project guidance exceeds 128 KiB; prepare bounded project guidance before delegation')
+            source = path.relative_to(repo).as_posix()
+            sources.append({'path': source, 'sha256': hashlib.sha256(raw).hexdigest()})
+            scope = folder.relative_to(repo).as_posix()
+            sections.append('## Project guidance: ' + source + '\nApplies within: ' + scope + '\n\n' + content)
+            break  # AGENTS wins over the Claude/deprecated fallback in a folder.
+    if not sections:
+        return None, {'source': 'none', 'files': []}
+    snapshot = run_dir / 'instructions.md'
+    snapshot.write_bytes(('Project guidance snapshot. More specific directory guidance applies within its own scope.\n\n'
+                          + '\n\n'.join(sections) + '\n').encode('utf-8'))
+    snapshot.chmod(0o600)
+    return snapshot, {'source': 'explicit_absolute_instructions', 'files': sources,
+                      'snapshot_sha256': hashlib.sha256(snapshot.read_bytes()).hexdigest()}
+
+
+def child_environment(base, model, key, run_dir, instructions=None):
     env = os.environ.copy()
     for name in list(env):
         if name.upper().startswith(('OPENCODE_', 'GIT_')):
             env.pop(name)
+    config = {'model': model, 'small_model': model}
+    if instructions is not None:
+        config['instructions'] = [Path(instructions).resolve().as_posix()]
     env.update({
         'OPENROUTER_API_KEY': key,
         'XDG_CONFIG_HOME': str(base / 'config'),
@@ -119,7 +160,7 @@ def child_environment(base, model, key, run_dir):
         'XDG_STATE_HOME': str(base / 'state'),
         'XDG_CACHE_HOME': str(base / 'cache'),
         'OPENCODE_CONFIG_DIR': str(base / 'config' / 'opencode'),
-        'OPENCODE_CONFIG_CONTENT': json.dumps({'model': model, 'small_model': model}),
+        'OPENCODE_CONFIG_CONTENT': json.dumps(config),
         'OPENCODE_DISABLE_PROJECT_CONFIG': 'true',
         'OPENCODE_DISABLE_EXTERNAL_SKILLS': 'true',
         'OPENCODE_DISABLE_CLAUDE_CODE': 'true',
@@ -396,7 +437,7 @@ def export_stats(base, output_format):
     database = base / 'runs.sqlite3'
     reports = []
     if database.is_file():
-        with sqlite3.connect(database.resolve().as_uri() + '?mode=ro', uri=True) as conn:
+        with closing(sqlite3.connect(database.resolve().as_uri() + '?mode=ro', uri=True)) as conn:
             reports = [json.loads(row[0]) for row in conn.execute('SELECT report_json FROM runs ORDER BY rowid')]
     if output_format == 'json':
         print(json.dumps(reports))
@@ -493,6 +534,7 @@ def run_job(args, base, credential_reader):
             # working-file hash for immutability and Git's bytes for provenance.
             contract_bytes = git(repo, 'show', base_commit + ':.opencode/worker.json').stdout
             plan['contract_committed_sha256'] = hashlib.sha256(contract_bytes).hexdigest()
+        instructions, report['instructions'] = prepare_instructions(repo, args.dir, run_dir)
         for step in plan['checks'] + ((plan.get('handoff') or {}).get('metadata') or []):
             command_argv(step, repo)
         safe_report_directory(repo)
@@ -509,6 +551,8 @@ def run_job(args, base, credential_reader):
             cli = cli_command(settings['cli_binary'])
             version = subprocess.run(cli + ['--version'], capture_output=True,
                                      text=True, check=True, timeout=15).stdout.strip()
+        except ValueError as exc:
+            raise GuardrailError(str(exc)) from exc
         except (OSError, subprocess.SubprocessError):
             raise GuardrailError('OpenCode version probe failed')
         if not version or '\n' in version:
@@ -522,9 +566,9 @@ def run_job(args, base, credential_reader):
         key = credential_reader()
         if not key:
             raise GuardrailError('Saved OpenRouter credential is empty')
-        env = child_environment(base, model, key, run_dir)
+        env = child_environment(base, model, key, run_dir, instructions)
         title = ' '.join((args.title or 'delegated coding task').split())[:120]
-        prompt = ' '.join(args.prompt) + '\n\nThe local audited launcher owns commits and usage reports. Leave your changes in the working tree; do not commit, push, edit .git, .opencode/runs, or .opencode/worker.json. Follow this project\'s instructions and implement the requested task. The launcher will run these declared checks and delivery stages after you finish; do not duplicate them or attempt stages requiring a future commit:\n' + json.dumps({'checks': plan['checks'], 'handoff': plan.get('handoff'), 'write_paths': plan['write_paths']}, ensure_ascii=False) + '\nPrepare any task-specific semantic review needed by the declared metadata commands. If required project steps are missing from this plan, report the conflict instead of inventing success. Summarize the result.'
+        prompt = ' '.join(args.prompt) + '\n\nThe local audited launcher owns commits and usage reports. Leave your changes in the working tree; do not commit, push, edit .git, .opencode/runs, or .opencode/worker.json. Applicable project guidance is supplied through explicit instructions. Read any more specific AGENTS.md or CLAUDE.md in directories you edit and follow its scope. Implement the requested task. The launcher will run these declared checks and delivery stages after you finish; do not duplicate them or attempt stages requiring a future commit:\n' + json.dumps({'checks': plan['checks'], 'handoff': plan.get('handoff'), 'write_paths': plan['write_paths']}, ensure_ascii=False) + '\nPrepare any task-specific semantic review needed by the declared metadata commands. If required project steps are missing from this plan, report the conflict instead of inventing success. Summarize the result.'
         command = cli + ['run', '--pure', '--auto', '--model', model,
                    '--dir', str(Path(args.dir).resolve()), '--format', 'json', '--title', title, '--agent', args.agent]
         if args.variant:

@@ -50,6 +50,29 @@ class ParseEventsTests(unittest.TestCase):
                 stream.write(b'{"unfinished":')
             self.assertEqual(parse_events(path, allow_partial=True)['tokens']['total'], 10)
 
+    def test_strict_rejects_step_started_after_terminal_but_partial_keeps_prior_usage(self):
+        terminal = _finish('step-1', reason='stop')
+        duplicate_terminal = json.loads(json.dumps(terminal))
+        duplicate_terminal['timestamp'] = 999
+        events = [
+            terminal,
+            duplicate_terminal,
+            _record('step-start', part={'id': 'step-2'}),
+        ]
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / 'events.jsonl'
+            _write_events(path, events)
+            with self.assertRaises(ValueError):
+                parse_events(path)
+            result = parse_events(path, allow_partial=True)
+
+        self.assertEqual(result['model_steps'], 1)
+        self.assertEqual(result['tokens']['total'], 10)
+        self.assertEqual(result['estimated_cost_usd'], 0.25)
+        self.assertFalse(result['completed'])
+        self.assertEqual(result['event_counts']['step_finish'], 1)
+        self.assertEqual(result['event_counts']['step_start'], 1)
+
     def test_partial_accounting_does_not_ignore_corrupt_completed_records(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / 'events.jsonl'

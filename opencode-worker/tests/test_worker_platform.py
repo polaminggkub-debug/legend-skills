@@ -12,6 +12,7 @@ import unittest
 import uuid
 import ctypes
 from unittest import mock
+from types import SimpleNamespace
 NativePath = type(Path())
 
 
@@ -25,29 +26,21 @@ import worker_platform  # noqa: E402
 
 class PlatformDirectoryTests(unittest.TestCase):
     def test_explicit_worker_home_wins_on_every_platform(self):
-        with mock.patch.dict(os.environ, {"OPENROUTER_WORKER_HOME": "/tmp/explicit-worker"}, clear=False):
-            with mock.patch.object(worker_platform.os, "name", "nt"):
-                with mock.patch.object(worker_platform, "Path", NativePath):
-                    self.assertEqual(worker_platform.default_base_dir(), NativePath("/tmp/explicit-worker"))
+        platform = SimpleNamespace(name="nt", environ={"OPENROUTER_WORKER_HOME": "/tmp/explicit-worker"})
+        with mock.patch.object(worker_platform, "os", platform):
+            self.assertEqual(worker_platform.default_base_dir(), NativePath("/tmp/explicit-worker"))
 
     def test_windows_uses_local_appdata_when_no_explicit_home(self):
-        with mock.patch.dict(os.environ, {"LOCALAPPDATA": "/tmp/local-app-data"}, clear=True):
-            with mock.patch.object(worker_platform.os, "name", "nt"):
-                with mock.patch.object(worker_platform, "Path", NativePath):
-                    self.assertEqual(
-                        worker_platform.default_base_dir(),
-                        NativePath("/tmp/local-app-data") / "OpenRouterWorker",
-                    )
+        platform = SimpleNamespace(name="nt", environ={"LOCALAPPDATA": "/tmp/local-app-data"})
+        with mock.patch.object(worker_platform, "os", platform):
+            self.assertEqual(worker_platform.default_base_dir(),
+                             NativePath("/tmp/local-app-data") / "OpenRouterWorker")
 
     def test_posix_uses_private_local_share_directory(self):
-        with mock.patch.dict(os.environ, {}, clear=True):
-            with mock.patch.object(worker_platform.os, "name", "posix"):
-                with mock.patch.object(worker_platform, "Path", side_effect=NativePath) as path:
-                    path.home.return_value = NativePath("/tmp/user")
-                    self.assertEqual(
-                        worker_platform.default_base_dir(),
-                        NativePath("/tmp/user/.local/share/codex-openrouter"),
-                    )
+        with mock.patch.object(worker_platform, "os", SimpleNamespace(name="posix", environ={})):
+            with mock.patch.object(worker_platform.Path, "home", return_value=NativePath("/tmp/user")):
+                self.assertEqual(worker_platform.default_base_dir(),
+                                 NativePath("/tmp/user/.local/share/codex-openrouter"))
 
 
 class CredentialTests(unittest.TestCase):

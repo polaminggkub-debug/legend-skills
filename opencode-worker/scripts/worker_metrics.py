@@ -247,6 +247,8 @@ def parse_events(path: Path, *, allow_partial: bool = False) -> Dict[str, Any]:
     seen_telemetry_errors = set()
     step_payloads: Dict[Tuple[str, str], str] = {}
     finished_steps: List[Tuple[str, str, Dict[str, Any], Any]] = []
+    terminal_step_seen = False
+    unique_step_after_terminal = False
 
     if not lines:
         raise MetricsError("events file is empty")
@@ -289,6 +291,11 @@ def parse_events(path: Path, *, allow_partial: bool = False) -> Dict[str, Any]:
                 # Duplicate records do not contribute to accounting or counts.
                 continue
             step_payloads[step_key] = signature
+            if terminal_step_seen:
+                # A repeated terminal record is skipped above.  Any new step
+                # record after it means the stream was truncated or reordered;
+                # strict accounting must not treat the earlier stop as final.
+                unique_step_after_terminal = True
 
         event_counts[event_type] = event_counts.get(event_type, 0) + 1
 
@@ -300,6 +307,8 @@ def parse_events(path: Path, *, allow_partial: bool = False) -> Dict[str, Any]:
                 raise MetricsError("step %s is missing cost" % (step_key[1] if step_key else ""))
             cost = _number(part["cost"], "step cost")
             finished_steps.append((step_key[1] if step_key else "", reason, tokens, cost))
+            if reason.strip().lower() == "stop":
+                terminal_step_seen = True
         elif event_type == "tool_use":
             tool = part.get("tool")
             if isinstance(tool, str) and tool.strip():
@@ -331,8 +340,11 @@ def parse_events(path: Path, *, allow_partial: bool = False) -> Dict[str, Any]:
         raise MetricsError("events file contains no session")
     if not finished_steps:
         raise MetricsError("events file is missing step-finish terminal step")
-    if not allow_partial and finished_steps[-1][1].strip().lower() != "stop":
-        raise MetricsError("events file is missing terminal step-finish reason stop")
+    if not allow_partial:
+        if finished_steps[-1][1].strip().lower() != "stop":
+            raise MetricsError("events file is missing terminal step-finish reason stop")
+        if unique_step_after_terminal:
+            raise MetricsError("events file has a step after terminal step-finish")
 
     totals: Dict[str, Any] = {}
     for key in _TOKEN_KEYS:

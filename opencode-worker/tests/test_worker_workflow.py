@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 from pathlib import Path
 import sys
@@ -189,6 +190,65 @@ class WorkerWorkflowTests(unittest.TestCase):
             0,
         )
         self.assertEqual(len(self.runtime.run_rows()), 1)
+
+    def test_crlf_working_contract_uses_committed_blob_for_metadata_provenance(self):
+        """Git's Windows-style checkout conversion must not break handoff evidence."""
+        repo = self.runtime.make_repo("metadata-handoff-crlf")
+        self.runtime.git(repo, "config", "core.autocrlf", "true")
+        write_code = (
+            "import json, os; from pathlib import Path; "
+            "p=Path('docs/metadata.json'); p.parent.mkdir(parents=True, exist_ok=True); "
+            "p.write_text(json.dumps({'source_commit': os.environ['WORKER_SOURCE_COMMIT']}, sort_keys=True)+'\\n')"
+        )
+        verify_code = (
+            "import json, subprocess; from pathlib import Path; "
+            "p=Path('docs/metadata.json'); d=json.loads(p.read_text()); source=d['source_commit']; "
+            "assert subprocess.run(['git','merge-base','--is-ancestor',source,'HEAD']).returncode == 0; "
+            "assert p.read_bytes() == subprocess.check_output(['git','show','HEAD:docs/metadata.json'])"
+        )
+        contract = {
+            "schema_version": 1,
+            "write_paths": ["src/**"],
+            "checks": [self._check("after", verify_code, stage="after_commit")],
+            "handoff": {
+                "write_paths": ["docs/**"],
+                "metadata": [self._metadata("receipt", write_code)],
+            },
+        }
+        contract_path = repo / ".opencode" / "worker.json"
+        contract_path.parent.mkdir(parents=True, exist_ok=True)
+        contract_bytes = (json.dumps(contract, indent=2) + "\n").replace("\n", "\r\n").encode("utf-8")
+        contract_path.write_bytes(contract_bytes)
+        self.runtime.git(repo, "add", ".opencode/worker.json")
+        self.runtime.git(repo, "commit", "-qm", "declare CRLF worker workflow")
+        working_digest = hashlib.sha256(contract_path.read_bytes()).hexdigest()
+        committed_bytes = self.runtime.git(repo, "show", "HEAD:.opencode/worker.json").stdout.encode("utf-8")
+        committed_digest = hashlib.sha256(committed_bytes).hexdigest()
+        self.assertNotEqual(contract_path.read_bytes(), committed_bytes)
+        self.assertNotEqual(working_digest, committed_digest)
+
+        before = self.runtime.git(repo, "rev-parse", "HEAD").stdout.strip()
+        code, stdout, stderr = self.runtime.call_main(
+            ["--dir", str(repo), "--model", "deepseek/deepseek-v4.1-flash", "CRLF metadata handoff"],
+        )
+        self.assertEqual(code, 0, stderr)
+        result = self.runtime.result_json(stdout)
+        self.assertEqual(result["status"], "committed")
+        report = json.loads(Path(result["report"]).read_text(encoding="utf-8"))
+        project = report["project"]
+        self.assertEqual(project["contract_sha256"], working_digest)
+        self.assertEqual(project["contract_committed_sha256"], committed_digest)
+        source_commit = report["delivery"]["source_commit"]
+        metadata_commit = report["delivery"]["metadata_commit"]
+        self.assertEqual(self.runtime.git(repo, "show", "-s", "--format=%P", source_commit).stdout.strip(), before)
+        self.assertEqual(
+            self.runtime.git(repo, "show", "-s", "--format=%P", metadata_commit).stdout.strip(),
+            source_commit,
+        )
+        metadata_path = ".opencode/runs/%s-metadata.json" % report["run_id"]
+        metadata = json.loads(self.runtime.git(repo, "show", metadata_commit + ":" + metadata_path).stdout)
+        self.assertEqual(metadata["contract_sha256"], committed_digest)
+        self.assertEqual(self.runtime.call_main(["verify", "--dir", str(repo), "--commit", "HEAD"])[0], 0)
 
     def test_contract_tamper_and_metadata_out_of_scope_mutation_fail(self):
         tamper_repo = self.runtime.make_repo("contract-tamper")
