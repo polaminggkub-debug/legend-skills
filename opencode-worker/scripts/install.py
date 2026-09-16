@@ -11,7 +11,7 @@ import sys
 
 from worker_platform import default_base_dir
 
-VERSION = '4.0.0'
+VERSION = '4.1.0'
 START = '<!-- BEGIN OPENCODE-WORKER -->'
 END = '<!-- END OPENCODE-WORKER -->'
 

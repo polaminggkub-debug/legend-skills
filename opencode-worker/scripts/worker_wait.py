@@ -151,15 +151,15 @@ def _read_report(run_dir: Path, run_id: str) -> Tuple[dict, Path]:
 def _is_final_report(report: Mapping[str, Any]) -> bool:
     """Return whether the wrapper has supplied a terminal report.
 
-    ``finalized`` is the authoritative marker in current reports.  Failure
-    statuses are terminal when written by the wrapper's exception path.  For
-    successful legacy reports, ``phase=finished`` (or an omitted phase) keeps
-    compatibility while avoiding the transient ``status=committed`` report
-    written during metadata/final checks.
+    ``finalized`` is the authoritative marker in current reports.  An explicit
+    non-true value therefore remains non-terminal, even when its status looks
+    terminal.  Legacy reports without that marker use their status and phase
+    as a compatibility fallback while avoiding the transient
+    ``status=committed`` report written during metadata/final checks.
     """
 
-    if report.get("finalized") is True:
-        return True
+    if "finalized" in report:
+        return report.get("finalized") is True
     status = report.get("status")
     if not isinstance(status, str):
         return False
@@ -251,9 +251,12 @@ def compact_report(report: Mapping[str, Any], report_path: Any) -> Dict[str, Any
     }
     # These aliases keep the projection usable by callers that need to decide
     # their exit code without loading the private full report again.
-    result["finalized"] = report.get("finalized") is True
+    result["finalized"] = _is_final_report(report)
     result["observed_models"] = observed
     result["git"] = dict(git)
+    timing = report.get("timing")
+    if isinstance(timing, Mapping):
+        result["timing"] = dict(timing)
     if report.get("error") is not None:
         result["error"] = report.get("error")
     if report.get("persistence_error") is not None:
@@ -351,6 +354,11 @@ def wait_for_run(
 
         owner_alive = _recorded_owner_alive(run_dir, report, probe)
         if owner_alive is False:
+            # The wrapper may have atomically published its final report
+            # between the first report read and this liveness observation.
+            report, report_path = _read_report(run_dir, canonical)
+            if _is_final_report(report):
+                return compact_report(report, report_path)
             raise StaleRunError(
                 "worker wrapper for run %s is no longer running and no final report was written"
                 % canonical

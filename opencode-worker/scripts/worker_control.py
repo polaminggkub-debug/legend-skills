@@ -40,12 +40,15 @@ def execute_control(argv, base, credential_reader):
     command = argv[0]
     parser = argparse.ArgumentParser(prog='opencode-worker ' + command)
     if command == 'wait':
-        from worker_wait import wait_for_run
+        from worker_wait import TERMINAL_SUCCESS_STATUSES, wait_for_run
         parser.add_argument('--run', required=True)
         args = parser.parse_args(argv[1:])
         result = wait_for_run(base, args.run)
         print(json.dumps(result))
-        return 0 if result.get('status') in ('committed', 'no_changes') else 1
+        status = result.get('status')
+        status = status.strip().lower() if isinstance(status, str) else None
+        successful = result.get('finalized') is True and status in TERMINAL_SUCCESS_STATUSES
+        return 0 if successful else 1
     if command == 'configure':
         parser.add_argument('--provider', choices=SUPPORTED_PROVIDERS)
         parser.add_argument('--model')

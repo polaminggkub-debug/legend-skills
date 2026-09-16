@@ -49,6 +49,10 @@ settings/history, and offline macOS/Windows CI. Use [its installer](opencode-wor
 each machine supplies its own credential and each special project workflow is
 declared once in that project's committed contract.
 
+The worker keeps completion in the Codex conversation, including the mobile view
+when the host session is reachable. Read its [waiting and timing guide](opencode-worker/references/waiting-and-timing.md)
+for the continuation recipe and optional report timing fields.
+
 `chris` connects acceptance criteria to focused tests, lint/guardrails, and actual
 CI evidence. Its short entrypoint routes to operating guides and a local case
 library with pinned source links; cases are read only when relevant. It preserves

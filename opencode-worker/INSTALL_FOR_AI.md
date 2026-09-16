@@ -43,7 +43,11 @@ copy the templated `SKILL.md` through the generic skill-copy procedure.
    Confirm paths and hashes, preserved settings/history, and unresolved
    dependency/project setup issues. An existing application session may need
    a refresh/restart to discover a newly installed skill; file existence alone
-   is not evidence that the UI has refreshed.
+   is not evidence that the UI has refreshed. Confirm that the installed
+   `references/waiting-and-timing.md` is installed alongside the worker guide.
+   Install and update
+   only while no worker run is active; use `worker wait --run RUN_UUID` to recover a
+   known active run before changing managed files.
 
 On Windows, use an argument vector or PowerShell's call operator for a quoted
 Python path. The worker supports the official npm OpenCode shim through its
@@ -71,9 +75,12 @@ known conflicts but is not a filesystem-wide transaction if the disk fails
 mid-write; preserve the backup and rerun from a known source revision.
 
 The worker does not change Codex models, reasoning effort, MCP servers, global
-Git hooks, project CI, provider keys, or the official OpenCode package. Do not
-install scheduled polling: heartbeat processing already happens inside the
-running Python process with no model request.
+Git hooks, project CI, provider keys, or the official OpenCode package. Heartbeat
+processing already happens inside the running Python process with no model or
+API request. The installer adds no background automation, MCP server, OS-only
+notifier, or detached completion path. Follow the installed waiting guide for
+Codex tool continuations; its 55/60-second values are host-tool tuning, not
+worker settings or an upstream timing standard.
 `hello --timeout 10` probes the actual OpenCode CLI without modifying project
 files; its ten-second limit is a probe limit, not a coding-job deadline.
 If Go reports `RegionError`, explain the required hosting-region consent and

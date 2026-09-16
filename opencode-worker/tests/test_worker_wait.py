@@ -10,6 +10,8 @@ from pathlib import Path
 import subprocess
 import sys
 import tempfile
+import threading
+import time
 import unittest
 import uuid
 
@@ -26,6 +28,7 @@ from worker_wait import (  # noqa: E402
     StaleRunError,
     TerminalOpenCodeError,
     active_runs,
+    compact_report,
     wait_for_run,
 )
 
@@ -135,6 +138,127 @@ class WorkerWaitTests(unittest.TestCase):
         self.assertEqual(result["model"], ["openrouter/test-model"])
         self.assertEqual(result["report"], str(report_path))
         self.assertNotIn("prompt_sha256", result)
+
+    def test_final_report_race_is_rechecked_after_owner_exit(self):
+        self._write_report(self._report(launcher_pid=4242))
+        final = self._report(
+            status="committed",
+            phase="finished",
+            finalized=True,
+            git={"commit": "race-commit"},
+        )
+        probes = []
+
+        def probe(pid):
+            probes.append(pid)
+            self._write_report(final)
+            return False
+
+        result = wait_for_run(self.base, self.run_id, process_probe=probe)
+
+        self.assertEqual(probes, [4242])
+        self.assertEqual(result["status"], "committed")
+        self.assertEqual(result["commit"], "race-commit")
+
+    def test_real_dead_owner_without_final_report_is_bounded(self):
+        owner = subprocess.Popen(
+            [sys.executable, "-c", "import time; time.sleep(0.08)"],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+        self._write_report(self._report(launcher_pid=owner.pid))
+        reaper = threading.Thread(target=owner.wait, daemon=True)
+        reaper.start()
+        started = time.monotonic()
+        try:
+            with self.assertRaises(StaleRunError):
+                wait_for_run(
+                    self.base,
+                    self.run_id,
+                    interval_seconds=0.01,
+                    timeout_seconds=2,
+                )
+        finally:
+            if owner.poll() is None:
+                owner.terminate()
+            try:
+                owner.wait(timeout=3)
+            except subprocess.TimeoutExpired:
+                owner.kill()
+                owner.wait(timeout=3)
+            reaper.join(timeout=3)
+        self.assertFalse(reaper.is_alive(), "owner process was not reaped")
+        self.assertLess(time.monotonic() - started, 3)
+
+    def test_quiet_waiter_returns_final_failure_without_stdout(self):
+        self._write_report(self._report())
+        final = self._report(
+            status="failed",
+            phase="finished",
+            finalized=True,
+            error="declared check failed",
+        )
+        written = []
+
+        def sleep(_seconds):
+            if not written:
+                self._write_report(final)
+                written.append(True)
+
+        output = io.StringIO()
+        with contextlib.redirect_stdout(output):
+            result = wait_for_run(
+                self.base,
+                self.run_id,
+                interval_seconds=0.01,
+                process_probe=lambda pid: True,
+                sleep_fn=sleep,
+            )
+
+        self.assertEqual(output.getvalue(), "")
+        self.assertEqual(result["status"], "failed")
+        self.assertEqual(result["error"], "declared check failed")
+
+    def test_explicit_false_terminal_status_is_not_final_and_dead_owner_is_bounded(self):
+        for status in ("completed", "failed"):
+            with self.subTest(status=status):
+                self._write_report(
+                    self._report(
+                        status=status,
+                        phase="finished",
+                        finalized=False,
+                        launcher_pid=999999,
+                    )
+                )
+                with self.assertRaises(StaleRunError):
+                    wait_for_run(
+                        self.base,
+                        self.run_id,
+                        interval_seconds=0.01,
+                        process_probe=lambda _pid: False,
+                    )
+
+    def test_compact_report_projects_optional_timing_and_keeps_legacy_shape(self):
+        report = self._report(
+            status="completed",
+            finalized=True,
+            phase="finished",
+            timing={"elapsed_seconds": 1.25, "phases_seconds": {"model": 1.0}},
+        )
+        projected = compact_report(report, self.run_dir / "report.json")
+        self.assertEqual(projected["timing"], report["timing"])
+
+        legacy_report = self._report(status="completed", phase="finished")
+        legacy_report.pop("finalized")
+        legacy = compact_report(legacy_report, self.run_dir / "report.json")
+        self.assertTrue(legacy["finalized"])
+        self.assertNotIn("timing", legacy)
+
+        explicit_false = compact_report(
+            self._report(status="completed", phase="finished", finalized=False),
+            self.run_dir / "report.json",
+        )
+        self.assertFalse(explicit_false["finalized"])
 
     def test_quiet_job_can_wait_beyond_twenty_minutes_without_default_timeout(self):
         clock = FakeClock()

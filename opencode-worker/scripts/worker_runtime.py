@@ -25,6 +25,7 @@ from worker_platform import (CredentialStoreUnavailable, RepositoryLock, cli_com
 from worker_project import (ProjectError, assert_unchanged, command_argv,
                             inspect_project, load_project, path_allowed)
 from worker_delivery import DeliveryError, run_steps
+from worker_timing import DiagnosticTimer, RunTimer, summarize_events
 
 BASE = default_base_dir()
 
@@ -236,10 +237,26 @@ def check_cancel(run_dir):
         raise KeyboardInterrupt()
 
 
-def execute_checks(repo, run_dir, report, plan, stage):
+def record_timing(report, timer, run_dir, *, final=False, events=False):
+    """Add diagnostic timing without changing success or billing evidence."""
+    event_summary = (report.get('timing') or {}).get('events')
+    if events or (final and event_summary is None):
+        try:
+            event_summary = summarize_events(run_dir / 'events.jsonl')
+        except Exception as exc:
+            event_summary = {'availability': 'unavailable', 'error': type(exc).__name__}
+    report['timing'] = timer.finish() if final else timer.snapshot()
+    if event_summary is not None:
+        report['timing']['events'] = event_summary
+
+
+def execute_checks(repo, run_dir, report, plan, stage, timer=None):
     check_cancel(run_dir)
     steps = [step for step in plan['checks'] if step['stage'] == stage]
     report['phase'] = stage
+    if timer is not None:
+        timer.start(stage)
+        record_timing(report, timer, run_dir)
     save_report(run_dir.parent.parent, run_dir, report)
     try:
         results = run_steps(steps, repo=repo, run_dir=run_dir, stage=stage)
@@ -259,12 +276,15 @@ def execute_checks(repo, run_dir, report, plan, stage):
         report['checks']['status'] = 'passed'
 
 
-def finalize_metadata(repo, run_dir, report, plan):
+def finalize_metadata(repo, run_dir, report, plan, timer=None):
     check_cancel(run_dir)
     source_commit = report['git']['source_commit']
     if not report['git']['commit']:
         raise GuardrailError('Metadata handoff requires an attributed source change; worker made no changes')
     report['phase'] = 'metadata'
+    if timer is not None:
+        timer.start('metadata')
+        record_timing(report, timer, run_dir)
     report['delivery'] = {'status': 'pending', 'source_commit': source_commit, 'metadata_commit': None, 'results': []}
     save_report(run_dir.parent.parent, run_dir, report)
     try:
@@ -452,6 +472,24 @@ def verify_metadata_commit(repo, commit, run_id, trailers):
     return commit
 
 
+def timing_columns(report):
+    timing = report.get('timing') or {}
+    phases = timing.get('phases_seconds') or {}
+    events = timing.get('events') or {}
+    checks = [phases[key] for key in ('before_commit', 'after_commit') if key in phases]
+    return {
+        'time_preflight_seconds': phases.get('preflight'),
+        'time_model_seconds': phases.get('model'),
+        'time_checks_seconds': round(sum(checks), 3) if checks else None,
+        'time_commit_seconds': phases.get('commit'),
+        'time_metadata_seconds': phases.get('metadata'),
+        'time_finalize_seconds': phases.get('finalize'),
+        'time_tool_execution_seconds': events.get('tool_execution_seconds'),
+        'time_non_tool_seconds': events.get('non_tool_seconds'),
+        'time_event_coverage': events.get('availability'),
+    }
+
+
 def export_stats(base, output_format):
     database = base / 'runs.sqlite3'
     reports = []
@@ -468,13 +506,14 @@ def export_stats(base, output_format):
                'tokens_cache_read', 'tokens_cache_write', 'estimated_cost_usd',
                'files_changed', 'insertions', 'deletions', 'commit', 'source_commit',
                'metadata_commit', 'checks_status', 'model_steps', 'metrics_complete',
-               'accounting_scope', 'error']
+               'accounting_scope', 'error'] + list(timing_columns({}))
     writer = csv.DictWriter(sys.stdout, fieldnames=columns)
     writer.writeheader()
     for report in reports:
         metrics, changes = report.get('metrics') or {}, report.get('changes') or {}
         row = {k: report.get(k) for k in columns if k in report}
         row['observed_models'] = ', '.join(report.get('observed_models', []))
+        row.update(timing_columns(report))
         row.update({'tokens_' + k: v for k, v in metrics.get('tokens', {}).items()})
         row.update({'estimated_cost_usd': metrics.get('estimated_cost_usd'),
                     'files_changed': len(changes.get('files', [])),
@@ -503,7 +542,7 @@ def run_job(args, base, credential_reader):
     run_dir.mkdir(parents=True, mode=0o700)
     report = {
         'schema_version': 1, 'run_id': run_id, 'status': 'preflight',
-        'launcher_version': '4.0.0', 'execution_started': False, 'exit_code': None,
+        'launcher_version': '4.1.0', 'execution_started': False, 'exit_code': None,
         'commit_verified': False, 'finalized': False, 'phase': 'preflight',
         'started_at': utc_now(), 'finished_at': None, 'elapsed_seconds': 0,
         'engine': 'OpenCode', 'provider': selection['provider_label'],
@@ -519,10 +558,15 @@ def run_job(args, base, credential_reader):
     }
     lock = RepositoryLock(common / 'opencode-worker.lock')
     started = time.monotonic()
+    timer = DiagnosticTimer(factory=RunTimer)
     process = None
     monitor = None
     previous_sigterm = None
     try:
+        # Publish the owner before preflight subprocesses/discovery so an
+        # installer or configuration change can see this live run too.
+        record_timing(report, timer, run_dir)
+        save_report(base, run_dir, report)
         try:
             monitor = ProcessMonitor(
                 run_dir, interval_seconds=settings.get('heartbeat_interval_seconds', 5),
@@ -581,6 +625,7 @@ def run_job(args, base, credential_reader):
         report['opencode_version'] = version
         report['status'] = 'running'
         report['phase'] = 'model'
+        record_timing(report, timer, run_dir)
         save_report(base, run_dir, report)
         assert_unchanged(repo, plan)
         check_cancel(run_dir)
@@ -599,6 +644,7 @@ def run_job(args, base, credential_reader):
             os.chmod(run_dir / 'events.jsonl', 0o600)
             os.chmod(run_dir / 'stderr.log', 0o600)
             check_cancel(run_dir)
+            timer.start('model')
             process = subprocess.Popen(command, stdout=out, stderr=err, env=env,
                                        cwd=str(repo), **process_options())
             report['execution_started'] = True
@@ -607,6 +653,8 @@ def run_job(args, base, credential_reader):
             except subprocess.TimeoutExpired:
                 report['status'] = 'timed_out'
                 raise GuardrailError('OpenCode exceeded the job timeout')
+        timer.start('finalize')
+        record_timing(report, timer, run_dir, events=True)
         report['exit_code'] = process.returncode
         if process.returncode:
             raise GuardrailError('OpenCode exited with status ' + str(process.returncode))
@@ -620,7 +668,8 @@ def run_job(args, base, credential_reader):
             report['model_evidence'] = 'opencode_message_db'
         if git(repo, 'status', '--porcelain', '--', '.opencode/runs').stdout:
             raise GuardrailError('Worker modified the reserved audit report directory')
-        execute_checks(repo, run_dir, report, plan, 'before_commit')
+        execute_checks(repo, run_dir, report, plan, 'before_commit', timer)
+        timer.start('commit')
         assert_unchanged(repo, plan)
         enforce_scope(repo, plan['write_paths'])
         if git_text(repo, 'rev-parse', 'HEAD') != base_commit:
@@ -628,6 +677,7 @@ def run_job(args, base, credential_reader):
         report['finished_at'] = utc_now()
         report['elapsed_seconds'] = round(time.monotonic() - started, 3)
         report['status'] = 'ready_to_commit'
+        record_timing(report, timer, run_dir)
         errors = validate_report(report)
         if errors:
             raise GuardrailError('Incomplete run evidence: ' + '; '.join(errors))
@@ -644,6 +694,7 @@ def run_job(args, base, credential_reader):
             manifest.parent.mkdir(parents=True, exist_ok=True)
             # A committed document cannot contain its own commit hash. The central
             # record receives that hash after Git commits; run_id binds both records.
+            record_timing(report, timer, run_dir)
             write_json(manifest, report)
             digest = hashlib.sha256(manifest.read_bytes()).hexdigest()
             git(repo, 'add', '--', relative)
@@ -665,9 +716,10 @@ def run_job(args, base, credential_reader):
             report['commit_verified'] = True
         report['git']['source_commit'] = report['git']['commit'] or base_commit
         if plan.get('handoff'):
-            finalize_metadata(repo, run_dir, report, plan)
+            finalize_metadata(repo, run_dir, report, plan, timer)
         final_revision = git_text(repo, 'rev-parse', 'HEAD')
-        execute_checks(repo, run_dir, report, plan, 'after_commit')
+        execute_checks(repo, run_dir, report, plan, 'after_commit', timer)
+        timer.start('finalize')
         assert_unchanged(repo, plan)
         if git_text(repo, 'rev-parse', 'HEAD') != final_revision or git(repo, 'status', '--porcelain', '--untracked-files=all').stdout:
             raise GuardrailError('Final checks changed the committed revision or files; delivery is not verified')
@@ -677,12 +729,17 @@ def run_job(args, base, credential_reader):
         report['finished_at'] = utc_now()
         report['elapsed_seconds'] = round(time.monotonic() - started, 3)
         report['changes'] = diff_stats(repo, base_commit, final_revision)
+        record_timing(report, timer, run_dir, final=True)
+        if report['timing']['elapsed_seconds'] is not None:
+            report['elapsed_seconds'] = report['timing']['elapsed_seconds']
+        report['finished_at'] = utc_now()
         save_report(base, run_dir, report)
         print(json.dumps({'status': report['status'], 'run_id': run_id,
                           'commit': report['git']['commit'], 'report': str(run_dir / 'report.json'),
                           'provider': report['provider'], 'model': report['observed_models'],
                           'elapsed_seconds': report['elapsed_seconds'], 'metrics': report['metrics'],
-                          'checks': report['checks'], 'delivery': report.get('delivery')},
+                          'checks': report['checks'], 'delivery': report.get('delivery'),
+                          'timing': report['timing']},
                          ensure_ascii=True))
         return 0
     except (Exception, KeyboardInterrupt) as exc:
@@ -698,6 +755,8 @@ def run_job(args, base, credential_reader):
         report['elapsed_seconds'] = round(time.monotonic() - started, 3)
         if process is not None and process.poll() is None:
             stop_process(process)
+        if timer.snapshot()['active_phase'] is not None:
+            timer.start('finalize')
         if process is not None:
             report['exit_code'] = process.returncode
             try:
@@ -712,6 +771,10 @@ def run_job(args, base, credential_reader):
                     report['model_evidence'] = 'opencode_message_db'
             except Exception:
                 pass
+        record_timing(report, timer, run_dir, final=True, events=True)
+        report['finished_at'] = utc_now()
+        if report['timing']['elapsed_seconds'] is not None:
+            report['elapsed_seconds'] = report['timing']['elapsed_seconds']
         try:
             save_report(base, run_dir, report)
         except Exception as storage_error:
@@ -723,7 +786,8 @@ def run_job(args, base, credential_reader):
         print(json.dumps({'status': report['status'], 'run_id': run_id,
                           'persistence_error': report.get('persistence_error'),
                           'error': report['error'], 'commit': report['git']['commit'],
-                          'report': str(run_dir / 'report.json')}, ensure_ascii=True), file=sys.stderr)
+                          'report': str(run_dir / 'report.json'), 'timing': report['timing']},
+                         ensure_ascii=True), file=sys.stderr)
         return 1
     finally:
         if process is not None and process.poll() is None:
