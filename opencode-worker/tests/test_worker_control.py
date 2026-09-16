@@ -134,7 +134,7 @@ class ControlTests(unittest.TestCase):
                 captured['environment'] = environment_factory(probe)
                 database = probe / 'data' / 'opencode' / 'opencode.db'
                 database.parent.mkdir(parents=True)
-                with sqlite3.connect(database) as connection:
+                with contextlib.closing(sqlite3.connect(database)) as connection, connection:
                     connection.execute('CREATE TABLE message (session_id TEXT, data TEXT)')
                     connection.execute(
                         'INSERT INTO message VALUES (?, ?)',
