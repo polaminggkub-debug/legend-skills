@@ -1,8 +1,18 @@
 # OpenCode Worker
 
-A local CLI that delegates coding to **OpenCode → OpenRouter → your selected
-model**, then owns the declared checks, attributed Git commits, and usage report.
-Python 3.9+, standard library only. Supported desktop targets: macOS and Windows.
+A local CLI that delegates coding through the official OpenCode CLI, then owns
+the declared checks, attributed Git commits, and usage report. Python 3.9+,
+standard library only. Supported desktop targets: macOS and Windows.
+
+New installations are Go-only and use OpenCode Go (`opencode-go`) with DeepSeek
+V4.1 Flash (`deepseek-v4.1-flash`) as the default. In the OpenCode Go console,
+enable **Use balance** so Go can continue against available Zen balance after
+its quota under the same Go service. That is native Go billing, not a provider
+fallback to the separate Zen provider; a Go run does not fall back to
+OpenRouter. Existing OpenRouter installations remain supported, and
+`openrouter-worker` remains the backwards-compatible alias for the
+provider-neutral `opencode-worker` entrypoint. Each provider has a separate
+credential, and API keys stay out of prompts, command arguments, and Git.
 
 After [one-time installation](INSTALL_FOR_AI.md), tell Codex:
 
@@ -18,9 +28,10 @@ does not update the others.
 1. Check Git state, lock the repository, validate the project's workflow, and
    resolve declared executables **before making a model request**.
 2. Start one OpenCode CLI session. Capture events privately and check the local
-   process every five seconds. There is no default total job timeout.
+   process every five seconds. The Python monitor makes no model or API calls.
+   There is no fixed 20-minute cap or default total job timeout.
 3. Run declared `before_commit` checks and create source commit **A**, with
-   OpenCode/OpenRouter attribution, actual observed model, and usage evidence.
+   OpenCode, selected-provider, observed-model, and usage evidence.
 4. If declared, run deterministic metadata commands using A as the source
    revision, then create metadata commit **B**. These steps make no worker
    model request and do not count the source tokens again.
@@ -29,10 +40,10 @@ does not update the others.
    the revision that was just built.
 
 No automatic repair, retry, push, deploy, or recurring Codex task is installed.
-The local heartbeat makes no model/API calls and does not stream repeated status
-messages to Codex. Dispatching through Codex still consumes the coordinating
-turn's tokens; an installed skill and short global registration also have some
-discovery/context overhead. This is not a claim of zero total Codex overhead.
+The local heartbeat does not stream repeated status messages to Codex.
+Dispatching through Codex and any tool continuations consume coordinating turns;
+the worker makes no claim of zero total Codex token use. `hello --timeout 10` is
+a CLI probe, not a coding-job deadline.
 
 ## First use in a project
 
@@ -64,32 +75,43 @@ isolated worktree when necessary.
 ## CLI for the coordinating agent
 
 Use the Python and absolute entrypoint recorded by the installer in `SKILL.md`.
-In the examples below, `worker` means that two-part invocation, not another
-installed shell command.
+In the examples below, `worker` means the provider-neutral `opencode-worker`
+entrypoint plus that Python invocation. Existing installations may continue to
+use `openrouter-worker` as a compatibility alias.
+Legacy installations keep their explicit `openrouter` provider and credential;
+the worker never selects it implicitly for a Go run.
 
 ```text
 worker doctor --dir PROJECT
 worker inspect --dir PROJECT
+worker auth status --provider opencode-go
+worker auth login --provider opencode-go
+worker configure --provider opencode-go --model deepseek-v4.1-flash
+worker hello --timeout 10
 worker run --dir PROJECT --title "Fix navigation" "Implement the requested fix"
-worker run --dir PROJECT --model provider/model-id "Implement the requested fix"
+worker run --dir PROJECT --model deepseek-v4.1-flash "Implement the requested fix"
+worker wait --run RUN_UUID
 worker stats --format csv
 worker verify --dir PROJECT --commit HEAD
 worker cancel --run RUN_UUID
-worker auth status
-worker auth login
 ```
 
 `doctor`, `inspect`, `stats`, `verify`, `cancel`, and `auth status` make no model
 request. `doctor` checks dependencies/workflow, not application correctness or
-provider connectivity. `auth login` uses hidden terminal input and stores the
-key in macOS Keychain or Windows Credential Manager. `OPENROUTER_API_KEY` is
-also supported. Never put a key in prompts, Git, settings, or command arguments.
+provider connectivity. `auth login --provider PROVIDER` uses hidden terminal
+input for that provider. Credentials remain separate, and API keys are never
+placed in prompts, Git, settings, or command arguments. Legacy OpenRouter
+installations may continue to use `OPENROUTER_API_KEY`.
 
-Fresh settings default to `deepseek/deepseek-v4.1-flash`; model availability is
-controlled by OpenRouter and is not guaranteed by the wrapper. `--model` selects
-an OpenRouter model ID. `--variant` passes an OpenCode variant. Existing settings
-are preserved during updates. No model is silently substituted if observed
-usage identifies a different model.
+Fresh settings default to `opencode-go/deepseek-v4.1-flash`; configure the
+OpenCode Go console's **Use balance** option separately so post-quota requests
+can use available Zen balance through Go. A Go run does not silently route to
+OpenRouter. `--model` is an explicit per-run override of the installed default
+and must use the configured provider. `configure` persists the selected
+provider and model. The worker runs OpenCode with isolated config/data roots, so
+global OpenCode model settings do not control it. Existing settings are
+preserved during updates. No model is silently substituted if observed usage
+identifies a different model.
 
 ## Results and failure behavior
 
@@ -110,7 +132,14 @@ reasoning/cache tokens, estimated cost, changed files and inserted/deleted lines
 source/final commits, and check results. These are diff line counts, not a claim
 that every inserted line is source code. Interrupted runs retain available
 completed-step usage as **partial**, never as complete billing. OpenCode cost is
-an estimate, not an OpenRouter receipt; it excludes Codex orchestration cost.
+an estimate, not a provider billing receipt; for Go, quota-versus-Zen-balance
+billing remains unknown unless the provider emits evidence. The estimate excludes
+Codex orchestration and tool-continuation cost.
+
+Current source and metadata commits also carry `Provider-ID`, `Billing-Source`,
+and `Cost-Basis` trailers. Verification checks them against the source report,
+and CSV exports retain those accounting fields. Legacy version 3 records remain
+verifiable without the new fields.
 
 `verify` validates committed provenance and statistics. It does **not** rerun
 application checks or certify that the change solves the user's problem. The
@@ -144,6 +173,8 @@ commands if you want zero extra model usage from those stages.
 
 The upstream comparison and its limits are recorded in
 [the architecture review](references/upstream-review.md).
+The OpenCode Go model-switching and balance evidence is recorded in
+[the Go research note](references/go-balance-model-switching-research.md).
 
 ## Development
 

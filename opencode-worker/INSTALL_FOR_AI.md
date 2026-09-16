@@ -16,15 +16,29 @@ copy the templated `SKILL.md` through the generic skill-copy procedure.
    `py -3`. Use the selected interpreter consistently.
 3. Preflight with `python opencode-worker/scripts/install.py --check`.
    Optional `--base`, `--codex-home`, and `--skill-root` select explicit
-   destinations. Defaults respect `OPENROUTER_WORKER_HOME` and `CODEX_HOME`.
+   destinations. Existing legacy worker homes remain valid; preserve their
+   settings and credentials during an update.
 4. Run the same installer without `--check`. It copies only program/docs/example
    files, renders absolute paths in the skill, and adds a small owned block to
    global `AGENTS.md`. Backups stay outside skill discovery folders. Existing
    settings, credentials, and run history are preserved.
-5. Invoke the returned entrypoint with that Python: `auth status`, then
-   `doctor --dir PROJECT`. For a fresh machine, arrange hidden terminal input
-   for `auth login`; each person supplies their own OpenRouter key. Do not read
-   another person's credential or distribute it with this repository.
+5. Invoke the returned provider-neutral `opencode-worker` entrypoint with that
+   Python, then run `doctor --dir PROJECT`. For a new installation, run
+   `auth status --provider opencode-go`. New installations are Go-only: they
+   default to OpenCode Go (`opencode-go`) and `deepseek-v4.1-flash` (DeepSeek
+   V4.1 Flash). If the credential is absent, arrange hidden terminal input for
+   `auth login --provider opencode-go`; each person supplies their own provider
+   key. Configure the isolated default with
+   `configure --provider opencode-go --model deepseek-v4.1-flash`; this persists
+   the provider and model. In the OpenCode Go console, enable **Use balance** so
+   Go can continue against available Zen balance after Go quota under the same
+   Go service. This is native Go billing through Go, not a switch to the
+   separate Zen provider or an OpenRouter fallback. For an existing legacy
+   installation, use `auth status --provider openrouter` and preserve its
+   OpenRouter selection and credential; any Go migration is explicit. Do not
+   read another person's credential or distribute it with this repository.
+   Credentials remain separate per provider; keep API keys in private local
+   storage and out of prompts, CLI arguments, and committed files.
 6. Read back the installed skill, registration, and `installation.json`.
    Confirm paths and hashes, preserved settings/history, and unresolved
    dependency/project setup issues. An existing application session may need
@@ -33,8 +47,11 @@ copy the templated `SKILL.md` through the generic skill-copy procedure.
 
 On Windows, use an argument vector or PowerShell's call operator for a quoted
 Python path. The worker supports the official npm OpenCode shim through its
-native executable (or a recognized older Node entrypoint). Unknown batch shims are rejected: use the program's real
-executable or a repository script launched with an explicit interpreter.
+native executable (or a recognized older Node entrypoint). Unknown batch shims
+are rejected: use the program's real executable or a repository script launched
+with an explicit interpreter. New installations expose `opencode-worker`;
+existing installations keep `openrouter-worker` as a backwards-compatible
+alias.
 
 ## Update and recovery
 
@@ -42,8 +59,10 @@ Fetch the requested Legend Skills revision in a checkout outside skill
 directories, inspect its changes, and rerun the tests/preflight/installer.
 An unchanged managed copy can be updated. Locally edited files cause an error
 before writes; compare and preserve customizations before retrying. Existing
-legacy `codex-openrouter` files can migrate when their recorded verification
-hashes match. Do not overwrite a conflict merely to make installation pass.
+legacy OpenRouter worker files can migrate when their recorded verification
+hashes match. Keep legacy OpenRouter credentials separate from the new
+OpenCode Go credential, and do not overwrite a conflict merely to make
+installation pass.
 
 `installation.json` records managed file hashes, registration ownership, and a
 timestamped backup path. Backups use a path hash plus filename; compare them
@@ -55,6 +74,11 @@ The worker does not change Codex models, reasoning effort, MCP servers, global
 Git hooks, project CI, provider keys, or the official OpenCode package. Do not
 install scheduled polling: heartbeat processing already happens inside the
 running Python process with no model request.
+`hello --timeout 10` probes the actual OpenCode CLI without modifying project
+files; its ten-second limit is a probe limit, not a coding-job deadline.
+If Go reports `RegionError`, explain the required hosting-region consent and
+obtain the account owner's decision before enabling it in the Go console.
+Do not silently change models or providers to make the probe pass.
 
 ## Project setup
 

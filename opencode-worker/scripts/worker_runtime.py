@@ -16,8 +16,10 @@ import getpass
 import shutil
 from contextlib import closing
 
-from worker_metrics import MetricsError, parse_events, validate_report
-from worker_monitor import ProcessMonitor
+from worker_metrics import MetricsError, parse_events, validate_report, requires_provider_accounting
+from worker_monitor import ProcessMonitor, TerminalOpenCodeError as MonitorTerminalError
+from worker_provider import resolve_selection, ProviderError
+from worker_wait import WaitError
 from worker_platform import (CredentialStoreUnavailable, RepositoryLock, cli_command, default_base_dir,
                              process_options, read_key, stop_process, store_key)
 from worker_project import (ProjectError, assert_unchanged, command_argv,
@@ -150,11 +152,16 @@ def child_environment(base, model, key, run_dir, instructions=None):
     for name in list(env):
         if name.upper().startswith(('OPENCODE_', 'GIT_')):
             env.pop(name)
-    config = {'model': model, 'small_model': model}
+    provider_id = model.split('/', 1)[0]
+    selection = resolve_selection({'default_provider': provider_id, 'default_model': model})
+    config = {'model': model, 'small_model': model, 'enabled_providers': [provider_id],
+              'provider': {provider_id: {'options': {'apiKey': key}}}}
+    for name in ('OPENROUTER_API_KEY', 'OPENCODE_API_KEY', 'OPENCODE_GO_API_KEY'):
+        env.pop(name, None)
     if instructions is not None:
         config['instructions'] = [Path(instructions).resolve().as_posix()]
     env.update({
-        'OPENROUTER_API_KEY': key,
+        selection['credential_env']: key,
         'XDG_CONFIG_HOME': str(base / 'config'),
         'XDG_DATA_HOME': str(base / 'data'),
         'XDG_STATE_HOME': str(base / 'state'),
@@ -184,7 +191,8 @@ def reason_effort(base, model, variant):
         return variant
     try:
         config = json.loads((base / 'config' / 'opencode' / 'opencode.json').read_text(encoding='utf-8'))
-        return config['provider']['openrouter']['models'][model.removeprefix('openrouter/')]['options']['reasoning']['effort']
+        provider, model_id = model.split('/', 1)
+        return config['provider'][provider]['models'][model_id]['options']['reasoning']['effort']
     except (OSError, ValueError, KeyError):
         return None
 
@@ -296,7 +304,8 @@ def finalize_metadata(repo, run_dir, report, plan):
     message.write_text('\n'.join([
         'chore(opencode): finalize declared metadata', '',
         'Deterministic delivery; model usage is recorded in the source run.', '',
-        'Generated-By: OpenCode workflow', 'Via: OpenRouter',
+        'Generated-By: OpenCode workflow', 'Via: ' + report['provider'],
+        *[key + ': ' + value for key, value in provider_trailers(report).items()],
         'Model-Observed: ' + ', '.join(report['observed_models']),
         'OpenCode-Run: ' + report['run_id'], 'Run-Phase: metadata',
         'OpenCode-Source-Commit: ' + source_commit,
@@ -318,13 +327,21 @@ def finalize_metadata(repo, run_dir, report, plan):
     report['delivery']['status'] = 'metadata_committed'
 
 
+def provider_trailers(report):
+    if not requires_provider_accounting(report):
+        return {}
+    return {'Provider-ID': report['provider_id'], 'Billing-Source': report['billing_source'],
+            'Cost-Basis': report['cost_basis']}
+
+
 def commit_message(report, relative_path, digest, title):
     tokens = report['metrics']['tokens']
     return '\n'.join([
         'chore(opencode): ' + title,
         '',
         'Generated-By: OpenCode',
-        'Via: OpenRouter',
+        'Via: ' + report['provider'],
+        *[key + ': ' + value for key, value in provider_trailers(report).items()],
         'Model-Requested: ' + report['requested_model'],
         'Model-Observed: ' + ', '.join(report['observed_models']),
         'OpenCode-Version: ' + report['opencode_version'],
@@ -369,7 +386,7 @@ def verify_commit(repo, revision):
     if errors:
         raise GuardrailError('Invalid committed report: ' + '; '.join(errors))
     expected = {
-        'Generated-By': 'OpenCode', 'Via': 'OpenRouter',
+        'Generated-By': 'OpenCode', 'Via': report['provider'],
         'Model-Requested': report['requested_model'],
         'Model-Observed': ', '.join(report['observed_models']),
         'OpenCode-Version': report['opencode_version'],
@@ -378,6 +395,7 @@ def verify_commit(repo, revision):
         'Cost-Estimate-USD': str(report['metrics']['estimated_cost_usd']),
         'Duration-Seconds': str(report['elapsed_seconds']),
     }
+    expected.update(provider_trailers(report))
     if any(trailers.get(k) != v for k, v in expected.items()):
         raise GuardrailError('Commit attribution does not match the recorded evidence')
     parents = git_text(repo, 'show', '-s', '--format=%P', commit).split()
@@ -416,10 +434,11 @@ def verify_metadata_commit(repo, commit, run_id, trailers):
         raise GuardrailError('Committed workflow contract digest does not match')
     if git(repo, 'show', commit + ':.opencode/worker.json').stdout != contract:
         raise GuardrailError('Metadata changed its workflow contract')
-    expected = {'Generated-By': 'OpenCode workflow', 'Via': 'OpenRouter',
+    expected = {'Generated-By': 'OpenCode workflow', 'Via': source['provider'],
                 'Model-Observed': ', '.join(source['observed_models']),
                 'OpenCode-Source-Commit': source_commit, 'Tokens-Total': '0',
                 'Model-Calls': '0', 'Cost-Estimate-USD': '0'}
+    expected.update(provider_trailers(source))
     if any(trailers.get(key) != value for key, value in expected.items()):
         raise GuardrailError('Metadata attribution does not match its source')
     if (metadata.get('schema_version') != 1 or metadata.get('phase') != 'metadata'
@@ -442,7 +461,8 @@ def export_stats(base, output_format):
     if output_format == 'json':
         print(json.dumps(reports))
         return
-    columns = ['run_id', 'started_at', 'finished_at', 'status', 'phase', 'launcher_version', 'engine', 'provider', 'requested_model',
+    columns = ['run_id', 'started_at', 'finished_at', 'status', 'phase', 'launcher_version', 'engine', 'provider',
+               'provider_id', 'billing_source', 'cost_basis', 'requested_model',
                'observed_models', 'opencode_version', 'reason_effort', 'elapsed_seconds',
                'tokens_total', 'tokens_input', 'tokens_output', 'tokens_reasoning',
                'tokens_cache_read', 'tokens_cache_write', 'estimated_cost_usd',
@@ -474,9 +494,8 @@ def export_stats(base, output_format):
 
 def run_job(args, base, credential_reader):
     settings = json.loads((base / 'settings.json').read_text(encoding='utf-8'))
-    model = args.model or settings['default_model']
-    if not model.startswith('openrouter/'):
-        model = 'openrouter/' + model
+    selection = resolve_selection(settings, args.model)
+    model = selection['model']
     repo = Path(git_text(Path(args.dir).resolve(), 'rev-parse', '--show-toplevel'))
     common = Path(git_text(repo, 'rev-parse', '--path-format=absolute', '--git-common-dir'))
     run_id = str(uuid.uuid4())
@@ -484,17 +503,19 @@ def run_job(args, base, credential_reader):
     run_dir.mkdir(parents=True, mode=0o700)
     report = {
         'schema_version': 1, 'run_id': run_id, 'status': 'preflight',
-        'launcher_version': '3.0.0', 'execution_started': False, 'exit_code': None,
+        'launcher_version': '4.0.0', 'execution_started': False, 'exit_code': None,
         'commit_verified': False, 'finalized': False, 'phase': 'preflight',
         'started_at': utc_now(), 'finished_at': None, 'elapsed_seconds': 0,
-        'engine': 'OpenCode', 'provider': 'OpenRouter',
+        'engine': 'OpenCode', 'provider': selection['provider_label'],
+        'provider_id': selection['provider_id'], 'launcher_pid': os.getpid(),
+        'billing_source': 'provider_managed_unobserved',
         'opencode_version': '', 'requested_model': model, 'observed_models': [],
         'model_evidence': 'unavailable', 'reason_effort': reason_effort(base, model, args.variant),
         'metrics': {}, 'git': {'base_commit': None, 'commit': None, 'parent_repo': str(repo)},
         'changes': {'files': [], 'insertions': 0, 'deletions': 0, 'binary_files': 0},
         'checks': {'status': 'not_verified'}, 'error': None,
         'prompt_sha256': hashlib.sha256(' '.join(args.prompt).encode()).hexdigest(),
-        'cost_basis': 'OpenCode per-session estimate; not an OpenRouter billing receipt',
+        'cost_basis': selection['cost_basis'],
     }
     lock = RepositoryLock(common / 'opencode-worker.lock')
     started = time.monotonic()
@@ -563,9 +584,9 @@ def run_job(args, base, credential_reader):
         save_report(base, run_dir, report)
         assert_unchanged(repo, plan)
         check_cancel(run_dir)
-        key = credential_reader()
+        key = (read_key(selection['provider_id']) if credential_reader is read_key else credential_reader())
         if not key:
-            raise GuardrailError('Saved OpenRouter credential is empty')
+            raise GuardrailError('Saved provider credential is empty')
         env = child_environment(base, model, key, run_dir, instructions)
         title = ' '.join((args.title or 'delegated coding task').split())[:120]
         prompt = ' '.join(args.prompt) + '\n\nThe local audited launcher owns commits and usage reports. Leave your changes in the working tree; do not commit, push, edit .git, .opencode/runs, or .opencode/worker.json. Applicable project guidance is supplied through explicit instructions. Read any more specific AGENTS.md or CLAUDE.md in directories you edit and follow its scope. Implement the requested task. The launcher will run these declared checks and delivery stages after you finish; do not duplicate them or attempt stages requiring a future commit:\n' + json.dumps({'checks': plan['checks'], 'handoff': plan.get('handoff'), 'write_paths': plan['write_paths']}, ensure_ascii=False) + '\nPrepare any task-specific semantic review needed by the declared metadata commands. If required project steps are missing from this plan, report the conflict instead of inventing success. Summarize the result.'
@@ -668,7 +689,7 @@ def run_job(args, base, credential_reader):
         report['finalized'] = True
         if report['status'] != 'timed_out':
             report['status'] = 'interrupted' if isinstance(exc, KeyboardInterrupt) else 'failed'
-        report['error'] = str(exc) if isinstance(exc, (GuardrailError, MetricsError, ProjectError, DeliveryError, CredentialStoreUnavailable)) else type(exc).__name__
+        report['error'] = str(exc) if isinstance(exc, (GuardrailError, MetricsError, ProjectError, DeliveryError, CredentialStoreUnavailable, ProviderError, WaitError, MonitorTerminalError)) else type(exc).__name__
         if getattr(exc, 'local_diagnostics', None):
             diagnostic_path = run_dir / 'git-error.log'
             diagnostic_path.write_bytes(exc.local_diagnostics)
@@ -744,6 +765,10 @@ def main(argv=None, base=None, credential_reader=read_key):
     argv = list(sys.argv[1:] if argv is None else argv)
     base = Path(base) if base is not None else default_base_dir()
     try:
+        from worker_control import execute_control
+        result = execute_control(argv, base, credential_reader)
+        if result is not None:
+            return result
         if argv and argv[0] in ('doctor', 'inspect'):
             parser = argparse.ArgumentParser(prog='openrouter-worker ' + argv[0])
             parser.add_argument('--dir', default=os.getcwd())
@@ -751,24 +776,6 @@ def main(argv=None, base=None, credential_reader=read_key):
             result = diagnose(base, args.dir) if argv[0] == 'doctor' else inspect_project(Path(args.dir).resolve())
             print(json.dumps(result))
             return 1 if result.get('status') == 'needs_setup' else 0
-        if argv and argv[0] == 'auth':
-            parser = argparse.ArgumentParser(prog='openrouter-worker auth')
-            parser.add_argument('action', choices=['login', 'status'])
-            args = parser.parse_args(argv[1:])
-            if args.action == 'login':
-                key = getpass.getpass('OpenRouter API key (hidden): ')
-                if not key.strip():
-                    raise GuardrailError('Credential must not be empty')
-                store_key(key.strip())
-                print(json.dumps({'status': 'stored', 'storage': 'OS credential store'}))
-            else:
-                try:
-                    present = bool(credential_reader())
-                except Exception:
-                    present = False
-                print(json.dumps({'configured': present}))
-                return 0 if present else 1
-            return 0
         if argv and argv[0] == 'cancel':
             parser = argparse.ArgumentParser(prog='openrouter-worker cancel')
             parser.add_argument('--run', required=True)
@@ -808,7 +815,7 @@ def main(argv=None, base=None, credential_reader=read_key):
         args = parser.parse_args(argv)
         return run_job(args, base, credential_reader)
     except (Exception, KeyboardInterrupt) as exc:
-        error = str(exc) if isinstance(exc, (GuardrailError, ProjectError, DeliveryError, CredentialStoreUnavailable)) else type(exc).__name__
+        error = str(exc) if isinstance(exc, (GuardrailError, ProjectError, DeliveryError, CredentialStoreUnavailable, ProviderError, WaitError, MonitorTerminalError)) else type(exc).__name__
         print(json.dumps({'status': 'failed', 'error': error}), file=sys.stderr)
         return 1
 

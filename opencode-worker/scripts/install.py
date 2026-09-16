@@ -11,7 +11,7 @@ import sys
 
 from worker_platform import default_base_dir
 
-VERSION = '3.0.0'
+VERSION = '4.0.0'
 START = '<!-- BEGIN OPENCODE-WORKER -->'
 END = '<!-- END OPENCODE-WORKER -->'
 
@@ -54,11 +54,17 @@ def install(package, base, codex_home, skill_root=None, check=False):
     skill_root = Path(skill_root).expanduser().resolve() if skill_root else codex_home / 'skills'
     skill_path = skill_root / 'opencode-worker' / 'SKILL.md'
     manifest_path = base / 'installation.json'
+    from worker_wait import active_runs
+    if active_runs(base):
+        raise InstallError('An OpenCode worker is active; install after it finishes')
     previous = json.loads(manifest_path.read_text(encoding='utf-8')) if manifest_path.exists() else {}
     known = previous.get('files_sha256', {})
     legacy_path = base / 'guardrail-verification.json'
     legacy = json.loads(legacy_path.read_text(encoding='utf-8')).get('files_sha256', {}) if legacy_path.exists() else {}
     sources = list((package / 'scripts').glob('worker_*.py')) + [package / 'scripts' / 'openrouter-worker', package / 'README.md']
+    entry_name = 'opencode-worker' if (package / 'scripts' / 'opencode-worker').is_file() else 'openrouter-worker'
+    if entry_name != 'openrouter-worker':
+        sources.append(package / 'scripts' / entry_name)
     if (package / 'INSTALL_FOR_AI.md').is_file():
         sources.append(package / 'INSTALL_FOR_AI.md')
     for folder in ('references', 'examples'):
@@ -71,7 +77,7 @@ def install(package, base, codex_home, skill_root=None, check=False):
         relative = source.name if source.parent == package / 'scripts' else source.relative_to(package).as_posix()
         files[base / relative] = source.read_bytes()
     skill = (package / 'SKILL.md').read_text(encoding='utf-8')
-    skill = skill.replace('{{WORKER_PYTHON}}', sys.executable).replace('{{WORKER_ENTRYPOINT}}', str(base / 'openrouter-worker')).replace('{{WORKER_README}}', str(base / 'README.md'))
+    skill = skill.replace('{{WORKER_PYTHON}}', sys.executable).replace('{{WORKER_ENTRYPOINT}}', str(base / entry_name)).replace('{{WORKER_README}}', str(base / 'README.md'))
     files[skill_path] = skill.encode('utf-8')
     for target, data in files.items():
         if target.is_symlink():
@@ -91,7 +97,8 @@ def install(package, base, codex_home, skill_root=None, check=False):
     updated_agents = register(original_agents, block, previous.get('registration_sha256'))
     settings_path = base / 'settings.json'
     settings = json.loads(settings_path.read_text(encoding='utf-8')) if settings_path.exists() else {
-        'default_model': 'deepseek/deepseek-v4.1-flash',
+        'default_provider': 'opencode-go', 'allowed_providers': ['opencode-go'],
+        'default_model': 'opencode-go/deepseek-v4.1-flash',
         'cli_binary': shutil.which('opencode') or 'opencode',
         'default_job_timeout_seconds': None, 'heartbeat_interval_seconds': 5,
         'hello_timeout_seconds': 10,
@@ -99,7 +106,7 @@ def install(package, base, codex_home, skill_root=None, check=False):
     if not isinstance(settings, dict):
         raise InstallError('Existing settings must be a JSON object')
     summary = {'status': 'checked' if check else 'installed', 'version': VERSION,
-               'entrypoint': str(base / 'openrouter-worker'), 'skill': str(skill_path),
+               'entrypoint': str(base / entry_name), 'skill': str(skill_path),
                'codex_instructions': str(agents), 'files': len(files),
                'credentials': 'preserved; each user supplies their own key',
                'prerequisites': ['Python 3.9+', 'Git', 'official OpenCode CLI']}
@@ -115,6 +122,7 @@ def install(package, base, codex_home, skill_root=None, check=False):
     for target, data in files.items():
         write(target, data)
     (base / 'openrouter-worker').chmod(0o700)
+    (base / entry_name).chmod(0o700)
     write(agents, updated_agents.encode('utf-8'))
     if not settings_path.exists():
         write(settings_path, (json.dumps(settings, indent=2) + '\n').encode())

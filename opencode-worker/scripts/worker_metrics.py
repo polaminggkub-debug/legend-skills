@@ -12,6 +12,8 @@ import math
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence, Tuple
 
+from worker_provider import resolve_selection
+
 
 class MetricsError(ValueError):
     """Raised when an event stream cannot support trustworthy accounting."""
@@ -455,6 +457,16 @@ def _validate_count_map(value: Mapping[str, Any], field: str, errors: List[str])
             _record_error(errors, "%s values must be non-negative integers" % field)
 
 
+def requires_provider_accounting(report: Mapping[str, Any]) -> bool:
+    """Go and version 4+ reports require explicit provider accounting."""
+    if report.get("provider") == "OpenCode Go":
+        return True
+    try:
+        return int(str(report.get("launcher_version", "0")).split(".")[0]) >= 4
+    except ValueError:
+        return False
+
+
 def validate_report(report: Mapping[str, Any]) -> List[str]:
     """Return human-readable validation failures for a worker report.
 
@@ -487,12 +499,24 @@ def validate_report(report: Mapping[str, Any]) -> List[str]:
 
     if report.get("engine") != "OpenCode":
         _record_error(errors, "engine must be OpenCode")
-    if report.get("provider") != "OpenRouter":
-        _record_error(errors, "provider must be OpenRouter")
+    providers = {"OpenRouter": "openrouter", "OpenCode Go": "opencode-go"}
+    provider_id = providers.get(report.get("provider"))
+    if provider_id is None:
+        _record_error(errors, "provider must be a supported worker provider")
+    if report.get("provider_id", provider_id) != provider_id:
+        _record_error(errors, "provider_id must match provider")
+    if requires_provider_accounting(report):
+        if report.get("provider_id") != provider_id or provider_id is None:
+            _record_error(errors, "provider_id is required for current reports")
+        if report.get("billing_source") != "provider_managed_unobserved":
+            _record_error(errors, "billing_source must acknowledge unobserved provider billing")
+        if provider_id and report.get("cost_basis") != resolve_selection({"default_provider": provider_id})["cost_basis"]:
+            _record_error(errors, "cost_basis must identify the provider estimate, not a billing receipt")
+    prefix = str(provider_id) + "/"
 
     requested_model = report.get("requested_model")
-    if not isinstance(requested_model, str) or not requested_model.startswith("openrouter/"):
-        _record_error(errors, "requested_model must use the openrouter/ prefix")
+    if not isinstance(requested_model, str) or not requested_model.startswith(prefix):
+        _record_error(errors, "requested_model must use the recorded provider prefix")
 
     observed_models = report.get("observed_models")
     status = report.get("status")
@@ -502,8 +526,8 @@ def validate_report(report: Mapping[str, Any]) -> List[str]:
     elif not observed_models and not failure_status:
         _record_error(errors, "observed_models must contain actual model evidence")
     elif observed_models:
-        if any(not item.startswith("openrouter/") for item in observed_models):
-            _record_error(errors, "observed_models must use the openrouter/ prefix")
+        if any(not item.startswith(prefix) for item in observed_models):
+            _record_error(errors, "observed_models must use the recorded provider prefix")
         if isinstance(requested_model, str) and set(observed_models) != {requested_model}:
             _record_error(errors, "observed_models must match requested_model exactly")
         if len(set(observed_models)) != len(observed_models):

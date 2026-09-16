@@ -134,6 +134,31 @@ class WorkerWorkflowTests(unittest.TestCase):
         self.assertIn("OpenCode", body)
         self.assertIn("OpenRouter", body)
 
+    def test_go_metadata_keeps_source_provider_attribution(self):
+        import worker_runtime
+        self.runtime.settings.update(default_provider="opencode-go", default_model="deepseek-v4.1-flash",
+                                     allowed_providers=["opencode-go"])
+        (self.runtime.base / "settings.json").write_text(json.dumps(self.runtime.settings))
+        repo = self.runtime.make_repo("go-metadata")
+        self._write_contract(repo, {"schema_version": 1, "write_paths": ["src/**"], "checks": [],
+            "handoff": {"write_paths": ["docs/**"], "metadata": [self._metadata("receipt",
+                "from pathlib import Path; p=Path('docs'); p.mkdir(exist_ok=True); (p/'done.txt').write_text('done')")]}})
+        code, stdout, stderr = self.runtime.call_main(["run", "--dir", str(repo), "update source"],
+            FAKE_PROVIDER="opencode-go", FAKE_MODEL="deepseek-v4.1-flash")
+        self.assertEqual(code, 0, stderr)
+        result = self.runtime.result_json(stdout)
+        body = self.runtime.git(repo, "show", "-s", "--format=%B", "HEAD").stdout
+        self.assertIn("Run-Phase: metadata", body)
+        self.assertIn("Via: OpenCode Go", body)
+        self.assertIn("Provider-ID: opencode-go", body)
+        self.assertIn("Billing-Source: provider_managed_unobserved", body)
+        self.assertNotIn("OpenRouter", body)
+        self.assertEqual(worker_runtime.verify_commit(repo, "HEAD"), result["commit"])
+        self.runtime.git(repo, "commit", "--amend", "-m",
+                         body.replace("Provider-ID: opencode-go", "Provider-ID: openrouter"))
+        with self.assertRaisesRegex(worker_runtime.GuardrailError, "Metadata attribution"):
+            worker_runtime.verify_commit(repo, "HEAD")
+
     def test_handoff_metadata_commits_after_source_and_after_check_verifies_it(self):
         repo = self.runtime.make_repo("metadata-handoff")
         write_code = (
