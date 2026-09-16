@@ -6,6 +6,7 @@ import tempfile
 import time
 import unittest
 from pathlib import Path
+from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 from worker_probe import run_hello
@@ -58,6 +59,15 @@ time.sleep(60)
     def test_wrong_reply_does_not_pass_connectivity_criterion(self):
         result, _ = self.probe("import json; print(json.dumps({'type':'text','part':{'text':'Goodbye'}}))")
         self.assertEqual(result['status'], 'failed')
+
+    def test_finished_hello_cannot_pass_when_observed_after_deadline(self):
+        # Simulate scheduling delay after a successful child exit, without
+        # changing subprocess's own monotonic clock or waiting in real time.
+        with mock.patch('worker_probe.time') as clock:
+            clock.monotonic.side_effect = [0, 0, 0, 3, 3]
+            result, report = self.probe("import json; print(json.dumps({'type':'text','part':{'text':'Hello'}}))")
+        self.assertEqual(result['status'], 'timed_out')
+        self.assertIsNone(report['response'])
 
     def test_provider_region_consent_is_reported_without_private_payload(self):
         event = {'type': 'error', 'error': {'name': 'APIError', 'data': {'statusCode': 403,

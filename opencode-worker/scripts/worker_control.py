@@ -79,9 +79,9 @@ def execute_control(argv, base, credential_reader):
     selection = resolve_selection(settings, args.model)
     key = read_key(selection['provider_id']) if credential_reader is read_key else credential_reader()
     result = run_hello(base, selection, cli_command(settings['cli_binary']),
-                       lambda directory: child_environment(base, selection['model'], key, directory), args.timeout)
+                       lambda directory: child_environment(directory, selection['model'], key, directory), args.timeout)
     session = (result.get('metrics') or {}).get('session_id')
-    result['observed_models'] = observed_models(base, session)
+    result['observed_models'] = observed_models(Path(result['report']).parent, session)
     if result['status'] == 'passed' and result['observed_models'] != [selection['model']]:
         result.update(status='failed', error='Hello returned without matching actual model evidence')
     write_json(Path(result['report']), result)

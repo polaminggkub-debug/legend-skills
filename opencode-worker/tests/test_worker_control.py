@@ -2,6 +2,7 @@ import json
 import contextlib
 import io
 import os
+import sqlite3
 import sys
 import tempfile
 import unittest
@@ -107,3 +108,62 @@ class ControlTests(unittest.TestCase):
             probe.assert_not_called()
             self.assertEqual(settings.read_bytes(), before)
             self.assertIn('still active', errors.getvalue())
+
+    def test_hello_uses_isolated_probe_state_for_environment_and_model_evidence(self):
+        with tempfile.TemporaryDirectory() as directory:
+            base = Path(directory)
+            settings = base / 'settings.json'
+            settings.write_text(json.dumps({
+                'default_provider': 'opencode-go',
+                'allowed_providers': ['opencode-go'],
+                'default_model': 'opencode-go/deepseek-v4.1-flash',
+                'cli_binary': sys.executable,
+            }))
+            before = settings.read_bytes()
+            captured = {}
+            credential_calls = []
+
+            def credential_reader():
+                credential_calls.append(True)
+                return 'fixture-key'
+
+            def fake_hello(_base, selection, _cli, environment_factory, _timeout):
+                probe = base / 'probes' / 'fixture-probe'
+                probe.mkdir(parents=True)
+                captured['probe'] = probe
+                captured['environment'] = environment_factory(probe)
+                database = probe / 'data' / 'opencode' / 'opencode.db'
+                database.parent.mkdir(parents=True)
+                with sqlite3.connect(database) as connection:
+                    connection.execute('CREATE TABLE message (session_id TEXT, data TEXT)')
+                    connection.execute(
+                        'INSERT INTO message VALUES (?, ?)',
+                        ('hello-session', json.dumps({
+                            'role': 'assistant', 'providerID': selection['provider_id'],
+                            'modelID': 'deepseek-v4.1-flash',
+                        })),
+                    )
+                report = probe / 'report.json'
+                return {'status': 'passed', 'metrics': {'session_id': 'hello-session'},
+                        'report': str(report)}
+
+            output = io.StringIO()
+            with mock.patch.object(worker_probe, 'run_hello', side_effect=fake_hello):
+                with contextlib.redirect_stdout(output):
+                    code = main(['hello'], base=base, credential_reader=credential_reader)
+
+            result = json.loads(output.getvalue())
+            environment = captured['environment']
+            probe = captured['probe']
+            self.assertEqual(code, 0)
+            self.assertEqual(result['observed_models'], ['opencode-go/deepseek-v4.1-flash'])
+            self.assertEqual(Path(environment['XDG_DATA_HOME']), probe / 'data')
+            self.assertEqual(Path(environment['XDG_CONFIG_HOME']), probe / 'config')
+            self.assertEqual(Path(environment['XDG_STATE_HOME']), probe / 'state')
+            self.assertEqual(Path(environment['XDG_CACHE_HOME']), probe / 'cache')
+            self.assertEqual(Path(environment['OPENCODE_CONFIG_DIR']), probe / 'config' / 'opencode')
+            self.assertEqual(credential_calls, [True])
+            self.assertEqual(settings.read_bytes(), before)
+            for path in base.rglob('*'):
+                if path.is_file():
+                    self.assertNotIn('fixture-key', path.read_text(encoding='utf-8', errors='replace'))

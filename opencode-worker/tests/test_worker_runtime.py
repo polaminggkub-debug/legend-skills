@@ -1128,7 +1128,7 @@ class WorkerRuntimeAcceptanceTests(unittest.TestCase):
             with self.subTest(field=field):
                 report = json.loads(original)
                 report.pop(field)
-                path.write_text(json.dumps(report) + "\n", encoding="utf-8")
+                path.write_bytes((json.dumps(report) + "\n").encode("utf-8"))
                 digest = hashlib.sha256(path.read_bytes()).hexdigest()
                 self.git(repo, "add", relative)
                 self.git(repo, "commit", "--amend", "-m", body.replace(original_digest, digest))
@@ -1140,7 +1140,7 @@ class WorkerRuntimeAcceptanceTests(unittest.TestCase):
         report["launcher_version"] = "3.0.0"
         for field in ("provider_id", "billing_source", "cost_basis"):
             report.pop(field)
-        path.write_text(json.dumps(report) + "\n", encoding="utf-8")
+        path.write_bytes((json.dumps(report) + "\n").encode("utf-8"))
         digest = hashlib.sha256(path.read_bytes()).hexdigest()
         message = worker_runtime.commit_message(report, relative, digest, "legacy fixture")
         self.git(repo, "add", relative)

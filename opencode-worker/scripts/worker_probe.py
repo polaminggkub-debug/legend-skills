@@ -112,8 +112,11 @@ def run_hello(base, selection, cli, environment_factory, timeout=10):
                 started = time.monotonic()
                 process = subprocess.Popen(command, cwd=directory, env=env, stdout=out, stderr=err,
                                            **process_options())
-                process.wait(timeout=timeout)
-                report['elapsed_seconds'] = round(time.monotonic() - started, 3)
+                process.wait(timeout=max(0, timeout - (time.monotonic() - started)))
+                elapsed = time.monotonic() - started
+                if elapsed > timeout:
+                    raise subprocess.TimeoutExpired(command, timeout)
+                report['elapsed_seconds'] = round(elapsed, 3)
             reply = _reply(events)
             report['response'] = reply
             if process.returncode == 0 and reply and reply.lower().rstrip('!.') == 'hello':
