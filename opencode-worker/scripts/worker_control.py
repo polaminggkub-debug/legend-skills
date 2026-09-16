@@ -69,10 +69,13 @@ def execute_control(argv, base, credential_reader):
             present = False
         print(json.dumps({'configured': present, 'provider': selection['provider_label']}))
         return 0 if present else 1
+    from worker_wait import active_runs
     from worker_probe import run_hello
     parser.add_argument('--model')
     parser.add_argument('--timeout', type=float, default=settings.get('hello_timeout_seconds', 10))
     args = parser.parse_args(argv[1:])
+    if active_runs(base):
+        raise ProviderError('An OpenCode worker is still active; run hello after it finishes')
     selection = resolve_selection(settings, args.model)
     key = read_key(selection['provider_id']) if credential_reader is read_key else credential_reader()
     result = run_hello(base, selection, cli_command(settings['cli_binary']),

@@ -136,6 +136,11 @@ an estimate, not a provider billing receipt; for Go, quota-versus-Zen-balance
 billing remains unknown unless the provider emits evidence. The estimate excludes
 Codex orchestration and tool-continuation cost.
 
+Current source and metadata commits also carry `Provider-ID`, `Billing-Source`,
+and `Cost-Basis` trailers. Verification checks them against the source report,
+and CSV exports retain those accounting fields. Legacy version 3 records remain
+verifiable without the new fields.
+
 `verify` validates committed provenance and statistics. It does **not** rerun
 application checks or certify that the change solves the user's problem. The
 source report is a pre-commit snapshot; final checks live in the external run

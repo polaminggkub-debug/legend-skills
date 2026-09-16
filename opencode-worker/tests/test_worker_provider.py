@@ -32,7 +32,7 @@ class ProviderSelectionTests(unittest.TestCase):
                 "provider_label": "OpenCode Go",
                 "model": "opencode-go/deepseek-v4.1-flash",
                 "credential_env": "OPENCODE_API_KEY",
-                "cost_basis": "OpenCode-reported estimate; OpenCode Go Use balance may charge Zen after Go limits; not a Zen/OpenRouter billing receipt",
+                "cost_basis": "OpenCode-reported estimate; OpenCode Go Use balance may charge Zen after Go limits; not a Zen billing receipt",
             },
         )
 

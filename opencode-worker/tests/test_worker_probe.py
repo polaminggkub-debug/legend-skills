@@ -3,6 +3,7 @@ import json
 import os
 import sys
 import tempfile
+import time
 import unittest
 from pathlib import Path
 
@@ -17,7 +18,8 @@ class ProbeTests(unittest.TestCase):
             script = base / 'cli.py'
             script.write_text(source)
             result = run_hello(base, {'provider_id': 'opencode-go', 'provider_label': 'OpenCode Go',
-                                    'model': 'opencode-go/deepseek-v4.1-flash'},
+                                    'model': 'opencode-go/deepseek-v4.1-flash',
+                                    'cost_basis': 'fixture estimate'},
                                [sys.executable, str(script)], lambda folder: os.environ.copy(), timeout)
             return result, json.loads(Path(result['report']).read_text())
 
@@ -33,9 +35,23 @@ print(json.dumps({'type':'text','sessionID':'s','part':{'type':'text','text':'He
         self.assertEqual(report['response'], 'Hello')
         self.assertLess(report['elapsed_seconds'], 2)
         self.assertFalse(report['application_workflow_executed'])
+        self.assertEqual(report['cost_basis'], 'fixture estimate')
 
     def test_no_reply_within_deadline_is_failure(self):
         result, report = self.probe('import time; time.sleep(60)', timeout=0.05)
+        self.assertEqual(result['status'], 'timed_out')
+        self.assertIsNone(report['response'])
+
+    def test_ignored_term_timeout_is_prompt_and_cannot_pass_late(self):
+        source = '''import json, signal, time
+signal.signal(signal.SIGTERM, signal.SIG_IGN)
+time.sleep(0.2)
+print(json.dumps({'type':'text','part':{'type':'text','text':'Hello'}}), flush=True)
+time.sleep(60)
+'''
+        started = time.monotonic()
+        result, report = self.probe(source, timeout=0.05)
+        self.assertLess(time.monotonic() - started, 1)
         self.assertEqual(result['status'], 'timed_out')
         self.assertIsNone(report['response'])
 

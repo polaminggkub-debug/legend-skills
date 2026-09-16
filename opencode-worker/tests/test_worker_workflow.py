@@ -150,8 +150,14 @@ class WorkerWorkflowTests(unittest.TestCase):
         body = self.runtime.git(repo, "show", "-s", "--format=%B", "HEAD").stdout
         self.assertIn("Run-Phase: metadata", body)
         self.assertIn("Via: OpenCode Go", body)
+        self.assertIn("Provider-ID: opencode-go", body)
+        self.assertIn("Billing-Source: provider_managed_unobserved", body)
         self.assertNotIn("OpenRouter", body)
         self.assertEqual(worker_runtime.verify_commit(repo, "HEAD"), result["commit"])
+        self.runtime.git(repo, "commit", "--amend", "-m",
+                         body.replace("Provider-ID: opencode-go", "Provider-ID: openrouter"))
+        with self.assertRaisesRegex(worker_runtime.GuardrailError, "Metadata attribution"):
+            worker_runtime.verify_commit(repo, "HEAD")
 
     def test_handoff_metadata_commits_after_source_and_after_check_verifies_it(self):
         repo = self.runtime.make_repo("metadata-handoff")

@@ -3,13 +3,14 @@ import json
 import math
 import os
 from pathlib import Path
+import signal
 import subprocess
 import tempfile
 import time
 import uuid
 
 from worker_metrics import MetricsError, parse_events
-from worker_platform import process_options, stop_process
+from worker_platform import process_options
 
 
 def _reply(path):
@@ -39,6 +40,49 @@ def _requires_region_consent(path):
     return False
 
 
+def _stop_hello_process(process):
+    """Terminate a Hello process tree without the worker's long grace period."""
+
+    if process is None:
+        return
+    try:
+        if process.poll() is not None:
+            return
+    except Exception:
+        pass
+
+    if os.name == 'nt':
+        # ``process_options`` creates a new process group on Windows.  The
+        # native taskkill command is the only standard-library-free way to
+        # terminate the CLI and descendants together without a shell.
+        try:
+            subprocess.run(['taskkill', '/PID', str(process.pid), '/T', '/F'],
+                           check=False, stdout=subprocess.DEVNULL,
+                           stderr=subprocess.DEVNULL, timeout=1)
+        except (OSError, ValueError, subprocess.SubprocessError):
+            pass
+        try:
+            process.kill()
+        except (AttributeError, OSError):
+            pass
+    else:
+        try:
+            process_group = os.getpgid(process.pid)
+            if process_group == process.pid:
+                os.killpg(process_group, signal.SIGKILL)
+            else:
+                process.kill()
+        except (AttributeError, OSError, ProcessLookupError):
+            try:
+                process.kill()
+            except (AttributeError, OSError):
+                pass
+    try:
+        process.wait(timeout=1)
+    except (AttributeError, OSError, subprocess.SubprocessError):
+        pass
+
+
 def run_hello(base, selection, cli, environment_factory, timeout=10):
     if isinstance(timeout, bool) or not isinstance(timeout, (int, float)) or not math.isfinite(timeout) or timeout <= 0:
         raise ValueError('Hello timeout must be a positive finite number')
@@ -49,6 +93,7 @@ def run_hello(base, selection, cli, environment_factory, timeout=10):
               'provider_id': selection['provider_id'], 'requested_model': selection['model'],
               'timeout_seconds': timeout, 'response': None, 'metrics': None,
               'application_workflow_executed': False, 'billing_source': 'provider_managed_unobserved',
+              'cost_basis': selection['cost_basis'],
               'report': str(probe / 'report.json')}
     env = environment_factory(probe)
     config = json.loads(env.get('OPENCODE_CONFIG_CONTENT', '{}'))
@@ -84,7 +129,7 @@ def run_hello(base, selection, cli, environment_factory, timeout=10):
             report['error'] = 'OpenCode could not be started'
         finally:
             if process is not None and process.poll() is None:
-                stop_process(process)
+                _stop_hello_process(process)
             report.setdefault('elapsed_seconds', round(time.monotonic() - started, 3))
             report['exit_code'] = process.returncode if process is not None else None
     try:

@@ -6,11 +6,13 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 from worker_control import configure
 from worker_runtime import child_environment, main
 from worker_provider import ProviderError
+import worker_probe
 
 
 class ControlTests(unittest.TestCase):
@@ -70,3 +72,38 @@ class ControlTests(unittest.TestCase):
             with self.assertRaises(ProviderError):
                 configure(base, 'opencode-go')
             self.assertEqual(settings.read_bytes(), before)
+
+    def test_hello_refuses_live_worker_before_credential_or_probe(self):
+        with tempfile.TemporaryDirectory() as directory:
+            base = Path(directory)
+            settings = base / 'settings.json'
+            settings.write_text(json.dumps({
+                'default_provider': 'opencode-go',
+                'allowed_providers': ['opencode-go'],
+                'default_model': 'opencode-go/deepseek-v4.1-flash',
+                'cli_binary': 'opencode',
+            }))
+            before = settings.read_bytes()
+            run_id = '11111111-1111-4111-8111-111111111111'
+            run = base / 'runs' / run_id
+            run.mkdir(parents=True)
+            (run / 'report.json').write_text(json.dumps({
+                'run_id': run_id, 'status': 'running', 'finalized': False,
+                'launcher_pid': os.getpid(),
+            }))
+            credential_calls = []
+
+            def credential_reader():
+                credential_calls.append(True)
+                return 'fixture-key'
+
+            output, errors = io.StringIO(), io.StringIO()
+            with mock.patch.object(worker_probe, 'run_hello') as probe:
+                with contextlib.redirect_stdout(output), contextlib.redirect_stderr(errors):
+                    code = main(['hello'], base=base, credential_reader=credential_reader)
+
+            self.assertEqual(code, 1)
+            self.assertEqual(credential_calls, [])
+            probe.assert_not_called()
+            self.assertEqual(settings.read_bytes(), before)
+            self.assertIn('still active', errors.getvalue())

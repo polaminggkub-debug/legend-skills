@@ -26,7 +26,7 @@ _PROVIDERS = {
         "provider_id": _OPENCODE_GO,
         "provider_label": "OpenCode Go",
         "credential_env": "OPENCODE_API_KEY",
-        "cost_basis": "OpenCode-reported estimate; OpenCode Go Use balance may charge Zen after Go limits; not a Zen/OpenRouter billing receipt",
+        "cost_basis": "OpenCode-reported estimate; OpenCode Go Use balance may charge Zen after Go limits; not a Zen billing receipt",
         "default_model": "opencode-go/deepseek-v4.1-flash",
     },
     _OPENROUTER: {

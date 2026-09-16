@@ -7,6 +7,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 from worker_metrics import parse_events, validate_report
+from worker_provider import resolve_selection
 
 
 def _record(kind, *, session="session-1", part=None, timestamp=1):
@@ -266,6 +267,25 @@ def _valid_report():
 class ValidateReportTests(unittest.TestCase):
     def test_accepts_ready_to_commit_report_with_null_commit(self):
         self.assertEqual(validate_report(_valid_report()), [])
+
+    def test_current_reports_require_provider_and_estimate_evidence(self):
+        report = _valid_report()
+        report.update(launcher_version="4.0.0", provider_id="openrouter",
+                      billing_source="provider_managed_unobserved",
+                      cost_basis=resolve_selection({"default_provider": "openrouter"})["cost_basis"])
+        self.assertEqual(validate_report(report), [])
+        for field in ("provider_id", "billing_source", "cost_basis"):
+            with self.subTest(field=field):
+                damaged = dict(report)
+                damaged.pop(field)
+                self.assertTrue(any(field in error for error in validate_report(damaged)))
+        report["billing_source"] = "zen_balance"
+        self.assertTrue(any("billing_source" in error for error in validate_report(report)))
+
+    def test_legacy_reports_without_new_accounting_fields_remain_valid(self):
+        report = _valid_report()
+        report["launcher_version"] = "3.0.0"
+        self.assertEqual(validate_report(report), [])
 
     def test_rejects_unverifiable_model_attribution(self):
         report = _valid_report()

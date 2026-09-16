@@ -16,7 +16,7 @@ import getpass
 import shutil
 from contextlib import closing
 
-from worker_metrics import MetricsError, parse_events, validate_report
+from worker_metrics import MetricsError, parse_events, validate_report, requires_provider_accounting
 from worker_monitor import ProcessMonitor, TerminalOpenCodeError as MonitorTerminalError
 from worker_provider import resolve_selection, ProviderError
 from worker_wait import WaitError
@@ -305,6 +305,7 @@ def finalize_metadata(repo, run_dir, report, plan):
         'chore(opencode): finalize declared metadata', '',
         'Deterministic delivery; model usage is recorded in the source run.', '',
         'Generated-By: OpenCode workflow', 'Via: ' + report['provider'],
+        *[key + ': ' + value for key, value in provider_trailers(report).items()],
         'Model-Observed: ' + ', '.join(report['observed_models']),
         'OpenCode-Run: ' + report['run_id'], 'Run-Phase: metadata',
         'OpenCode-Source-Commit: ' + source_commit,
@@ -326,6 +327,13 @@ def finalize_metadata(repo, run_dir, report, plan):
     report['delivery']['status'] = 'metadata_committed'
 
 
+def provider_trailers(report):
+    if not requires_provider_accounting(report):
+        return {}
+    return {'Provider-ID': report['provider_id'], 'Billing-Source': report['billing_source'],
+            'Cost-Basis': report['cost_basis']}
+
+
 def commit_message(report, relative_path, digest, title):
     tokens = report['metrics']['tokens']
     return '\n'.join([
@@ -333,6 +341,7 @@ def commit_message(report, relative_path, digest, title):
         '',
         'Generated-By: OpenCode',
         'Via: ' + report['provider'],
+        *[key + ': ' + value for key, value in provider_trailers(report).items()],
         'Model-Requested: ' + report['requested_model'],
         'Model-Observed: ' + ', '.join(report['observed_models']),
         'OpenCode-Version: ' + report['opencode_version'],
@@ -386,6 +395,7 @@ def verify_commit(repo, revision):
         'Cost-Estimate-USD': str(report['metrics']['estimated_cost_usd']),
         'Duration-Seconds': str(report['elapsed_seconds']),
     }
+    expected.update(provider_trailers(report))
     if any(trailers.get(k) != v for k, v in expected.items()):
         raise GuardrailError('Commit attribution does not match the recorded evidence')
     parents = git_text(repo, 'show', '-s', '--format=%P', commit).split()
@@ -428,6 +438,7 @@ def verify_metadata_commit(repo, commit, run_id, trailers):
                 'Model-Observed': ', '.join(source['observed_models']),
                 'OpenCode-Source-Commit': source_commit, 'Tokens-Total': '0',
                 'Model-Calls': '0', 'Cost-Estimate-USD': '0'}
+    expected.update(provider_trailers(source))
     if any(trailers.get(key) != value for key, value in expected.items()):
         raise GuardrailError('Metadata attribution does not match its source')
     if (metadata.get('schema_version') != 1 or metadata.get('phase') != 'metadata'
@@ -450,7 +461,8 @@ def export_stats(base, output_format):
     if output_format == 'json':
         print(json.dumps(reports))
         return
-    columns = ['run_id', 'started_at', 'finished_at', 'status', 'phase', 'launcher_version', 'engine', 'provider', 'requested_model',
+    columns = ['run_id', 'started_at', 'finished_at', 'status', 'phase', 'launcher_version', 'engine', 'provider',
+               'provider_id', 'billing_source', 'cost_basis', 'requested_model',
                'observed_models', 'opencode_version', 'reason_effort', 'elapsed_seconds',
                'tokens_total', 'tokens_input', 'tokens_output', 'tokens_reasoning',
                'tokens_cache_read', 'tokens_cache_write', 'estimated_cost_usd',
