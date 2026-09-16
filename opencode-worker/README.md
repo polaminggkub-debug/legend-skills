@@ -40,10 +40,28 @@ does not update the others.
    the revision that was just built.
 
 No automatic repair, retry, push, deploy, or recurring Codex task is installed.
-The local heartbeat does not stream repeated status messages to Codex.
-Dispatching through Codex and any tool continuations consume coordinating turns;
-the worker makes no claim of zero total Codex token use. `hello --timeout 10` is
-a CLI probe, not a coding-job deadline.
+The local heartbeat stays private and does not stream repeated status messages to
+Codex. Completion is reported in Codex's final turn, which is available on
+mobile when the host session is reachable. The worker has no OS-only notifier or
+detached completion path. Dispatching through Codex and any tool continuations
+consume coordinating turns; the worker makes no claim of zero total Codex token
+use. `hello --timeout 10` is a CLI probe, not a coding-job deadline.
+
+## Waiting and timing
+
+Use one foreground `run` call and keep its returned handle. When an outer tool
+call yields, continue that existing handle or cell; do not start another worker,
+read the heartbeat repeatedly, or emit unchanged status. The exact code-mode
+continuation recipe, one-shot `wait --run RUN_UUID` recovery rule, Codex/mobile
+reporting contract, and optional timing semantics are in
+[references/waiting-and-timing.md](references/waiting-and-timing.md).
+
+The existing `elapsed_seconds` value is total wrapper wall time. A
+timing-enabled report may include an optional breakdown with phase wall
+durations, event-derived tool overlap, and an estimated non-tool interval that
+includes model/provider latency and streaming. Timing is supplemental evidence:
+it never establishes true TTFT, and unavailable legacy values are unknown
+(`null`), not zero. This breakdown requires no new CLI flag.
 
 ## First use in a project
 
@@ -135,6 +153,13 @@ completed-step usage as **partial**, never as complete billing. OpenCode cost is
 an estimate, not a provider billing receipt; for Go, quota-versus-Zen-balance
 billing remains unknown unless the provider emits evidence. The estimate excludes
 Codex orchestration and tool-continuation cost.
+
+When present, the optional timing object is read alongside these fields. It
+describes observed phase wall durations and an event-tool interval union; the
+derived non-tool duration remains an estimate that can include model/provider
+waiting and streamed output. Consumers preserve `null` for missing or legacy
+timing evidence and reserve zero for a measured zero duration. See the timing
+reference for the evidence boundary and source links.
 
 Current source and metadata commits also carry `Provider-ID`, `Billing-Source`,
 and `Cost-Basis` trailers. Verification checks them against the source report,

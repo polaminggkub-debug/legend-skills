@@ -6,6 +6,7 @@ import sqlite3
 import sys
 import tempfile
 import unittest
+import uuid
 from pathlib import Path
 from unittest import mock
 
@@ -59,6 +60,50 @@ class ControlTests(unittest.TestCase):
             self.assertEqual(code, 0)
             self.assertEqual(len(output.getvalue().splitlines()), 1)
             self.assertEqual(json.loads(output.getvalue())['commit'], 'abc')
+
+    def test_wait_cli_accepts_authoritative_legacy_success_statuses(self):
+        statuses = ('committed', 'no_changes', 'completed', 'complete', 'succeeded', 'success', 'done')
+        with tempfile.TemporaryDirectory() as directory:
+            base = Path(directory)
+            for status in statuses:
+                with self.subTest(status=status):
+                    run_id = str(uuid.uuid4())
+                    run = base / 'runs' / run_id
+                    run.mkdir(parents=True)
+                    (run / 'report.json').write_text(json.dumps({
+                        'run_id': run_id, 'status': status, 'phase': 'finished',
+                        'provider': 'OpenCode Go', 'git': {'commit': 'abc'},
+                    }))
+                    output = io.StringIO()
+                    with contextlib.redirect_stdout(output):
+                        code = main(['wait', '--run', run_id], base=base)
+                    self.assertEqual(code, 0)
+                    self.assertTrue(json.loads(output.getvalue())['finalized'])
+
+    def test_wait_cli_keeps_explicit_false_and_modern_failure_nonzero(self):
+        with tempfile.TemporaryDirectory() as directory:
+            base = Path(directory)
+            for status, finalized in (('completed', False), ('failed', True)):
+                with self.subTest(status=status):
+                    run_id = str(uuid.uuid4())
+                    run = base / 'runs' / run_id
+                    run.mkdir(parents=True)
+                    report = {
+                        'run_id': run_id, 'status': status, 'phase': 'finished',
+                        'finalized': finalized, 'launcher_pid': 999999,
+                        'provider': 'OpenCode Go', 'git': {'commit': 'abc'},
+                    }
+                    (run / 'report.json').write_text(json.dumps(report))
+                    output, errors = io.StringIO(), io.StringIO()
+                    with contextlib.redirect_stdout(output), contextlib.redirect_stderr(errors):
+                        code = main(['wait', '--run', run_id], base=base)
+                    self.assertEqual(code, 1)
+                    if finalized:
+                        self.assertEqual(json.loads(output.getvalue())['status'], 'failed')
+                        self.assertEqual(errors.getvalue(), '')
+                    else:
+                        self.assertEqual(output.getvalue(), '')
+                        self.assertIn('no longer running', errors.getvalue())
 
     def test_configure_preserves_settings_while_a_recorded_worker_is_alive(self):
         with tempfile.TemporaryDirectory() as directory:
