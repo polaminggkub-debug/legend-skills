@@ -33,6 +33,24 @@ except ImportError:  # pragma: no cover - exercised by POSIX CI
 
 _KEYCHAIN_SERVICE = "codex-openrouter-cli"
 _WINDOWS_CREDENTIAL_TARGET = "codex-openrouter-cli"
+_OPENCODE_GO_KEYCHAIN_SERVICE = "codex-opencode-go-cli"
+_OPENCODE_GO_WINDOWS_CREDENTIAL_TARGET = "codex-opencode-go-cli"
+
+
+def _credential_spec(provider: str) -> tuple[str, str, str]:
+    """Return the environment variable and native-store names for a provider."""
+
+    if provider == "openrouter":
+        # Read these constants at call time so platform tests and migrations
+        # can replace the legacy target without changing the Go target.
+        return "OPENROUTER_API_KEY", _KEYCHAIN_SERVICE, _WINDOWS_CREDENTIAL_TARGET
+    if provider == "opencode-go":
+        return (
+            "OPENCODE_API_KEY",
+            _OPENCODE_GO_KEYCHAIN_SERVICE,
+            _OPENCODE_GO_WINDOWS_CREDENTIAL_TARGET,
+        )
+    raise ValueError("Unsupported credential provider")
 
 
 class CredentialStoreUnavailable(RuntimeError):
@@ -55,41 +73,55 @@ def default_base_dir() -> Path:
     return Path.home() / ".local" / "share" / "codex-openrouter"
 
 
-def _require_key(value: Any) -> str:
+def _require_key(value: Any, label: str = "API key") -> str:
     if not isinstance(value, str) or not value.strip():
-        raise ValueError("OpenRouter API key must be a non-empty string")
+        raise ValueError(label + " must be a non-empty string")
     return value
 
 
-def read_key() -> str:
-    """Read the API key from the environment or native credential storage."""
+def read_key(provider: str = "openrouter") -> str:
+    """Read one provider's API key from its environment or native storage."""
 
-    environment_key = os.environ.get("OPENROUTER_API_KEY")
+    environment_name, service, target = _credential_spec(provider)
+    environment_key = os.environ.get(environment_name)
     if environment_key and environment_key.strip():
         return environment_key
     if os.name == "nt":
-        return _read_windows_credential()
+        if provider == "openrouter":
+            return _read_windows_credential()
+        return _read_windows_credential(target)
     if sys.platform == "darwin":
-        return _read_macos_keychain(getpass.getuser())
+        account = getpass.getuser()
+        if provider == "openrouter":
+            return _read_macos_keychain(account)
+        return _read_macos_keychain(account, service)
     raise CredentialStoreUnavailable(
-        "No OPENROUTER_API_KEY is set and this OS has no configured credential backend; "
-        "set OPENROUTER_API_KEY or run on macOS/Windows with its credential store enabled"
+        "No " + environment_name + " is set and this OS has no configured credential backend; "
+        "set " + environment_name + " or run on macOS/Windows with its credential store enabled"
     )
 
 
-def store_key(key: str) -> None:
-    """Store an API key in native credential storage, never in worker files."""
+def store_key(key: str, provider: str = "openrouter") -> None:
+    """Store one provider's API key in native storage, never in worker files."""
 
-    value = _require_key(key)
+    environment_name, service, target = _credential_spec(provider)
+    value = _require_key(key, environment_name + " value")
     if os.name == "nt":
-        _write_windows_credential(value)
+        if provider == "openrouter":
+            _write_windows_credential(value)
+        else:
+            _write_windows_credential(value, target)
         return
     if sys.platform == "darwin":
-        _write_macos_keychain(getpass.getuser(), value)
+        account = getpass.getuser()
+        if provider == "openrouter":
+            _write_macos_keychain(account, value)
+        else:
+            _write_macos_keychain(account, value, service)
         return
     raise CredentialStoreUnavailable(
         "Native credential storage is unavailable on this OS; keep the key in "
-        "OPENROUTER_API_KEY or use a supported macOS/Windows credential store"
+        + environment_name + " or use a supported macOS/Windows credential store"
     )
 
 
@@ -100,12 +132,13 @@ def _security_command() -> str:
     return "/usr/bin/security"
 
 
-def _read_macos_keychain(account: str) -> str:
-    account = _require_key(account)
+def _read_macos_keychain(account: str, service: Optional[str] = None) -> str:
+    account = _require_key(account, "Keychain account")
+    service = service or _KEYCHAIN_SERVICE
     command = _security_command()
     try:
         result = subprocess.run(
-            [command, "find-generic-password", "-a", account, "-s", _KEYCHAIN_SERVICE, "-w"],
+            [command, "find-generic-password", "-a", account, "-s", service, "-w"],
             capture_output=True,
             text=True,
             check=True,
@@ -113,27 +146,28 @@ def _read_macos_keychain(account: str) -> str:
         )
     except FileNotFoundError as exc:
         raise CredentialStoreUnavailable(
-            "macOS Keychain helper is unavailable; set OPENROUTER_API_KEY"
+            "macOS Keychain helper is unavailable; set the selected provider API key"
         ) from exc
     except subprocess.TimeoutExpired as exc:
         raise CredentialStoreUnavailable(
-            "macOS Keychain lookup timed out; set OPENROUTER_API_KEY or repair Keychain access"
+            "macOS Keychain lookup timed out; set the selected provider API key or repair Keychain access"
         ) from exc
     except subprocess.CalledProcessError as exc:
         raise CredentialStoreUnavailable(
-            "OpenRouter API key was not available in macOS Keychain; set OPENROUTER_API_KEY or store it"
+            "Selected provider API key was not available in macOS Keychain; set it or store it"
         ) from exc
     value = result.stdout.strip()
     if not value:
         raise CredentialStoreUnavailable(
-            "macOS Keychain returned an empty OpenRouter API key; set OPENROUTER_API_KEY or store it"
+            "macOS Keychain returned an empty provider API key; set it or store it"
         )
     return value
 
 
-def _write_macos_keychain(account: str, key: str) -> None:
-    account = _require_key(account)
+def _write_macos_keychain(account: str, key: str, service: Optional[str] = None) -> None:
+    account = _require_key(account, "Keychain account")
     key = _require_key(key)
+    service = service or _KEYCHAIN_SERVICE
     command = _security_command()
     try:
         subprocess.run(
@@ -144,7 +178,7 @@ def _write_macos_keychain(account: str, key: str) -> None:
                 "-a",
                 account,
                 "-s",
-                _KEYCHAIN_SERVICE,
+                service,
                 "-w",
                 key,
             ],
@@ -155,15 +189,15 @@ def _write_macos_keychain(account: str, key: str) -> None:
         )
     except FileNotFoundError as exc:
         raise CredentialStoreUnavailable(
-            "macOS Keychain helper is unavailable; set OPENROUTER_API_KEY"
+            "macOS Keychain helper is unavailable; set the selected provider API key"
         ) from exc
     except subprocess.TimeoutExpired as exc:
         raise CredentialStoreUnavailable(
-            "macOS Keychain update timed out; set OPENROUTER_API_KEY or repair Keychain access"
+            "macOS Keychain update timed out; set the selected provider API key or repair Keychain access"
         ) from exc
     except subprocess.CalledProcessError as exc:
         raise CredentialStoreUnavailable(
-            "Could not store the OpenRouter API key in macOS Keychain; check Keychain access"
+            "Could not store the provider API key in macOS Keychain; check Keychain access"
         ) from exc
 
 
@@ -191,13 +225,13 @@ _CREDENTIAL_PERSIST_LOCAL_MACHINE = 2
 def _advapi32() -> Any:  # pragma: no cover - exercised on Windows CI
     if not hasattr(ctypes, "WinDLL"):
         raise CredentialStoreUnavailable(
-            "Windows Credential Manager is unavailable in this Python build; set OPENROUTER_API_KEY"
+            "Windows Credential Manager is unavailable in this Python build; set the selected provider API key"
         )
     try:
         library = ctypes.WinDLL("Advapi32.dll", use_last_error=True)
     except OSError as exc:
         raise CredentialStoreUnavailable(
-            "Windows Credential Manager could not be loaded; set OPENROUTER_API_KEY"
+            "Windows Credential Manager could not be loaded; set the selected provider API key"
         ) from exc
     # Explicit prototypes are required on 64-bit Windows so ctypes does not
     # truncate the CREDENTIALW pointer returned to CredReadW.
@@ -215,41 +249,42 @@ def _advapi32() -> Any:  # pragma: no cover - exercised on Windows CI
         library.CredFree.restype = ctypes.c_uint32
     except AttributeError as exc:
         raise CredentialStoreUnavailable(
-            "Windows Credential Manager API is incomplete; set OPENROUTER_API_KEY"
+            "Windows Credential Manager API is incomplete; set the selected provider API key"
         ) from exc
     return library
 
 
-def _read_windows_credential() -> str:  # pragma: no cover - exercised on Windows CI
+def _read_windows_credential(target: Optional[str] = None) -> str:  # pragma: no cover - exercised on Windows CI
+    target = target or _WINDOWS_CREDENTIAL_TARGET
     library = _advapi32()
     credential_pointer = ctypes.POINTER(_CredentialW)()
     try:
         success = library.CredReadW(
-            _WINDOWS_CREDENTIAL_TARGET,
+            target,
             _CREDENTIAL_TYPE_GENERIC,
             0,
             ctypes.byref(credential_pointer),
         )
         if not success or not credential_pointer:
             raise CredentialStoreUnavailable(
-                "OpenRouter API key was not available in Windows Credential Manager; "
-                "set OPENROUTER_API_KEY or store it"
+                "Selected provider API key was not available in Windows Credential Manager; "
+                "set it or store it"
             )
         credential = credential_pointer.contents
         if not credential.CredentialBlob or credential.CredentialBlobSize <= 0:
             raise CredentialStoreUnavailable(
-                "Windows Credential Manager returned an empty OpenRouter API key; set OPENROUTER_API_KEY"
+                "Windows Credential Manager returned an empty provider API key; set it"
             )
         try:
             raw = ctypes.string_at(credential.CredentialBlob, credential.CredentialBlobSize)
             value = raw.decode("utf-16-le")
         except (UnicodeDecodeError, ValueError) as exc:
             raise CredentialStoreUnavailable(
-                "Windows Credential Manager returned an invalid OpenRouter API key; set OPENROUTER_API_KEY"
+                "Windows Credential Manager returned an invalid provider API key; set it"
             ) from exc
         if not value.strip():
             raise CredentialStoreUnavailable(
-                "Windows Credential Manager returned an empty OpenRouter API key; set OPENROUTER_API_KEY"
+                "Windows Credential Manager returned an empty provider API key; set it"
             )
         return value
     finally:
@@ -260,14 +295,15 @@ def _read_windows_credential() -> str:  # pragma: no cover - exercised on Window
                 pass
 
 
-def _write_windows_credential(key: str) -> None:  # pragma: no cover - exercised on Windows CI
+def _write_windows_credential(key: str, target: Optional[str] = None) -> None:  # pragma: no cover - exercised on Windows CI
     key = _require_key(key)
+    target = target or _WINDOWS_CREDENTIAL_TARGET
     library = _advapi32()
     encoded = key.encode("utf-16-le")
     blob = (ctypes.c_ubyte * len(encoded)).from_buffer_copy(encoded)
     credential = _CredentialW()
     credential.Type = _CREDENTIAL_TYPE_GENERIC
-    credential.TargetName = _WINDOWS_CREDENTIAL_TARGET
+    credential.TargetName = target
     credential.CredentialBlobSize = len(encoded)
     credential.CredentialBlob = ctypes.cast(blob, ctypes.POINTER(ctypes.c_ubyte))
     credential.Persist = _CREDENTIAL_PERSIST_LOCAL_MACHINE
@@ -276,7 +312,7 @@ def _write_windows_credential(key: str) -> None:  # pragma: no cover - exercised
         success = library.CredWriteW(ctypes.byref(credential), 0)
         if not success:
             raise CredentialStoreUnavailable(
-                "Could not store the OpenRouter API key in Windows Credential Manager; "
+                "Could not store the provider API key in Windows Credential Manager; "
                 "check Credential Manager access"
             )
     finally:

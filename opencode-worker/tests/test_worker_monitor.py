@@ -151,6 +151,51 @@ class ProcessMonitorTests(unittest.TestCase):
                 self.assertEqual((run_dir / "heartbeat.json").stat().st_mode & 0o777, 0o600)
             self.assertFalse(list(run_dir.glob("heartbeat.json*.tmp")))
 
+    def test_record_includes_the_actual_launcher_process_id(self):
+        clock = FakeClock()
+        process = FakeProcess(clock)
+        with tempfile.TemporaryDirectory() as directory:
+            run_dir = Path(directory)
+            with self._clock(clock):
+                monitor = worker_monitor.ProcessMonitor(run_dir)
+                monitor.record(process)
+            snapshot = self._snapshot(run_dir)
+            self.assertEqual(snapshot["launcher_pid"], os.getpid())
+
+    def test_terminal_nonretryable_event_interrupts_wait_but_transient_error_does_not(self):
+        with tempfile.TemporaryDirectory() as directory:
+            run_dir = Path(directory)
+            events = run_dir / "events.jsonl"
+            events.parent.mkdir(parents=True, exist_ok=True)
+            events.write_text(
+                json.dumps({
+                    "type": "error",
+                    "error": {"name": "Retryable", "data": {"isRetryable": True}},
+                }) + "\n",
+                encoding="utf-8",
+            )
+            clock = FakeClock()
+            process = FakeProcess(clock)
+            with self._clock(clock):
+                monitor = worker_monitor.ProcessMonitor(run_dir, timeout_seconds=5)
+                with self.assertRaises(subprocess.TimeoutExpired):
+                    monitor.wait(process)
+
+            events.write_text(
+                json.dumps({
+                    "type": "error",
+                    "error": {"name": "Quota Error/secret", "data": {"isRetryable": False}},
+                }) + "\n",
+                encoding="utf-8",
+            )
+            clock = FakeClock()
+            process = FakeProcess(clock)
+            with self._clock(clock):
+                monitor = worker_monitor.ProcessMonitor(run_dir)
+                with self.assertRaises(worker_monitor.TerminalOpenCodeError) as raised:
+                    monitor.wait(process)
+            self.assertEqual(raised.exception.name, "Quota_Error_secret")
+
     def test_quiet_process_survives_more_than_1200_seconds_with_five_second_checks(self):
         clock = FakeClock()
         process = FakeProcess(clock, exit_after=1205, exit_code=0)

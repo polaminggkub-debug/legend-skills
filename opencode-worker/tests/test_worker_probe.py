@@ -1,0 +1,52 @@
+"""The Hello acceptance check exercises the CLI boundary, not a raw API."""
+import json
+import os
+import sys
+import tempfile
+import unittest
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
+from worker_probe import run_hello
+
+
+class ProbeTests(unittest.TestCase):
+    def probe(self, source, timeout=2):
+        with tempfile.TemporaryDirectory() as directory:
+            base = Path(directory)
+            script = base / 'cli.py'
+            script.write_text(source)
+            result = run_hello(base, {'provider_id': 'opencode-go', 'provider_label': 'OpenCode Go',
+                                    'model': 'opencode-go/deepseek-v4.1-flash'},
+                               [sys.executable, str(script)], lambda folder: os.environ.copy(), timeout)
+            return result, json.loads(Path(result['report']).read_text())
+
+    def test_completed_hello_uses_cli_and_private_probe_directory(self):
+        source = '''import json, sys
+assert sys.argv[1] == 'run'
+assert sys.argv[sys.argv.index('--model')+1] == 'opencode-go/deepseek-v4.1-flash'
+assert sys.argv[-1] == 'Hello'
+print(json.dumps({'type':'text','sessionID':'s','part':{'type':'text','text':'Hello'}}))
+'''
+        result, report = self.probe(source)
+        self.assertEqual(result['status'], 'passed')
+        self.assertEqual(report['response'], 'Hello')
+        self.assertLess(report['elapsed_seconds'], 2)
+        self.assertFalse(report['application_workflow_executed'])
+
+    def test_no_reply_within_deadline_is_failure(self):
+        result, report = self.probe('import time; time.sleep(60)', timeout=0.05)
+        self.assertEqual(result['status'], 'timed_out')
+        self.assertIsNone(report['response'])
+
+    def test_wrong_reply_does_not_pass_connectivity_criterion(self):
+        result, _ = self.probe("import json; print(json.dumps({'type':'text','part':{'text':'Goodbye'}}))")
+        self.assertEqual(result['status'], 'failed')
+
+    def test_provider_region_consent_is_reported_without_private_payload(self):
+        event = {'type': 'error', 'error': {'name': 'APIError', 'data': {'statusCode': 403,
+            'responseBody': json.dumps({'error': {'type': 'RegionError', 'message': 'private account URL'}})}}}
+        result, report = self.probe('import json; print(' + repr(json.dumps(event)) + ')')
+        self.assertEqual(result['status'], 'requires_action')
+        self.assertEqual(report['action_required'], 'provider_region_opt_in')
+        self.assertNotIn('private account URL', json.dumps(report))

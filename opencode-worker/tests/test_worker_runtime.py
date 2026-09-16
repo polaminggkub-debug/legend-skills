@@ -83,6 +83,9 @@ def emit(events):
 
 
 def put_model_observation(session_id, provider="openrouter", model_id=MODEL):
+    provider = os.environ.get("FAKE_PROVIDER", provider)
+    if model_id == MODEL:
+        model_id = os.environ.get("FAKE_MODEL", model_id)
     # The worker points OpenCode at an isolated XDG data directory.  The
     # explicit fixture override keeps this fake deterministic when the test
     # calls the runtime in-process.
@@ -645,6 +648,35 @@ class WorkerRuntimeAcceptanceTests(unittest.TestCase):
         self.assertEqual(runs[0]["format"], "json")
         self.assertEqual(runs[0]["model"], "openrouter/" + MODEL)
         self.assertEqual(runs[0]["repo"], str(repo.resolve()))
+
+    def test_go_run_commits_correct_provider_and_verifies_without_openrouter(self):
+        self.settings.update(default_provider="opencode-go", default_model="deepseek-v4.1-flash",
+                             allowed_providers=["opencode-go"])
+        (self.base / "settings.json").write_text(json.dumps(self.settings))
+        repo = self.make_repo()
+        code, stdout, stderr = self.call_main(
+            ["run", "--dir", str(repo), "update source"],
+            FAKE_PROVIDER="opencode-go", FAKE_MODEL="deepseek-v4.1-flash")
+        self.assertEqual(code, 0, stderr)
+        result = self.result_json(stdout)
+        self.assertEqual(result["provider"], "OpenCode Go")
+        self.assertEqual(result["model"], ["opencode-go/deepseek-v4.1-flash"])
+        body = self.git(repo, "show", "-s", "--format=%B", result["commit"]).stdout
+        self.assertIn("Via: OpenCode Go", body)
+        self.assertNotIn("OpenRouter", body)
+        self.assertEqual(worker_runtime.verify_commit(repo, "HEAD"), result["commit"])
+        report = json.loads(Path(result["report"]).read_text())
+        self.assertEqual(report["billing_source"], "provider_managed_unobserved")
+
+    def test_go_only_policy_rejects_openrouter_before_model_or_credential_call(self):
+        self.settings.update(default_provider="opencode-go", default_model="deepseek-v4.1-flash",
+                             allowed_providers=["opencode-go"])
+        (self.base / "settings.json").write_text(json.dumps(self.settings))
+        repo = self.make_repo()
+        code, stdout, stderr = self.call_main(
+            ["run", "--dir", str(repo), "--model", "openrouter/" + MODEL, "update source"])
+        self.assertNotEqual(code, 0)
+        self.assertEqual(self.run_rows(), [])
 
     def test_json_format_is_forced_when_caller_omits_format(self):
         repo = self.make_repo()

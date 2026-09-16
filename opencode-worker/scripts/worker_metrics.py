@@ -487,12 +487,17 @@ def validate_report(report: Mapping[str, Any]) -> List[str]:
 
     if report.get("engine") != "OpenCode":
         _record_error(errors, "engine must be OpenCode")
-    if report.get("provider") != "OpenRouter":
-        _record_error(errors, "provider must be OpenRouter")
+    providers = {"OpenRouter": "openrouter", "OpenCode Go": "opencode-go"}
+    provider_id = providers.get(report.get("provider"))
+    if provider_id is None:
+        _record_error(errors, "provider must be a supported worker provider")
+    if report.get("provider_id", provider_id) != provider_id:
+        _record_error(errors, "provider_id must match provider")
+    prefix = str(provider_id) + "/"
 
     requested_model = report.get("requested_model")
-    if not isinstance(requested_model, str) or not requested_model.startswith("openrouter/"):
-        _record_error(errors, "requested_model must use the openrouter/ prefix")
+    if not isinstance(requested_model, str) or not requested_model.startswith(prefix):
+        _record_error(errors, "requested_model must use the recorded provider prefix")
 
     observed_models = report.get("observed_models")
     status = report.get("status")
@@ -502,8 +507,8 @@ def validate_report(report: Mapping[str, Any]) -> List[str]:
     elif not observed_models and not failure_status:
         _record_error(errors, "observed_models must contain actual model evidence")
     elif observed_models:
-        if any(not item.startswith("openrouter/") for item in observed_models):
-            _record_error(errors, "observed_models must use the openrouter/ prefix")
+        if any(not item.startswith(prefix) for item in observed_models):
+            _record_error(errors, "observed_models must use the recorded provider prefix")
         if isinstance(requested_model, str) and set(observed_models) != {requested_model}:
             _record_error(errors, "observed_models must match requested_model exactly")
         if len(set(observed_models)) != len(observed_models):

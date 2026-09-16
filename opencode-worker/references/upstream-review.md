@@ -15,6 +15,12 @@ The comparison is structural. It is evidence about boundaries and documented
 behavior, not a benchmark, a billing audit, or proof that any implementation
 automatically preserves semantic intent.
 
+For the authorized OpenCode Go migration, see the source-backed
+[Go balance and model switching research](go-balance-model-switching-research.md).
+It points to the pinned OpenCode CLI/model seams and the official Go **Use
+balance** behavior; those sources support the provider and billing policy, not
+unstated worker APIs.
+
 | Concern | Local `opencode-worker` | Upstream evidence | Assessment |
 | --- | --- | --- | --- |
 | Waiting while a job runs | `worker_runtime.py` starts one child process and `worker_monitor.py` waits on `Popen`, recording a private atomic heartbeat on each local interval. The monitor has no model or network path. | OpenCode's [session processor](https://github.com/anomalyco/opencode/blob/014614d35b397775e5d397a490fc72368c894ec2/packages/opencode/src/session/processor.ts) handles step events and usage; Aider's [scripting interface](https://aider.chat/docs/scripting.html) sends one message and exits; the [OpenHands main repository](https://github.com/OpenHands/OpenHands/blob/82203bb1011cdf0e6eb318a32111806a6f6f734a/README.md) describes local-stack orchestration while its [SDK quick start](https://github.com/OpenHands/software-agent-sdk/blob/b054a2fe99173baee47897e4f3af7a910d3aab1e/README.md) calls `conversation.run()` for the agent/tool loop. | A local process/event wait seam is complementary to an agent's model loop. It should be judged by child lifecycle and heartbeat tests, not by prompt quality. |
@@ -31,6 +37,12 @@ upstream projects demonstrate related pieces, but they do not establish an
 identical end-to-end A-to-B design. A passing local check proves only that the
 declared command exited as expected; it does not prove semantic correctness,
 complete provider billing, or instruction compliance.
+
+The Go research also supports treating provider selection, local waiting, and
+usage evidence as separate seams. OpenCode Go's post-quota Zen-balance behavior
+is a native same-service billing rule; it is not evidence for an OpenRouter
+failover path. Keep the worker's selected provider and observed billing evidence
+in the final report when the provider exposes them.
 
 ## Resolved findings and remaining limits
 

@@ -7,7 +7,7 @@ Portable agent skills for Codex and Claude Code.
 | General skills | Yes | Yes | None |
 | Matt workflow coordinator | Yes | Yes | Bundled Chris; optional pinned helper suite |
 | Steve Design Suite | Yes | Yes | None |
-| [OpenCode Worker](opencode-worker/README.md) | Yes | CLI can be invoked separately | Python 3.9+, Git, OpenCode, own OpenRouter key; macOS/Windows |
+| [OpenCode Worker](opencode-worker/README.md) | Yes | CLI can be invoked separately | Python 3.9+, Git, official OpenCode CLI, own provider credential; macOS/Windows |
 
 ## Learning resources
 
@@ -32,13 +32,22 @@ macOS/Windows. Matt's optional upstream helper bundle requires Node.js and `npx`
 General skills: `chris`, `formpress`, `margaret`, `matt`, `ship`, `steve`,
 `ui-ux-pro-max`, and `update-all`.
 
-`opencode-worker` delegates coding through OpenCode and OpenRouter. Its executable
-enforces declared project checks, source/metadata commit ordering, usage records,
-and local process monitoring without extra model prompts. It includes a Codex
-entrypoint, an installer that preserves private settings/history, and offline
-macOS/Windows CI. Use [its installer](opencode-worker/INSTALL_FOR_AI.md); each
-machine needs its own credentials and each special project workflow is declared
-once in that project's committed contract.
+`opencode-worker` delegates coding through the official OpenCode CLI. Fresh
+installations are Go-only: they use OpenCode Go (`opencode-go`) with DeepSeek
+V4.1 Flash (`deepseek-v4.1-flash`) as the default. In the OpenCode Go console,
+enable **Use balance** so Go can continue against available Zen balance after
+Go quota under the same Go service; a Go run does not fall back to OpenRouter or
+the separate Zen provider. Existing OpenRouter installations remain usable,
+while new installs expose the provider-neutral `opencode-worker` entrypoint and
+keep `openrouter-worker` as a backwards-compatible alias. Credentials stay
+separate per provider, and API keys stay out of prompts, arguments, and Git.
+
+Its executable enforces declared project checks, source/metadata commit ordering,
+usage records, and local process monitoring without extra model prompts. It
+includes a Codex entrypoint, an installer that preserves private
+settings/history, and offline macOS/Windows CI. Use [its installer](opencode-worker/INSTALL_FOR_AI.md);
+each machine supplies its own credential and each special project workflow is
+declared once in that project's committed contract.
 
 `chris` connects acceptance criteria to focused tests, lint/guardrails, and actual
 CI evidence. Its short entrypoint routes to operating guides and a local case

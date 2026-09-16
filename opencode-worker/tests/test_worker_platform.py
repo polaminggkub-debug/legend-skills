@@ -100,6 +100,51 @@ class CredentialTests(unittest.TestCase):
                     worker_platform.store_key("new-secret")
                     write.assert_called_once_with("new-secret")
 
+    def test_go_environment_does_not_fall_back_to_openrouter(self):
+        with mock.patch.dict(os.environ, {"OPENROUTER_API_KEY": "legacy-secret"}, clear=True):
+            with mock.patch.object(worker_platform.os, "name", "posix"):
+                with mock.patch.object(worker_platform.sys, "platform", "linux"):
+                    with self.assertRaises(worker_platform.CredentialStoreUnavailable) as raised:
+                        worker_platform.read_key("opencode-go")
+        self.assertIn("OPENCODE_API_KEY", str(raised.exception))
+        self.assertNotIn("legacy-secret", str(raised.exception))
+
+    def test_macos_provider_targets_are_distinct(self):
+        with mock.patch.dict(os.environ, {}, clear=True):
+            with mock.patch.object(worker_platform.os, "name", "posix"):
+                with mock.patch.object(worker_platform.sys, "platform", "darwin"):
+                    with mock.patch.object(worker_platform.getpass, "getuser", return_value="fixture-user"):
+                        with mock.patch.object(worker_platform, "_read_macos_keychain", return_value="key") as read:
+                            worker_platform.read_key()
+                            read.assert_called_once_with("fixture-user")
+                            read.reset_mock()
+                            worker_platform.read_key("opencode-go")
+                            read.assert_called_once_with("fixture-user", "codex-opencode-go-cli")
+                        with mock.patch.object(worker_platform, "_write_macos_keychain") as write:
+                            worker_platform.store_key("new-key")
+                            write.assert_called_once_with("fixture-user", "new-key")
+                            write.reset_mock()
+                            worker_platform.store_key("new-go-key", "opencode-go")
+                            write.assert_called_once_with(
+                                "fixture-user", "new-go-key", "codex-opencode-go-cli"
+                            )
+
+    def test_windows_provider_targets_are_distinct(self):
+        with mock.patch.dict(os.environ, {}, clear=True):
+            with mock.patch.object(worker_platform.os, "name", "nt"):
+                with mock.patch.object(worker_platform, "_read_windows_credential", return_value="key") as read:
+                    worker_platform.read_key()
+                    read.assert_called_once_with()
+                    read.reset_mock()
+                    worker_platform.read_key("opencode-go")
+                    read.assert_called_once_with("codex-opencode-go-cli")
+                with mock.patch.object(worker_platform, "_write_windows_credential") as write:
+                    worker_platform.store_key("new-key")
+                    write.assert_called_once_with("new-key")
+                    write.reset_mock()
+                    worker_platform.store_key("new-go-key", "opencode-go")
+                    write.assert_called_once_with("new-go-key", "codex-opencode-go-cli")
+
 
 class LockTests(unittest.TestCase):
     def test_posix_lock_is_nonblocking_and_releases_on_close(self):

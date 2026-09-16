@@ -191,6 +191,25 @@ class WorkerInstallTests(unittest.TestCase):
         self.assertFalse((self.base / "worker_fixture.py").exists())
         self.assertFalse((self.codex_home / "AGENTS.md").exists())
 
+    def test_neutral_entrypoint_and_go_defaults_are_installed_with_legacy_alias(self):
+        (self.package_scripts / 'opencode-worker').write_text('#!/bin/sh\nexit 0\n')
+        summary = self._install()
+        self.assertEqual(summary['entrypoint'], str(self.base / 'opencode-worker'))
+        self.assertTrue((self.base / 'openrouter-worker').is_file())
+        settings = json.loads((self.base / 'settings.json').read_text())
+        self.assertEqual(settings['default_provider'], 'opencode-go')
+        self.assertEqual(settings['allowed_providers'], ['opencode-go'])
+        self.assertEqual(settings['default_model'], 'opencode-go/deepseek-v4.1-flash')
+
+    def test_active_worker_prevents_install_before_any_managed_write(self):
+        run = self.base / 'runs' / '11111111-1111-4111-8111-111111111111'
+        run.mkdir(parents=True)
+        (run / 'report.json').write_text(json.dumps({'run_id': run.name, 'status': 'running', 'finalized': False,
+                                                   'launcher_pid': os.getpid()}))
+        with self.assertRaises(install.InstallError):
+            self._install()
+        self.assertFalse((self.base / 'installation.json').exists())
+
 
 if __name__ == "__main__":
     unittest.main()
