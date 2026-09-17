@@ -8,6 +8,7 @@ Portable agent skills for Codex and Claude Code.
 | Matt workflow coordinator | Yes | Yes | Bundled Chris; optional pinned helper suite |
 | Steve Design Suite | Yes | Yes | None |
 | [OpenCode Worker](opencode-worker/README.md) | Yes | CLI can be invoked separately | Python 3.9+, Git, official OpenCode CLI, own provider credential; macOS/Windows |
+| [DeepSeek through Codex](codex-deepseek/README.md) | Yes, explicit CLI delegation | CLI can be invoked separately | Official Codex CLI, Python, direct DeepSeek API key; isolated setup |
 
 ## Learning resources
 
