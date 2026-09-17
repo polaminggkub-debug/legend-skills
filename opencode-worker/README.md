@@ -16,7 +16,7 @@ credential, and API keys stay out of prompts, command arguments, and Git.
 
 After [one-time installation](INSTALL_FOR_AI.md), tell Codex:
 
-> ให้ OpenCode แก้งานนี้ ทำรอบเดียว แล้วรายงานเวลา โทเค็น ค่าใช้จ่าย และ commit
+> ให้ OpenCode แก้งานนี้ แล้วรายงานเวลา โทเค็น ค่าใช้จ่าย และ commit
 
 The coordinating agent constructs the command. You do not need to remember a
 CLI invocation. A different model can be selected per run or saved as the
@@ -27,9 +27,9 @@ does not update the others.
 
 1. Check Git state, lock the repository, validate the project's workflow, and
    resolve declared executables **before making a model request**.
-2. Start one OpenCode CLI session. Capture events privately and check the local
-   process every five seconds. The Python monitor makes no model or API calls.
-   There is no fixed 20-minute cap or default total job timeout.
+2. Start OpenCode, capture events privately, and check the local process every
+   five seconds. The Python monitor makes no model or API calls. A shared job
+   budget defaults to 100 model steps and 60 minutes, including repair/check time.
 3. Run declared `before_commit` checks and create source commit **A**, with
    OpenCode, selected-provider, observed-model, and usage evidence.
 4. If declared, run deterministic metadata commands using A as the source
@@ -39,13 +39,23 @@ does not update the others.
    results outside the project so recording a successful build cannot change
    the revision that was just built.
 
-No automatic repair, retry, push, deploy, or recurring Codex task is installed.
+A failed required check may send its output back to OpenCode for at most two
+repair attempts within the same job budget. Repeated failure without source
+progress stops early. No automatic push, deploy, or recurring Codex task is installed.
 The local heartbeat stays private and does not stream repeated status messages to
 Codex. Completion is reported in Codex's final turn, which is available on
 mobile when the host session is reachable. The worker has no OS-only notifier or
 detached completion path. Dispatching through Codex and any tool continuations
 consume coordinating turns; the worker makes no claim of zero total Codex token
 use. `hello --timeout 10` is a CLI probe, not a coding-job deadline.
+
+## Bounded repairs
+
+The executable enforces the limits; Codex does not supervise each repair.
+[The repair and budget reference](references/bounded-repairs.md) explains eligible
+failures, shared accounting, overrides, and the polling/billing limits. Say
+“ทำรอบเดียว ห้ามแก้ซ้ำ” to dispatch with `--max-repairs 0`. That disables
+additional worker sessions, while retaining model-step and wall-time guards.
 
 ## Waiting and timing
 
@@ -135,15 +145,17 @@ identifies a different model.
 
 - **`committed`** means attributed local commits exist. Check `checks.status`
   separately: `passed`, `passed_with_warnings`, or `not_declared`.
-- A required check failure returns nonzero. Before A, changes remain uncommitted;
-  after A/B, existing commits remain and the report identifies the failed stage.
+- A required check failure still present after bounded repairs returns nonzero.
+  Before A, changes remain uncommitted; after A/B, existing commits remain and
+  the report identifies the failed stage.
   The worker never resets user work to hide a failure.
 - Missing/malformed metrics, a changed contract, unexpected HEAD changes,
   out-of-scope writes, or repository hook rejection stop successful finalization.
-- Cancellation is observed locally. The default permits long quiet jobs; process
-  liveness is not proof of useful progress. There is no automatic stall detector.
-  An optional finite `default_job_timeout_seconds` limits the model process;
-  individual contract steps have their own optional timeout.
+- Cancellation and the shared 60-minute job budget are observed locally. Quiet
+  output alone is not a stall. Three consecutive identical failed tool actions
+  trigger a stop. Each declared command defaults to a ten-minute timeout, bounded
+  by the remaining job time; the project can set an explicit command timeout.
+  An existing finite `default_job_timeout_seconds` also limits each model process.
 
 Each run records model/provider/version, run ID, elapsed time, input/output/
 reasoning/cache tokens, estimated cost, changed files and inserted/deleted lines,

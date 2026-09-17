@@ -11,7 +11,7 @@ import sys
 
 from worker_platform import default_base_dir
 
-VERSION = '4.1.0'
+VERSION = '4.2.0'
 START = '<!-- BEGIN OPENCODE-WORKER -->'
 END = '<!-- END OPENCODE-WORKER -->'
 
@@ -102,6 +102,11 @@ def install(package, base, codex_home, skill_root=None, check=False):
         'cli_binary': shutil.which('opencode') or 'opencode',
         'default_job_timeout_seconds': None, 'heartbeat_interval_seconds': 5,
         'hello_timeout_seconds': 10,
+        'execution_limits': {
+            'max_model_steps': 100, 'max_wall_seconds': 3600,
+            'max_repair_attempts': 2, 'check_timeout_seconds': 600,
+            'max_repeated_tool_failures': 3,
+        },
     }
     if not isinstance(settings, dict):
         raise InstallError('Existing settings must be a JSON object')

@@ -196,8 +196,9 @@ def positive_seconds(value, name):
 
 class ProcessMonitor:
     def __init__(self, run_dir, *, interval_seconds=5, timeout_seconds=None, cancel_path=None,
-                 launcher_pid=None, detect_terminal_errors=True):
+                 launcher_pid=None, detect_terminal_errors=True, guard=None, output_dir=None):
         self.run_dir = Path(run_dir)
+        self.output_dir = Path(output_dir) if output_dir is not None else self.run_dir
         self.cancel_path = Path(cancel_path) if cancel_path else self.run_dir / 'cancel.request'
         self.interval_seconds = positive_seconds(interval_seconds, 'heartbeat_interval_seconds')
         self.timeout_seconds = (None if timeout_seconds is None else
@@ -210,6 +211,15 @@ class ProcessMonitor:
         if not isinstance(detect_terminal_errors, bool):
             raise ValueError('detect_terminal_errors must be a boolean')
         self.detect_terminal_errors = detect_terminal_errors
+        if guard is not None and not callable(guard):
+            raise ValueError('guard must be callable or null')
+        # ``guard`` is a local, synchronous stop hook.  It is deliberately
+        # not a model callback: the owner can use it to enforce a shared job
+        # budget on every poll.  The exception is recorded only so the caller
+        # that owns the child can identify the source and stop it; the
+        # original exception is re-raised unchanged below.
+        self.guard = guard
+        self.guard_exception = None
         self.started = None
         self.heartbeat_count = 0
         self.output_sizes = (0, 0)
@@ -223,10 +233,10 @@ class ProcessMonitor:
             self.started = now
         code = process.poll()
         sizes = []
-        stdout_name = 'events.jsonl' if (self.run_dir / 'events.jsonl').exists() else 'stdout.log'
+        stdout_name = 'events.jsonl' if (self.output_dir / 'events.jsonl').exists() else 'stdout.log'
         for name in (stdout_name, 'stderr.log'):
             try:
-                sizes.append((self.run_dir / name).stat().st_size)
+                sizes.append((self.output_dir / name).stat().st_size)
             except FileNotFoundError:
                 sizes.append(0)
         if tuple(sizes) != self.output_sizes:
@@ -267,8 +277,17 @@ class ProcessMonitor:
             if self.cancel_path.exists():
                 raise KeyboardInterrupt()
             snapshot = self.record(process)
+            if self.guard is not None:
+                try:
+                    # Run on the first poll and on the final poll as well.
+                    # This lets a shared budget account for the last event
+                    # before a normally exiting child is accepted.
+                    self.guard()
+                except BaseException as exc:
+                    self.guard_exception = exc
+                    raise
             if self.detect_terminal_errors:
-                terminal_name = terminal_error_name(self.run_dir / 'events.jsonl')
+                terminal_name = terminal_error_name(self.output_dir / 'events.jsonl')
                 if terminal_name is not None:
                     raise TerminalOpenCodeError(terminal_name)
             if not snapshot['process_running']:

@@ -257,6 +257,9 @@ def compact_report(report: Mapping[str, Any], report_path: Any) -> Dict[str, Any
     timing = report.get("timing")
     if isinstance(timing, Mapping):
         result["timing"] = dict(timing)
+    for field in ("budget", "repairs"):
+        if isinstance(report.get(field), Mapping):
+            result[field] = dict(report[field])
     if report.get("error") is not None:
         result["error"] = report.get("error")
     if report.get("persistence_error") is not None:

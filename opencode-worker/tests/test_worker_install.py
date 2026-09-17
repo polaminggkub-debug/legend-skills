@@ -90,6 +90,9 @@ class WorkerInstallTests(unittest.TestCase):
 
         settings = json.loads((self.base / "settings.json").read_text(encoding="utf-8"))
         self.assertIn("default_model", settings)
+        self.assertEqual(settings["execution_limits"]["max_model_steps"], 100)
+        self.assertEqual(settings["execution_limits"]["max_wall_seconds"], 3600)
+        self.assertEqual(settings["execution_limits"]["max_repair_attempts"], 2)
         self.assertTrue((self.base / "installation.json").is_file())
         manifest = json.loads((self.base / "installation.json").read_text(encoding="utf-8"))
         self.assertEqual(manifest["version"], install.VERSION)

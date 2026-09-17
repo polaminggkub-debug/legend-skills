@@ -21,7 +21,10 @@ copy the templated `SKILL.md` through the generic skill-copy procedure.
 4. Run the same installer without `--check`. It copies only program/docs/example
    files, renders absolute paths in the skill, and adds a small owned block to
    global `AGENTS.md`. Backups stay outside skill discovery folders. Existing
-   settings, credentials, and run history are preserved.
+   settings, credentials, and run history are preserved. Version 4.2 adds effective
+   defaults of 100 model steps, 60 minutes for the whole job, and at most two
+   repairs when `execution_limits` is absent; existing settings files are not
+   rewritten to add these defaults. See [bounded repairs](references/bounded-repairs.md).
 5. Invoke the returned provider-neutral `opencode-worker` entrypoint with that
    Python, then run `doctor --dir PROJECT`. For a new installation, run
    `auth status --provider opencode-go`. New installations are Go-only: they

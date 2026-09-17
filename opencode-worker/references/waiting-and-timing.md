@@ -2,9 +2,10 @@
 
 Use this guide when a worker run is still active, a native tool call yields, a
 final report is missing, or a run report needs its timing breakdown interpreted.
-The worker owns one foreground OpenCode process. Its Python monitor records a
+The worker owns one foreground job, including any bounded repair processes. Its Python monitor records a
 private heartbeat every five seconds without a model or API request. The default
-total job timeout is `None`, so a quiet job can run longer than twenty minutes.
+total job budget is 60 minutes, shared by model calls, repairs, and checks.
+A quiet job can run longer than twenty minutes within that budget.
 No recurring Codex task, MCP server, or background notifier is involved.
 
 ## Continue one wait
@@ -63,7 +64,8 @@ worker wait --run RUN_UUID
 ```
 
 Consume the returned terminal report, including its failure status, and stop.
-There is no rerun or automatic repair path. If no run ID or final report exists,
+Do not start a fresh job or repair from Codex after terminal failure; the
+executable has already applied its [bounded repair policy](bounded-repairs.md). If no run ID or final report exists,
 keep the outcome unknown and state the evidence that is missing. A failed check
 or failed delivery stage remains a failure even when an earlier source commit
 exists; distinguish the commit from the application-check result.
