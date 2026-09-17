@@ -33,6 +33,8 @@ macOS/Windows. Matt's optional upstream helper bundle requires Node.js and `npx`
 General skills: `chris`, `formpress`, `margaret`, `matt`, `ship`, `steve`,
 `ui-ux-pro-max`, and `update-all`.
 
+For an optional Max-plans/Flash-codes setup, see [Qwen Go defaults](opencode-worker/references/qwen-defaults.md).
+
 `opencode-worker` delegates coding through the official OpenCode CLI. Fresh
 installations are Go-only: they use OpenCode Go (`opencode-go`) with DeepSeek
 V4.1 Flash (`deepseek-v4.1-flash`) as the default. In the OpenCode Go console,
