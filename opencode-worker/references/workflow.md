@@ -40,7 +40,7 @@ The worker does not invent `build`, require Node.js, or claim tests passed.
 | `cwd` | Existing directory inside the repo; default `.` |
 | `stage` | `before_commit` (default) or `after_commit` |
 | `required` | Boolean, default true; false preserves failure as a warning |
-| `timeout_seconds` | Positive finite number or null (default: no total limit) |
+| `timeout_seconds` | Positive finite number; null uses the worker command default (600 seconds). Always bounded by remaining job time |
 
 `{python}` in argv[0] means the worker's interpreter. Other command names are
 resolved on PATH; repository executables resolve relative to `cwd`. Arguments

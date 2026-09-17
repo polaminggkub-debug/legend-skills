@@ -43,7 +43,9 @@ keep `openrouter-worker` as a backwards-compatible alias. Credentials stay
 separate per provider, and API keys stay out of prompts, arguments, and Git.
 
 Its executable enforces declared project checks, source/metadata commit ordering,
-usage records, and local process monitoring without extra model prompts. It
+usage records, and local process monitoring. Failed required checks can trigger
+at most two worker repair attempts within a shared 100-step/60-minute budget;
+the local five-second heartbeat makes no model requests. It
 includes a Codex entrypoint, an installer that preserves private
 settings/history, and offline macOS/Windows CI. Use [its installer](opencode-worker/INSTALL_FOR_AI.md);
 each machine supplies its own credential and each special project workflow is

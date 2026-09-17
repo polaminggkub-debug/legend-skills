@@ -12,6 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
 sys.path.insert(0, str(ROOT / 'tests'))
 import worker_runtime
+import worker_job
 
 
 class RuntimeTimingTests(unittest.TestCase):
@@ -92,7 +93,7 @@ class RuntimeTimingTests(unittest.TestCase):
             observed.append(running[0])
             return discover(path)
 
-        with mock.patch.object(worker_runtime, 'load_project', side_effect=inspect_preflight):
+        with mock.patch.object(worker_job, 'load_project', side_effect=inspect_preflight):
             code, output, errors = self.fixture.call_main(
                 ['run', '--dir', str(repo), 'change source'])
         self.assertEqual(code, 0, errors)
@@ -107,7 +108,7 @@ class RuntimeTimingTests(unittest.TestCase):
                 raise OSError('fixture persistence failure')
             return save(base, directory, report)
 
-        with mock.patch.object(worker_runtime, 'save_report', side_effect=fail_final):
+        with mock.patch.object(worker_job, 'save_report', side_effect=fail_final):
             code, output, errors = self.fixture.call_main(
                 ['run', '--dir', str(repo), 'change source'])
         self.assertEqual(code, 1)
@@ -123,7 +124,7 @@ class RuntimeTimingTests(unittest.TestCase):
                 repo = self.fixture.make_repo('timer-' + behavior)
                 broken = mock.Mock()
                 broken.snapshot.side_effect = RuntimeError('fixture timer failure')
-                with mock.patch.object(worker_runtime, 'RunTimer', return_value=broken):
+                with mock.patch.object(worker_job, 'RunTimer', return_value=broken):
                     code, output, errors = self.fixture.call_main(
                         ['run', '--dir', str(repo), 'change source'], behavior=behavior)
                 self.assertEqual(code, expected, errors)

@@ -18,6 +18,7 @@ SCRIPTS = ROOT / "scripts"
 if str(SCRIPTS) not in sys.path:
     sys.path.insert(0, str(SCRIPTS))
 
+import worker_delivery_support
 import worker_delivery  # noqa: E402
 
 
@@ -36,7 +37,7 @@ class DeliveryTests(unittest.TestCase):
     def _run(self, steps, run_dir, *, env=None, resolver=None, **kwargs):
         resolver = resolver or self._resolver()
         project = types.SimpleNamespace(command_argv=resolver)
-        with mock.patch.object(worker_delivery, "worker_project", project):
+        with mock.patch.object(worker_delivery_support, "worker_project", project):
             return worker_delivery.run_steps(
                 steps,
                 repo=run_dir,
@@ -119,7 +120,7 @@ class DeliveryTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             project = types.SimpleNamespace(command_argv=self._resolver(calls))
-            with mock.patch.object(worker_delivery, "worker_project", project):
+            with mock.patch.object(worker_delivery_support, "worker_project", project):
                 with self.assertRaises(worker_delivery.DeliveryError) as raised:
                     worker_delivery.run_steps(
                         steps,
@@ -175,6 +176,69 @@ class DeliveryTests(unittest.TestCase):
             self.assertEqual(result["timeout_seconds"], 0.1)
             self.assertIsNotNone(result["exit_code"])
 
+    def test_remaining_job_time_bounds_each_subprocess(self):
+        steps = [
+            {
+                "id": "quick",
+                "kind": "test",
+                "argv": ["{python}", "-c", "pass"],
+            },
+            {
+                "id": "slow",
+                "kind": "build",
+                "argv": ["{python}", "-c", "import time; time.sleep(60)"],
+            },
+        ]
+        remaining_values = iter((0.2, 0.05))
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            started = time.monotonic()
+            with self.assertRaises(worker_delivery.DeliveryError) as raised:
+                self._run(
+                    steps,
+                    root,
+                    default_timeout_seconds=2,
+                    remaining_seconds=lambda: next(remaining_values),
+                )
+            self.assertLess(time.monotonic() - started, 3)
+            results = raised.exception.results
+            self.assertEqual([item["status"] for item in results], ["passed", "timed_out"])
+            self.assertEqual(results[0]["timeout_seconds"], 0.2)
+            self.assertEqual(results[1]["timeout_seconds"], 0.05)
+            self.assertIsNotNone(results[1]["exit_code"])
+
+    def test_guard_during_running_step_stops_child_and_preserves_exception(self):
+        class BudgetExceeded(RuntimeError):
+            pass
+
+        expected = BudgetExceeded("shared job budget exhausted")
+        calls = []
+
+        def guard():
+            calls.append(time.monotonic())
+            # The first call is before launch.  The next call comes from the
+            # monitor's first poll while the child is still sleeping.
+            if len(calls) >= 2:
+                raise expected
+
+        steps = [{
+            "id": "guarded",
+            "kind": "build",
+            "argv": ["{python}", "-c", "import time; time.sleep(60)"],
+        }]
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            started = time.monotonic()
+            with self.assertRaises(BudgetExceeded) as raised:
+                self._run(steps, root, guard=guard)
+            self.assertLess(time.monotonic() - started, 3)
+            self.assertIs(raised.exception, expected)
+            self.assertEqual(len(raised.exception.delivery_results), 1)
+            result = raised.exception.delivery_results[0]
+            self.assertEqual(result["status"], "budget_exceeded")
+            self.assertIsNotNone(result["exit_code"])
+            self.assertGreaterEqual(len(calls), 2)
+
     def test_keyboard_interrupt_stops_process_and_carries_partial_results(self):
         code = "import time; time.sleep(60)"
 
@@ -198,8 +262,8 @@ class DeliveryTests(unittest.TestCase):
                     super().__init__(*args, **kwargs)
                     monitor_holder["kwargs"] = kwargs
 
-            with mock.patch.object(worker_delivery, "worker_project", project):
-                with mock.patch.object(worker_delivery, "ProcessMonitor", CapturingInterruptingMonitor):
+            with mock.patch.object(worker_delivery_support, "worker_project", project):
+                with mock.patch.object(worker_delivery_support, "ProcessMonitor", CapturingInterruptingMonitor):
                     with self.assertRaises(worker_delivery.DeliveryInterrupted) as raised:
                         worker_delivery.run_steps(
                             [{"id": "cancelled", "argv": ["{python}", "-c", code]}],
@@ -224,7 +288,7 @@ class DeliveryTests(unittest.TestCase):
             run_dir.mkdir()
             (run_dir / "cancel.request").write_text("cancel\n", encoding="utf-8")
             project = types.SimpleNamespace(command_argv=self._resolver(calls))
-            with mock.patch.object(worker_delivery, "worker_project", project):
+            with mock.patch.object(worker_delivery_support, "worker_project", project):
                 with mock.patch.object(worker_delivery.subprocess, "Popen") as popen:
                     with self.assertRaises(worker_delivery.DeliveryInterrupted) as raised:
                         worker_delivery.run_steps(
@@ -250,7 +314,7 @@ class DeliveryTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             project = types.SimpleNamespace(command_argv=self._resolver())
-            with mock.patch.object(worker_delivery, "worker_project", project):
+            with mock.patch.object(worker_delivery_support, "worker_project", project):
                 same_stage = worker_delivery.run_steps(
                     [command("unit/a"), command("unit_a"), command("Check"), command("check")],
                     repo=root,

@@ -98,6 +98,19 @@ class FakeProcess:
 
 
 class ProcessMonitorTests(unittest.TestCase):
+    def test_attempt_logs_can_be_separate_from_root_heartbeat(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            attempt = root / 'attempts' / 'one'
+            attempt.mkdir(parents=True)
+            event = {'type': 'error', 'error': {'name': 'AuthError', 'isRetryable': False}}
+            (attempt / 'events.jsonl').write_text(json.dumps(event) + '\n')
+            monitor = worker_monitor.ProcessMonitor(root, output_dir=attempt)
+            with self.assertRaises(worker_monitor.TerminalOpenCodeError):
+                monitor.wait(FakeProcess(FakeClock(), initial_returncode=0))
+            self.assertGreater(json.loads((root / 'heartbeat.json').read_text())['events_bytes'], 0)
+            self.assertFalse((root / 'events.jsonl').exists())
+
     def _clock(self, clock: FakeClock):
         """Make monitor timing deterministic without sleeping."""
 
@@ -286,6 +299,38 @@ class ProcessMonitorTests(unittest.TestCase):
             self.assertEqual(process.wait_timeouts, [5, 5, 2])
             self.assertEqual(process.terminate_calls, 0)
             self.assertEqual(process.kill_calls, 0)
+
+    def test_guard_runs_on_the_final_poll_before_accepting_exit(self):
+        clock = FakeClock()
+        process = FakeProcess(clock, initial_returncode=0)
+        calls = []
+        with tempfile.TemporaryDirectory() as directory:
+            run_dir = Path(directory)
+            with self._clock(clock):
+                monitor = worker_monitor.ProcessMonitor(
+                    run_dir,
+                    guard=lambda: calls.append(clock.current),
+                )
+                self.assertEqual(monitor.wait(process), 0)
+        self.assertEqual(calls, [0.0])
+
+    def test_guard_exception_propagates_unchanged(self):
+        class BudgetExceeded(RuntimeError):
+            pass
+
+        expected = BudgetExceeded("job step limit reached")
+        clock = FakeClock()
+        process = FakeProcess(clock)
+        with tempfile.TemporaryDirectory() as directory:
+            with self._clock(clock):
+                monitor = worker_monitor.ProcessMonitor(
+                    Path(directory),
+                    guard=lambda: (_ for _ in ()).throw(expected),
+                )
+                with self.assertRaises(BudgetExceeded) as raised:
+                    monitor.wait(process)
+        self.assertIs(raised.exception, expected)
+        self.assertIs(monitor.guard_exception, expected)
 
 
 if __name__ == "__main__":

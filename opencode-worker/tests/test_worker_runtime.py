@@ -226,6 +226,7 @@ def main():
                     "-C",
                     str(repo),
                     "commit",
+                    "-q",
                     "-m",
                     "unrelated worker head change",
                 ],

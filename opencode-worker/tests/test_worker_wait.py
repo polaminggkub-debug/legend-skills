@@ -45,6 +45,17 @@ class FakeClock:
 
 
 class WorkerWaitTests(unittest.TestCase):
+    def test_compact_result_preserves_budget_and_repair_stop_evidence(self):
+        report = {
+            'status': 'failed', 'finalized': True,
+            'budget': {'counts': {'model_steps': 100}, 'stop_reason': 'max_model_steps'},
+            'repairs': {'attempts': 1, 'stop_reason': 'max_model_steps'},
+        }
+        result = compact_report(report, 'report.json')
+        self.assertEqual(result['budget'], report['budget'])
+        self.assertEqual(result['repairs'], report['repairs'])
+        self.assertNotIn('attempts', result)
+
     def setUp(self) -> None:
         self.temp_dir = tempfile.TemporaryDirectory(prefix="worker-wait-tests-")
         self.base = Path(self.temp_dir.name)
