@@ -1,0 +1,28 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "opencode-go/qwen3.8-max",
+  "small_model": "opencode-go/qwen3.8-flash",
+  "default_agent": "orchestrator",
+  "agent": {
+    "orchestrator": {
+      "description": "Plan and coordinate coding with Qwen Max; delegate edits to Qwen Flash.",
+      "mode": "primary",
+      "model": "opencode-go/qwen3.8-max",
+      "prompt": "Understand the task, inspect relevant project context, and delegate implementation and requested checks to the coder subagent. Give a focused plan and acceptance criteria. Let coder make file changes and execute checks. Summarize its result honestly, including any failed checks. Answer simple questions directly without delegation.",
+      "permission": {
+        "edit": "deny",
+        "bash": "deny",
+        "task": { "*": "deny", "coder": "allow" }
+      }
+    },
+    "coder": {
+      "description": "Implement code changes and run requested checks using Qwen Flash.",
+      "mode": "subagent",
+      "model": "opencode-go/qwen3.8-flash",
+      "prompt": "Implement the delegated task, follow project instructions, and run appropriate checks. Return changed files, check results and blockers. Preserve unrelated changes.",
+      "permission": { "task": "deny" }
+    },
+    "build": { "model": "opencode-go/qwen3.8-flash" },
+    "plan": { "model": "opencode-go/qwen3.8-max" }
+  }
+}
