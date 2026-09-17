@@ -114,6 +114,7 @@ def _repair_failure(report, *, stage, results, repo, budget, max_repairs,
         report['stop_reason'] = 'max_repair_attempts'
         raise GuardrailError('Automatic repair limit reached')
     try:
+        _budget_check_before_model(budget)
         budget.record_repair_attempt()
     except Exception as exc:
         reason = getattr(exc, 'reason', 'max_repair_attempts')

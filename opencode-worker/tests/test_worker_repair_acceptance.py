@@ -133,6 +133,7 @@ class BoundedRepairAcceptanceTests(unittest.TestCase):
         self.assertNotEqual(code, 0)
         self.assertEqual(len(self.runtime.run_rows()), 1)
         self.assertEqual(report['budget']['stop_reason'], 'max_model_steps')
+        self.assertEqual(report['repairs']['attempts'], 0)
 
     def test_success_on_last_allowed_step_can_finish_checks_and_commit(self):
         self.contract()
