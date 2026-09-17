@@ -467,5 +467,3 @@ def _new_monitor(
                     "ProcessMonitor does not support the shared delivery guard"
                 ) from retry_error
             raise
-
-
