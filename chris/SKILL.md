@@ -2,8 +2,9 @@
 name: chris
 description: >
   Turn software requirements into acceptance criteria, focused checks, and
-  trustworthy evidence. Use for TDD, test strategy, testability, failures,
-  test reviews, fixtures, coverage, performance, lint, and CI guardrails.
+  trustworthy evidence. Use for RTM/traceability, TDD, test strategy,
+  testability, failures, test reviews, fixtures, coverage, performance, lint,
+  and CI guardrails.
 ---
 
 # Chris — Acceptance, Tests, and Guardrails
@@ -50,6 +51,7 @@ Read only the references matching the current decision before acting.
 | Decision | Reference |
 |---|---|
 | Define acceptance, select a test level, or decide whether evidence is sufficient | [Acceptance and evidence](references/acceptance-evidence.md) |
+| Build or revise an RTM, audit requirement coverage, or assess change impact across requirement links | [Requirements traceability](references/requirements-traceability.md) |
 | Implement a feature or fix with TDD | [TDD](references/tdd.md) |
 | Write tests or choose assertions | [Writing tests](references/writing-tests.md) |
 | Improve unit boundaries or testability | [Testable architecture](references/testable-architecture.md) |
