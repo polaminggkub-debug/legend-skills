@@ -19,10 +19,9 @@ A large project's rule is a precedent to evaluate, not a universal requirement.
 | Preserve an external interface | Contract/schema compatibility check | Consumer expectations and supported versions |
 | Formatting or repository hygiene | Formatter, whitespace/file policy check | Check mode versus auto-fix mode |
 
-Static syntax checks cannot prove general runtime properties. Select the test
-boundary through [Acceptance and evidence](acceptance-evidence.md) when needed.
-Write down the rule, scope, allowed exceptions, expected diagnostic, and cost
-only to the extent these are not clear in the authoritative configuration.
+Static syntax checks cannot prove runtime or rendered behavior; select that
+boundary through [Acceptance and evidence](acceptance-evidence.md). A guard
+larger than the code it protects needs owner approval.
 
 ## Trace enforcement end to end
 
@@ -42,10 +41,9 @@ Trace the actual chain, including wrappers and conditional steps:
    Configuration in Git establishes neither current settings nor their historical
    state. Report unavailable settings as unknown, not as enforcement.
 
-Report the highest evidenced stage: **configured**, **locally demonstrated**,
-**CI demonstrated**, or **required for merge**. Explain gaps between stages.
-A successful command with no selected files or a skipped job is not equivalent
-to having checked the intended code.
+State how far enforcement was actually shown (config only, local run, CI run,
+or required for merge). A command with no selected files or a skipped job has
+not checked the intended code.
 
 ## Prove the rule's behavior
 
@@ -56,9 +54,8 @@ worktree; keep deliberate violations out of normal source and the final diff.
 Validate important evasion paths implied by the requirement, rather than trying
 to prove a syntax checker rejects every possible runtime behavior.
 
-An expected-failure lab may return success because its bad fixtures failed as
-expected. Such a lab runner is not a production source-check command. Adapt
-examples to the repository's files, scripts, tool versions, and CI contract.
+An expected-failure lab that succeeds because its bad fixtures failed is not a
+production check command.
 
 Completion means the agreed rule detects its intended violation, accepts valid
 code, and reaches the requested enforcement stage. If CI/settings access is
@@ -66,11 +63,11 @@ missing, identify the demonstrated stage and remaining setup precisely.
 
 ## Review changes to the checks themselves
 
-When a diff changes lint/config, test selection, assertions, generated baselines,
-CI workflows, or exceptions, explain whether protection changed. Keep necessary
-policy changes explicit in the diff and rationale. A failing check alone is not
-a reason to lower severity, broaden ignores, skip coverage, or replace expectations.
-Use the agreed contract and a demonstrated failure cause to justify updates.
+When a diff changes lint/config, test selection, assertions, baselines, CI
+workflows, or exceptions, explain whether protection changed. A failing check
+alone is not a reason to lower severity, broaden ignores, skip coverage, or
+replace expectations. The agent implementing a change must not edit the checks
+it is judged by; lock them with CODEOWNERS, protected paths, or hooks.
 
 For an authorized policy-change notification workflow, derive watched paths
 from actual enforcement files and include the detector plus its watched-path
