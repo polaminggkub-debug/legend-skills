@@ -15,17 +15,10 @@ Report the compact final result in the Codex turn and distinguish code committed
 
 ## Fast dispatch
 
-If a job is slow, the fix is almost always upstream of dispatch, not a bigger
-budget: the worker should write, not explore. Before dispatch, build a context
-pack (ideally from a script, e.g. a Playwright run dumping `ariaSnapshot()` per
-step) with the exact facts the worker needs, and write the prompt as a
-numbered spec ("do not explore beyond these files"), not a pointer to go learn
-a flow. One independent unit per job; run independent units in parallel only
-across separate clones (a shared repo's worktrees share one lock file and will
-block each other for the whole job, not just at commit time — see the
-reference for the exact mechanism). Start with tight caps (`--max-job-seconds
-1800 --max-model-steps 80`) and fix the pack/prompt on failure instead of
-raising them. Scope checks to what changed, and measure every run's wall time,
-steps, cost, and check result (via `runs.sqlite3`) against a baseline so
-regressions are visible. Full detail, including the verified worktree-lock
-finding: [`references/fast-dispatch.md`](references/fast-dispatch.md).
+If a job is slow, fix what happens before dispatch, not the budget: the worker
+should write, not explore. Build a context pack (ideally from a script) and
+write the prompt as a numbered spec naming the files to read, not a pointer to
+go learn a flow. See the installed guide's **Fast dispatch** section for the
+context-pack/prompt pattern, safe parallelization (including a verified lock
+finding that rules out worktrees of the same repo), tight fail-fast caps, and
+per-run measurement.

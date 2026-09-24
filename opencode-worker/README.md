@@ -73,6 +73,20 @@ includes model/provider latency and streaming. Timing is supplemental evidence:
 it never establishes true TTFT, and unavailable legacy values are unknown
 (`null`), not zero. This breakdown requires no new CLI flag.
 
+## Fast dispatch
+
+A dispatched job is only as fast as what it has to figure out on its own. If a
+job spends most of its steps exploring — reading source/doc files, poking the
+app to find selectors, retrying slowly — fix the dispatch, not the budget: the
+orchestrating agent should gather those facts first (ideally with a script,
+not a model call) and hand the worker a numbered spec, not a flow to go learn.
+[The fast-dispatch reference](references/fast-dispatch.md) covers building
+that context pack, writing a spec-style prompt, safe parallelization
+(including a verified finding that the repository lock is shared across
+worktrees of one repo, so parallel units need separate clones), tight
+fail-fast caps, scoped checks, and measuring runs via `runs.sqlite3` against a
+baseline.
+
 ## First use in a project
 
 The agent runs `inspect --dir PROJECT` and uses project instructions, package
