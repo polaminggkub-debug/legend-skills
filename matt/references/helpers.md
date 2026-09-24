@@ -53,8 +53,9 @@ Hierarchy describes containment; dependencies describe what must exist first.
 For Projects use [its workflow](github-projects.md); otherwise use the selected
 tracker's convention. With no tracker, keep work items in the accepted plan.
 
-Give a shared interface one owner or a coordinated change plan before parallel
-implementation. Independent branches do not prove interface compatibility.
+Give a shared interface one owner before parallel implementation; independent
+branches do not prove compatibility. Keep verifier authorship away from the
+implementer it judges.
 Transfer source pointers, revision/working changes, observed results, remaining
 findings and decisions, authority limits, and the next checkable action in the
 existing task record rather than creating a competing tracker.

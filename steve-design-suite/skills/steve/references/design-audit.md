@@ -1,7 +1,7 @@
 # Deep design audit
 
-Manifest routes/screens/components and relevant states. Use screenshots or a
-running product when available; source alone cannot prove rendered experience.
+List screens/components and relevant states. Audit screenshots of the running
+product; source alone cannot prove rendered experience.
 
 Choose relevant lenses:
 
@@ -14,6 +14,6 @@ Choose relevant lenses:
 - **Consistency:** repeated patterns, token/component reuse, state behavior,
   platform conventions.
 
-For each screen/state mark `REVIEWED`, `FINDING`, `SKIPPED — reason`, or
-`COVERAGE GAP`. Verify CRITICAL/HIGH issues in the rendered UI or exact component
-state. Show a concrete before/after recommendation; do not invent a numeric score.
+Mark each screen/state `REVIEWED`, `FINDING`, `SKIPPED — reason`, or
+`COVERAGE GAP`. Verify CRITICAL/HIGH issues in the rendered UI. Give a concrete
+before/after recommendation; no numeric score.

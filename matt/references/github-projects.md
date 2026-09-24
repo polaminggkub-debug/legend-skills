@@ -75,13 +75,13 @@ Classify each actionable finding against the agreed AC/scope. Work necessary for
 
 A finding on an earlier revision remains an obligation to disposition, not proof that the current candidate still has the defect. Inspect or reproduce it on the current candidate before prescribing a fix. If rework changes the candidate, identify the resulting revision and verify that revision rather than reporting the pre-fix SHA as tested.
 
-Collect evidence while working so the user does not have to reconstruct it manually. For each applicable AC, link a check/result/artifact and the tested revision/environment. Failed, skipped, cancelled, unavailable, or stale results need an explicit disposition; a green aggregate check does not prove an unexecuted scenario. Use automated checks where they answer the AC, and require UI/manual evidence only where the task's acceptance needs it.
+Collect evidence while working. For each AC, link a check or artifact and the tested revision; failed, skipped, or stale results need an explicit disposition. For UI/demo work the evidence is one screenshot per AC from the rendered app, which the owner can judge in minutes. A green aggregate check does not prove an unexecuted scenario.
 
 Before accepting, verify:
 
 1. Agreed AC are satisfied, or an authorized scope change explicitly revises them.
 2. Relevant verification and review cover the current candidate; blocking findings have a recorded resolution.
-3. Required owner/product acceptance is present and the task's delivery target is achieved.
+3. The owner's acceptance is present and the task's delivery target is achieved. Agents never record their own work as accepted.
 4. Evidence links and decisions are accessible to the next reviewer/agent.
 
 These conditions define the tracker acceptance transition. `merge-ready` is not Done for a task whose target is merge; merge is not Done for a task that also promises deployment, docs, or downstream integration. Use the target actually agreed for the task, not a universal deploy requirement. Matt's action-specific authorization boundaries still apply.
@@ -118,12 +118,4 @@ For an authorized tracker migration, move active outcomes and needed prerequisit
 
 ## Basis and capability references
 
-The protocol above is a synthesis, not a measured guarantee of reduced supervision. Public Issues/PRs reveal artifacts and reported actions; missing private task state, agent prompts, and handoff traces remain unknown.
-
-- [OpenHands SDK #2841](https://github.com/OpenHands/software-agent-sdk/pull/2841): implementation/review context for a cross-repository outcome. This motivates checking remaining delivery obligations separately from a single PR's state.
-- [Dyad #4187](https://github.com/dyad-sh/dyad/pull/4187): review/rework and deferred scope illustrate why acceptance needs finding disposition and evidence tied to the candidate.
-- [Goose #11307](https://github.com/aaif-goose/goose/pull/11307): bounded repair during migration illustrates keeping the required parity fix distinct from broader feature work.
-- [Issue dependencies](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/creating-issue-dependencies) and [sub-issues](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/adding-sub-issues): native prerequisite and hierarchy capabilities.
-- [Project automations](https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/using-the-built-in-automations) and [PR-to-Issue linking](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue): closure behavior to inspect before mapping Done.
-- [Copilot cloud agent](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/cloud-agent/use-cloud-agent-on-github): an agent-specific example of invocation and feedback delivery, not a universal agent protocol.
-- [Projects API](https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/using-the-api-to-manage-projects) and [Projects with Actions](https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/automating-projects-using-actions): current operations and authentication; verify the chosen runtime before promising execution.
+A synthesis, not a measured guarantee. Precedents: [OpenHands #2841](https://github.com/OpenHands/software-agent-sdk/pull/2841), [Dyad #4187](https://github.com/dyad-sh/dyad/pull/4187), [Goose #11307](https://github.com/aaif-goose/goose/pull/11307). GitHub docs: [dependencies](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/creating-issue-dependencies), [sub-issues](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/adding-sub-issues), [automations](https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/using-the-built-in-automations), [PR-to-Issue linking](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue), [Copilot cloud agent](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/cloud-agent/use-cloud-agent-on-github), [Projects API](https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/using-the-api-to-manage-projects), [Projects with Actions](https://docs.github.com/en/issues/planning-and-tracking-with-projects/automating-your-project/automating-projects-using-actions). Verify current product behavior before relying on it.
