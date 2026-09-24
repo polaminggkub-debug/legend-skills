@@ -48,7 +48,7 @@ Split when separate assignment, prerequisite ordering, or independent verificati
 
 Use sub-issues for containment and native dependencies for prerequisites. Parent completion requires its combined outcome and integration evidence, not only all children closed. Describe what each prerequisite must deliver; an auto-closed blocker may still leave the consumer's required contract unproven.
 
-For approved task creation, create the Issues, capture their returned identities, then add hierarchy/dependencies and Project membership. Read back every declared relationship and the intended ready frontier. Use the installed CLI/API's current supported operations. If the installed `$to-tickets` only creates Beads, name that mismatch and use an authorized equivalent bounded GitHub action under Matt's task scope; preserve the Beads skill and the selected spec.
+For approved task creation, create the Issues, capture their returned identities, then add hierarchy/dependencies and Project membership. Read back every declared relationship and the intended ready frontier. Use the installed CLI/API's current supported operations. Use `$to-tickets` with the discovered repository workflow and preserve the selected spec.
 
 For a preparation-only request, finish the requested draft Issue payloads and dependency mapping from available facts before seeking execution approval. Leave missing facts explicit. Preparing a reviewable draft and writing it to GitHub are separate actions; a request to defer execution does not defer the authorized drafting work.
 

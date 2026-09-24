@@ -18,7 +18,7 @@ does not rewrite persistent configuration.
 
 Without global defaults, use established repository conventions. Without tracker
 details, retain a bounded plan in the current task and resolve identity/access
-before writes. Do not create a board, Beads project, or OpenSpec installation as
+before writes. Do not create a board, tracker project, or OpenSpec installation as
 a side effect of an ordinary feature request. Explain missing setup only when
 it affects the next action.
 
@@ -26,7 +26,7 @@ it affects the next action.
 
 Obtain missing agent targets, default tracker, and default spec system together.
 Trackers include none, GitHub Issues, GitHub Projects with repository Issues,
-Beads, or a named custom tracker. Spec systems include none, Markdown PRD/plan,
+or a named custom tracker. Spec systems include none, Markdown PRD/plan,
 OpenSpec, or a named custom system.
 
 Prepare the English managed block from confirmed choices:

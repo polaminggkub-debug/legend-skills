@@ -33,8 +33,8 @@ them when no dedicated skill-invocation tool exists.
 
 ## Compatibility and missing helpers
 
-Check the selected helper, not all installed skills. A customized `$to-tickets`
-may require Beads; `$implement` may require OpenSpec or prescribe a full suite.
+Check the selected helper, not all installed skills. `$to-tickets` uses the repository’s configured GitHub Issues/Projects workflow;
+`$implement` may require OpenSpec or prescribe a full suite.
 Do not change the user's tracker, spec, or Chris's Full E2E policy to satisfy a
 helper. State the mismatch briefly and perform the equivalent authorized step
 with compatible tools when its requirements are known. Preserve helper files.

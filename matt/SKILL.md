@@ -101,6 +101,9 @@ in-scope review findings return to correction and affected verification. For
 the same failure, allow the first attempt plus two informed retries; then report
 attempts/evidence and the decision or access needed. Avoid unchanged retries.
 
+An expected red from a test written first (TDD or a locked walkthrough) is part
+of the plan, not an unexplained failure to diagnose.
+
 At a real handoff/context limit, preserve task/spec pointers, revision and
 uncommitted changes, evidence, remaining obligations, authority limits, and next
 action; the receiver verifies them against the current checkout.
