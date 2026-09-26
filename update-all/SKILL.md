@@ -22,7 +22,8 @@ the OS, Homebrew, global npm, project dependencies, or arbitrary developer tools
    or resolve conflicts in a user repository.
 4. Update one component at a time using its documented installer/marketplace.
 5. Verify command availability, version, and plugin/skill discovery after each.
-   Stop and rollback the affected component where the documented rollback exists.
+   Stop and rollback the affected component where the documented rollback exists;
+   otherwise stop and report the failure without further changes.
 6. Write a Markdown report with updated, skipped, failed, rollback, and restart
    requirements.
 
@@ -37,3 +38,8 @@ Run it only after explicit opt-in.
 Use OS-specific adapters discovered at runtime; no fixed shell, `python3`, home
 directory, package manager, or invented CLI command. The suite uses verified
 releases only: never pull untested latest at runtime.
+
+RTK, Graphify, Caveman, and Cavecrew are retired. Never install, update,
+restore, recommend, or re-enable them. If discovered, report them as retired
+and skip them. Treat an explicit removal request as separate destructive work:
+verify exact targets and document rollback before deleting anything.
