@@ -46,13 +46,13 @@ Use this section when the user requests the full bundle or helper repair.
    argument per missing name and one `--agent` per selected target:
 
    ```text
-   npx skills@latest add https://github.com/mattpocock/skills/tree/5b15a47f2d7150f545fbcacbfe381787fc0230dc --global
+   npx skills@latest add https://github.com/mattpocock/skills/tree/4588b32ecab9ecc9fc8cc6b6c5e7d675b6004b0d --global
    ```
 
    Verify the URL exactly equals `upstream.installSource`. Explain the external
    dependency installation; run only when authorized. Preserve conflicting custom
    copies. Re-check every selected target after installation.
-4. Report the full bundle complete only when all 25 are present. Otherwise list
+4. Report the full bundle complete only when all 27 are present. Otherwise list
    missing capabilities; core Matt/Chris and independent work remain usable.
 
 The upstream `$tdd` may remain installed for compatibility. Matt's testing route
