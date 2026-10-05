@@ -19,8 +19,8 @@ them when no dedicated skill-invocation tool exists.
 | Acceptance, tests, TDD, coverage, or CI guardrails | `$chris`; its internal TDD guide owns the test-first loop in this workflow |
 | A hard bug without a tight reproduction | `$diagnosing-bugs`, with Chris governing test scope and evidence |
 | A completed diff needing Standards and Spec review | `$code-review`; supply the accepted task/spec and review base |
-| A PR body to write | `$pr`; creating or publishing the PR still needs delivery authority |
-| An in-progress merge/rebase conflict | Resolve directly (upstream removed `$resolving-merge-conflicts` in 1.3.x) |
+| A PR body to write | `$pr` |
+| An in-progress merge/rebase conflict | Resolve directly |
 | Unclear module boundaries or architecture health | `$improve-codebase-architecture`, supported by `$codebase-design` |
 | Domain vocabulary or a durable architecture decision | `$domain-modeling` |
 | Raw incoming requests needing disposition | `$triage` |
@@ -29,7 +29,7 @@ them when no dedicated skill-invocation tool exists.
 | A question owned by another person | `$to-questionnaire`; drafting does not authorize sending |
 | Communication that did not land | `$wait-what` |
 | Multi-session learning | `$teach` |
-| A session retrospective on the agent environment | `$retro`; proposed instruction/skill changes still need owner approval |
+| A session retrospective on the agent environment | `$retro` |
 | Agent-facing instructions or skill design | `$writing-for-agents` and the available skill-creation workflow |
 | Explicit tracker/bootstrap setup | `$setup-matt-pocock-skills` if compatible with the selected systems |
 | The upstream course or rationale itself | `$ask-matt` or the relevant section of [course summary](course-summary.md) |
