@@ -15,10 +15,12 @@ them when no dedicated skill-invocation tool exists.
 | Settled decisions needing a buildable spec/plan | `$to-spec`, compatible with the chosen spec system |
 | Multiple assignable outcomes needing tracker items | `$to-tickets` only if compatible with the selected tracker; otherwise use its actual CLI/API and accepted plan |
 | Implementation of an accepted bounded change | `$implement` only if compatible with the actual spec/tracker and Chris's test policy; otherwise implement directly within that contract |
+| A whole spec with ticketed task graph to build on one integration branch | `$implement-spec` only when `$to-spec`/`$to-tickets` output exists in the selected tracker; otherwise slice it per [decomposition](#decomposition-and-handoff) |
 | Acceptance, tests, TDD, coverage, or CI guardrails | `$chris`; its internal TDD guide owns the test-first loop in this workflow |
 | A hard bug without a tight reproduction | `$diagnosing-bugs`, with Chris governing test scope and evidence |
 | A completed diff needing Standards and Spec review | `$code-review`; supply the accepted task/spec and review base |
-| An in-progress merge/rebase conflict | `$resolving-merge-conflicts` |
+| A PR body to write | `$pr` |
+| An in-progress merge/rebase conflict | Resolve directly |
 | Unclear module boundaries or architecture health | `$improve-codebase-architecture`, supported by `$codebase-design` |
 | Domain vocabulary or a durable architecture decision | `$domain-modeling` |
 | Raw incoming requests needing disposition | `$triage` |
@@ -27,6 +29,7 @@ them when no dedicated skill-invocation tool exists.
 | A question owned by another person | `$to-questionnaire`; drafting does not authorize sending |
 | Communication that did not land | `$wait-what` |
 | Multi-session learning | `$teach` |
+| A session retrospective on the agent environment | `$retro` |
 | Agent-facing instructions or skill design | `$writing-for-agents` and the available skill-creation workflow |
 | Explicit tracker/bootstrap setup | `$setup-matt-pocock-skills` if compatible with the selected systems |
 | The upstream course or rationale itself | `$ask-matt` or the relevant section of [course summary](course-summary.md) |

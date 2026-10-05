@@ -3,9 +3,9 @@
   "suite": "matt",
   "upstream": {
     "source": "mattpocock/skills",
-    "version": "1.2.3",
-    "commit": "5b15a47f2d7150f545fbcacbfe381787fc0230dc",
-    "installSource": "https://github.com/mattpocock/skills/tree/5b15a47f2d7150f545fbcacbfe381787fc0230dc",
+    "version": "1.3.1",
+    "commit": "4588b32ecab9ecc9fc8cc6b6c5e7d675b6004b0d",
+    "installSource": "https://github.com/mattpocock/skills/tree/4588b32ecab9ecc9fc8cc6b6c5e7d675b6004b0d",
     "manifestPath": ".claude-plugin/plugin.json"
   },
   "requiredSkills": [
@@ -19,10 +19,12 @@
     "grilling",
     "handoff",
     "implement",
+    "implement-spec",
     "improve-codebase-architecture",
+    "pr",
     "prototype",
     "research",
-    "resolving-merge-conflicts",
+    "retro",
     "setup-matt-pocock-skills",
     "tdd",
     "teach",

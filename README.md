@@ -92,7 +92,7 @@ Its global availability does not migrate tasks or change tracker defaults.
 Follow [Matt's installer](matt/INSTALL_FOR_AI.md) for installation/update. The
 core workflow installs Matt and Chris; the pinned upstream suite supplies optional
 specialized helpers. Routine work checks its selected helper rather than auditing
-all 25. Existing defaults are preserved; missing setup files do not block
+the whole suite. Existing defaults are preserved; missing setup files do not block
 independent work, and tracker identity is resolved before writes.
 
 The [design note](docs/plans/2026-09-14-matt-chris-workflow.md) records the

@@ -52,7 +52,7 @@ rules. Projects setup additionally uses [GitHub Projects](github-projects.md).
 
 ## Helper installation and repair
 
-`dependency-lock.json` pins the original upstream 25-skill bundle. The lock is
+`dependency-lock.json` pins the upstream helper bundle. The lock is
 installation metadata, not a gate on every task. Chris supplies Matt's acceptance
 and testing workflow separately from those upstream helpers.
 

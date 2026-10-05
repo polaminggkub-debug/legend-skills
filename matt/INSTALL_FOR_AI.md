@@ -35,8 +35,8 @@ skills. Do not reinstall or upgrade the upstream suite as a side effect.
 Use this section when the user requests the full bundle or helper repair.
 
 1. Read `dependency-lock.json`. Fetch the official manifest at the pinned
-   `upstream.installSource`; require its version, commit, and 25 stable
-   Engineering/Productivity paths to match the lock.
+   `upstream.installSource`; require its version, commit, and
+   `includedCategories` paths to match `requiredSkills`.
 2. Check required skill names/frontmatter for the selected targets. Prefer an
    installer registry recording source `mattpocock/skills`. Without provenance,
    a matching local name and corresponding official pinned path satisfies presence;
@@ -46,13 +46,13 @@ Use this section when the user requests the full bundle or helper repair.
    argument per missing name and one `--agent` per selected target:
 
    ```text
-   npx skills@latest add https://github.com/mattpocock/skills/tree/5b15a47f2d7150f545fbcacbfe381787fc0230dc --global
+   npx skills@latest add <upstream.installSource> --global
    ```
 
-   Verify the URL exactly equals `upstream.installSource`. Explain the external
+   Substitute the lock's exact `upstream.installSource`. Explain the external
    dependency installation; run only when authorized. Preserve conflicting custom
    copies. Re-check every selected target after installation.
-4. Report the full bundle complete only when all 25 are present. Otherwise list
+4. Report the full bundle complete only when every `requiredSkills` name is present. Otherwise list
    missing capabilities; core Matt/Chris and independent work remain usable.
 
 The upstream `$tdd` may remain installed for compatibility. Matt's testing route
