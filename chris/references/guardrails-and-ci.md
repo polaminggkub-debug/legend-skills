@@ -8,7 +8,9 @@ checks to CI, or protecting verification policy from unnoticed changes.
 Start from the project's requirement and actual code/configuration. Prefer an
 existing checker that catches the failure with useful diagnostics. Adopt a rule
 when its protection warrants runtime, false positives, and exception maintenance.
-A large project's rule is a precedent to evaluate, not a universal requirement.
+When existing code already violates it, commit a baseline so only new
+violations fail, and review baseline edits like rule edits. A large project's
+rule is a precedent to evaluate, not a universal requirement.
 
 | Constraint | Candidate mechanism | Boundary to inspect |
 |---|---|---|
@@ -18,6 +20,8 @@ A large project's rule is a precedent to evaluate, not a universal requirement.
 | Keep generated files in sync | Regenerate and compare expected files | Tool version, tracked/untracked files, deterministic output |
 | Preserve an external interface | Contract/schema compatibility check | Consumer expectations and supported versions |
 | Formatting or repository hygiene | Formatter, whitespace/file policy check | Check mode versus auto-fix mode |
+| A test passes without the behavior being true | Test lint bans ([Playwright](playwright.md#acceptance-walkthroughs)) | Rule severity: warnings exit 0 |
+| Suite run time or size creeps up | Slow-file report, run budget, spec-count and duplicate checks ([Test speed](test-speed.md#7-guard)) | Same selection and machine over time |
 
 Static syntax checks cannot prove runtime or rendered behavior; select that
 boundary through [Acceptance and evidence](acceptance-evidence.md). A guard

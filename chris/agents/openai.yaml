@@ -1,4 +1,4 @@
 interface:
   display_name: "Chris"
-  short_description: "Acceptance, tests, guardrails, and CI evidence"
+  short_description: "Acceptance, tests, test speed, guardrails, and CI evidence"
   default_prompt: "Use $chris to define acceptance, choose focused checks, and verify the evidence for this change."

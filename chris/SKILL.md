@@ -1,10 +1,10 @@
 ---
 name: chris
 description: >
-  Turn software requirements into acceptance criteria, focused checks, and
-  trustworthy evidence. Use for RTM/traceability, TDD, test strategy,
-  testability, failures, test reviews, fixtures, coverage, performance, lint,
-  and CI guardrails.
+  Turn requirements into acceptance criteria, focused checks, and trustworthy
+  evidence. Use for test strategy, traceability (RTM), TDD, testability,
+  writing or reviewing tests, Playwright E2E, slow suites and test speed, flaky
+  or failing tests, fixtures, coverage, performance, lint, and CI guardrails.
 ---
 
 # Chris — Acceptance, Tests, and Guardrails
@@ -25,8 +25,9 @@ coordinates the workflow; `$diagnosing-bugs` diagnoses hard failures;
    than the code under test, or the criteria are too long for the owner to read
    in a couple of minutes, stop and ask the owner.
 3. **UI/demo: the rendered screen is the acceptance boundary.** Prefer a short
-   walkthrough that clicks the real UI like a user and saves one screenshot per
-   criterion. Send screenshots to the owner early.
+   [walkthrough](references/playwright.md#acceptance-walkthroughs) that clicks
+   the real UI like a user and saves one screenshot per criterion. Send
+   screenshots to the owner early.
 4. **Only the owner declares accepted or done.** Agents report evidence; they
    never mark the goal complete.
 5. **The implementer never edits its judge.** After the owner approves a
@@ -44,9 +45,10 @@ coordinates the workflow; `$diagnosing-bugs` diagnoses hard failures;
 3. **Act:** implementation/repair requests get the smallest authorized fix and
    its verification; verification requests get checks and findings;
    advice-only requests get a recommendation.
-4. **Evaluate:** state what ran, on which revision, and the result; say what it
-   does not prove. Rerun affected checks after edits. Repeated failure without
-   new evidence calls for diagnosis or missing access, not unchanged retries.
+4. **Evaluate:** state what ran, on which revision, its wall-clock, and the
+   result; say what it does not prove. Rerun affected checks after edits.
+   Repeated failure without new evidence calls for diagnosis or missing access,
+   not unchanged retries.
 
 ## Route
 
@@ -57,27 +59,16 @@ Read only the reference matching the current decision.
 | Define acceptance, select a test level, judge evidence | [Acceptance and evidence](references/acceptance-evidence.md) |
 | Build an RTM, audit requirement coverage, or trace change impact | [Requirements traceability](references/requirements-traceability.md) |
 | Implement a feature or fix with TDD | [TDD](references/tdd.md) |
-| Write tests or choose assertions | [Writing tests](references/writing-tests.md) |
+| Write tests, choose assertions, or apply the testing invariants | [Writing tests](references/writing-tests.md) |
 | Improve unit boundaries or testability | [Testable architecture](references/testable-architecture.md) |
+| Write, lint, select, or isolate Playwright tests; set retry and flaky-test policy | [Playwright](references/playwright.md) |
+| Make a suite faster, size workers or shards, or measure run time | [Test speed](references/test-speed.md) |
 | Write or debug auth-backed local E2E | [Authentication boundary](references/debugging-tests.md#authentication-boundary) |
 | Diagnose failure, flakiness, or environment issues | [Debugging tests](references/debugging-tests.md) |
-| Review tests, audit coverage gaps, or close review findings | [Reviewing tests](references/reviewing-tests.md) |
+| Review tests, audit coverage gaps, or close review findings | [Reviewing tests](references/reviewing-tests.md), with a measured run from [Test speed](references/test-speed.md) step 1 |
 | Design or audit lint rules, check commands, CI gates, or policy-change detection | [Guardrails and CI](references/guardrails-and-ci.md) |
 | Run tests touching external state; configure fixtures, coverage, or performance | [Test infrastructure](references/test-infrastructure.md) |
 | Explain a precedent from real projects | [Case index](references/cases/index.md); select only the relevant case |
-
-## Testing invariants
-
-1. Keep a Functional Core / Imperative Shell: test pure logic directly and I/O
-   at controlled boundaries.
-2. Keep UI/orchestrator tests thin; reserve E2E/contract tests for critical flows.
-3. Test the happy path, then distinct edge/error risks. Assert observable or
-   independently derived behavior; avoid circular tests and implementation coupling.
-4. Keep tests readable Arrange, Act, Assert sequences without hidden control flow.
-5. Run the narrowest relevant test before and after a change; expand only when
-   risk justifies it, within the release policy below.
-6. A green job proves only what actually ran against the relevant code and
-   environment. Counts, markers, and populated fields do not prove behavior.
 
 ## Release test decisions
 

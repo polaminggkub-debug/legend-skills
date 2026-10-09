@@ -1,0 +1,56 @@
+{
+  "skill_name": "chris",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Review this Playwright config and suite for speed. A full run takes about 20 minutes on my laptop.\n\nplaywright.config.ts:\n```ts\nimport { defineConfig, devices } from '@playwright/test'\n\nexport default defineConfig({\n  testDir: './tests/e2e',\n  fullyParallel: true,\n  workers: 6,\n  retries: 0,\n  use: {\n    baseURL: 'http://localhost:5173',\n    video: 'retain-on-failure',\n    trace: 'off',\n    screenshot: 'only-on-failure',\n  },\n  projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],\n  webServer: {\n    command: 'npm run dev',\n    url: 'http://localhost:5173',\n    reuseExistingServer: !process.env.CI,\n  },\n})\n```\n\ntests/e2e/checkout.spec.ts (the other 30 spec files follow the same pattern):\n```ts\nimport { test, expect } from '@playwright/test'\n\nconst viewports = [\n  { width: 1920, height: 1080 },\n  { width: 1440, height: 900 },\n  { width: 1280, height: 800 },\n  { width: 390, height: 844 },\n]\n\nfor (const vp of viewports) {\n  test(`checkout from the cart page at ${vp.width}`, async ({ page }) => {\n    await page.setViewportSize(vp)\n    await page.goto('/')\n    await page.getByRole('link', { name: 'Cart' }).click()\n    await page.getByRole('button', { name: 'Checkout' }).click()\n    await page.getByLabel('Delivery address').fill('12 Test Street')\n    await page.getByRole('button', { name: 'Place order' }).click()\n    await expect(page.getByRole('heading', { name: 'Order placed' })).toBeVisible()\n  })\n\n  test(`checkout from the product page at ${vp.width}`, async ({ page }) => {\n    await page.setViewportSize(vp)\n    await page.goto('/')\n    await page.getByRole('link', { name: 'Shop' }).click()\n    await page.getByRole('link', { name: 'Blue mug' }).click()\n    await page.getByRole('button', { name: 'Buy now' }).click()\n    await page.getByLabel('Delivery address').fill('12 Test Street')\n    await page.getByRole('button', { name: 'Place order' }).click()\n    await expect(page.getByRole('heading', { name: 'Order placed' })).toBeVisible()\n  })\n}\n```",
+      "expected_output": "A speed review that names all four planted causes with their cost, gives the fix for each, requires a measured run before claiming any gain, caps the verdict while run time is unmeasured, and proposes guards so the costs cannot return.",
+      "files": [],
+      "expectations": [
+        "Flags video: 'retain-on-failure' as recording a video for every test (it only deletes the passing ones) and recommends 'off' for normal runs, or 'on-first-retry' where CI retries, with recording turned on only for a rerun of a failure",
+        "Flags the webServer command 'npm run dev' as a dev server that transforms modules on request and recommends serving a production build (for example 'npm run build && npm run preview'), noting that a reused server keeps serving its old build",
+        "Flags the four-viewport loop as running every test four times and recommends one viewport for per-change runs, with a second size only when the requirement is responsive layout (for example a separate project at a later tier or with default: false)",
+        "Flags setViewportSize inside tests as a pattern to ban by lint, with the screen set once in the config",
+        "Flags the cart-page and product-page tests as two full walks of one checkout flow and recommends one full walk plus a small test of only the second entry path's difference",
+        "States the combined repetition: eight full checkout walks per spec (four viewports times two entry paths) where one or two are needed",
+        "Requires a measured run before claiming gains: list the selection, then run once with timing reporters (HTML Speedboard, JSON, or Perfetto) and record wall-clock, workers, and machine",
+        "Because it could not run the suite, marks Speed as not measured, presents the four causes as unconfirmed suspects, and gives at most CONDITIONAL PASS",
+        "Proposes at least one mechanical guard, such as a lint ban on setViewportSize, a check on recording settings, or a per-file slow-test threshold",
+        "Asks for before-and-after wall-clock on the same machine at similar load",
+        "Does not recommend more workers, sharding, or retries as the fix for these causes"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Make our Playwright suite faster. It takes about 22 minutes on my laptop and 25 minutes on our 96-thread build server, so the big server doesn't help at all. To time just the payment specs I ran `npx playwright test pay-` from the repo root (the repo is checked out at ~/work/pay-service-worktree/), and that still took 22 minutes. Workers are set to 16 in the config because that felt about right.",
+      "expected_output": "A measured speed plan that first explains the filter trap and the guessed worker count, measures before changing anything, looks for the shared bottleneck that stops a 96-thread server from helping, and reports before-and-after numbers.",
+      "files": [],
+      "expectations": [
+        "Explains that a file filter is a regular expression matched against the full file path, so 'pay-' also matches the checkout directory 'pay-service-worktree' and selects the whole suite",
+        "Recommends confirming the selection with --list before timing, and selecting by exact file path, a --test-list file, or a title with -g",
+        "Starts with one measured run using timing reporters (HTML Speedboard, JSON, or Perfetto) and records wall-clock, test count, workers, server start-up, and the machine, plus the slowest tests and per-file totals",
+        "Treats the worker count as something to measure: time two or three counts on each machine and keep the fastest that adds no timeouts",
+        "Reads the 96-thread server being no faster as a sign of a shared bottleneck (app server, database, dev server, or recording) rather than a CPU limit, and suggests the Perfetto worker timeline or server metrics to find it",
+        "Checks per-test overhead suspects before adding hardware: recording settings, dev server versus production build, sign-in and data setup through the UI instead of storageState and API seeding, and long navigation replays",
+        "Checks repetition: projects or viewports multiplying the suite, the same flow walked from several entry paths, and duplicate spec files",
+        "Proposes guards so the cost cannot grow back and asks for before-and-after wall-clock on the same machine",
+        "Does not propose raising workers or adding shards as the first fix"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Our acceptance walkthrough for the reorder flow fails about 1 run in 5 on CI, always at the step that clicks 'Confirm order'. The agent that implemented the feature proposes this change to the walkthrough and its config: set `retries: 2` in playwright.config.ts, add `await page.waitForTimeout(1000)` before the step, and replace the step with\n```ts\nawait expect(async () => {\n  await page.getByRole('button', { name: 'Confirm order' }).click({ force: true })\n  await expect(page.getByText('Order confirmed')).toBeVisible()\n}).toPass()\n```\nShould we accept it?",
+      "expected_output": "A rejection that cites the judge rule and each banned construct, then replaces the patch with an evidence-based diagnosis of the flake.",
+      "files": [],
+      "expectations": [
+        "Recommends rejecting the change and says the implementing agent must not edit its own approved verifier; any walkthrough change goes to the owner",
+        "Names each banned construct and why it lets the test pass without the user-visible behaviour being true: retries on a walkthrough (walkthroughs run with retries: 0), the toPass retry loop, force: true, and the fixed waitForTimeout sleep",
+        "Proposes diagnosing from evidence: rerun the failure with recording on (for example --last-failed --trace on) and read the trace at the failing step",
+        "Proposes reproducing the flake with --repeat-each and a --shuffle run",
+        "Lists plausible causes to check, such as the button not yet stable or enabled, an overlay intercepting the click, shared test data or accounts across parallel workers, beforeAll running per worker, or a saturated server",
+        "States that if the product enables the button before it can act, the product is fixed, not the test",
+        "Keeps the failure visible until its cause is fixed, and for suites that do retry on CI, requires a record of each flake (failOnFlakyTests or a tracked issue)"
+      ]
+    }
+  ]
+}
