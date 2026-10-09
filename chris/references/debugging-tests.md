@@ -3,8 +3,12 @@
 Reproduce the narrowest failing command first. Classify the cause as product or
 contract, stale selector/expectation, auth/RLS, dependency/config, timing or
 isolation, or external service. Fix the boundary cause, then rerun the focused
-test and affected suite. Do not hide failures with retries, sleeps, skips, or
-weakened assertions.
+test and affected suite. Keep the failure visible until its cause is fixed;
+retries, sleeps, skips, and weakened assertions hide it.
+
+For a Playwright failure, rerun it with recording on and read the trace; for a
+flake, reproduce it with repeats and shuffled order per
+[Playwright: flaky tests](playwright.md#flaky-tests).
 
 For database behavior, run the repository's documented contract gate and check
 an independent domain invariant before changing an expectation. Treat reconnect
