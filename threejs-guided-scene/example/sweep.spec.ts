@@ -13,7 +13,8 @@ const LAST = Number(process.env.GUARD_LAST_STEP ?? 12)
 const stepUrl = (n: number) => `/?step=${n}`
 const pressNext = (page: Page) => page.getByRole('button', { name: 'Next' }).click()
 
-test.use({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' })
+// Motion stays on: the steady rule needs the moves to play. Every other rule reads the scene after it settles.
+test.use({ viewport: { width: 1440, height: 900 }, reducedMotion: 'no-preference' })
 test.beforeEach(async ({ page }) => {
   await page.addInitScript({ path: path.join(import.meta.dirname, 'probe.js') })
 })
@@ -24,13 +25,18 @@ async function factsAt(page: Page, step: number, route: 'walk' | 'jump') {
   return { step, route, ...(await page.evaluate(() => (window as any).__guard.facts())) }
 }
 
-test('guided scene: every step passes the five rules', async ({ page }) => {
+test('guided scene: every step passes the six rules', async ({ page }) => {
   test.setTimeout(10 * 60_000)
   const walk = []
   await page.goto(stepUrl(FIRST))
+  let motion: unknown[] = []
   for (let n = FIRST; n <= LAST; n++) {
-    walk.push(await factsAt(page, n, 'walk'))
-    if (n < LAST) await pressNext(page)
+    walk.push({ ...(await factsAt(page, n, 'walk')), motion })
+    if (n === LAST) break
+    await page.evaluate(() => (window as any).__guard.startMotion())
+    await pressNext(page)
+    await page.evaluate(() => (window as any).__guard.settle())
+    motion = await page.evaluate(() => (window as any).__guard.stopMotion())
   }
   const jump = []
   for (let n = FIRST; n <= LAST; n++) {

@@ -34,8 +34,8 @@ General skills: `chris`, `formpress`, `margaret`, `matt`, `ship`, `steve`,
 `threejs-guided-scene`, `threejs-guided-scene-build`, `ui-ux-pro-max`, and `update-all`.
 
 [`threejs-guided-scene`](threejs-guided-scene/README.md) builds and guards a step-by-step
-3D scene with HTML labels: five measured rules (stay-put, jump-walk, overlap, frame,
-card-gap) instead of screenshot review, with a runnable example guard and pictures of the
+3D scene with HTML labels: six measured rules (stay-put, jump-walk, overlap, frame,
+card-gap, steady) instead of screenshot review, with a runnable example guard and pictures of the
 real bugs each rule caught. Its authoring half,
 [`threejs-guided-scene-build`](threejs-guided-scene-build/README.md), gives one algorithm
 per rule so a scene passes the guard by construction, from 10 things to a million.

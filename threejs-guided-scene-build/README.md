@@ -1,7 +1,7 @@
 # threejs-guided-scene-build
 
 The authoring half of [`threejs-guided-scene`](../threejs-guided-scene/README.md). The guard
-checks a step-by-step 3D scene with five measured rules; this skill tells an agent how to
+checks a step-by-step 3D scene with six measured rules; this skill tells an agent how to
 write the scene so those rules hold by construction, at any data size.
 
 | Guard rule | Algorithm in this skill |

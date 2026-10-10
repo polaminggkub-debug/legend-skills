@@ -9,8 +9,8 @@ description: >
 
 # Build a guided scene that passes its guard
 
-The guard ([`threejs-guided-scene`](../threejs-guided-scene/SKILL.md)) checks five rules:
-stay-put, jump-walk, overlap, frame, card-gap. This skill gives one algorithm per rule. Each
+The guard ([`threejs-guided-scene`](../threejs-guided-scene/SKILL.md)) checks six rules:
+stay-put, jump-walk, overlap, frame, card-gap, steady. This skill gives one algorithm per rule. Each
 algorithm makes its rule true **by construction**: it holds for any data, so the scene keeps
 passing at 10 boxes or 1,000,000. Take the guard's numbers (label gap, card gap, move) from
 its code by import, never by copying.
@@ -117,7 +117,27 @@ Measure each label's real size from the DOM (or `measureText` with the real font
 text. Never estimate sizes from character counts. Use a grid index so placement stays near
 linear in the number of labels.
 
-Done when: every shown label was accepted by this loop.
+**When to place (steady).** Run this loop only when the scene is at rest: after a step's
+moves end, after the view or camera settles, and on resize. Never run it inside the render
+loop. During a move:
+
+- every label keeps the offset and the shown/hidden state it had at the last rest, and
+  rides with its anchor (the anchor moves; the offset does not);
+- a label whose thing is moving keeps its own offset too, even if it now meets another
+  label for a moment; the overlap rule is judged at rest, not mid-move;
+- nothing is measured with `getBoundingClientRect` per frame; sizes come from the cache.
+
+Apply the placement as CSS `translate` on a label positioned at its anchor (`left`/`top`),
+so the guard can tell placement from riding along. At the next rest, start each label from
+its previous offset and keep it if it is still clear; search new spots only for labels that
+are now blocked. Labels then move only when they must.
+
+1D example: B1's label sits at offset +0 above B1 at x 10. B1 slides to x 40 over 30
+frames; the label rides from 10 to 40 with offset +0 the whole way. At rest, B1's label
+meets B2's at 40, so B1's label alone moves to its next spot, once.
+
+Done when: every shown label was accepted by this loop, and the loop never runs while
+anything moves.
 
 ## 8. Publish the contract
 
@@ -134,7 +154,7 @@ Done when: the guard's sweep reads every field it needs without touching app cod
 2. A property test runs the pure layout on random scenes from 1 to 10,000 things, plus a
    place holding 1,000,000, and the guard's judge is green on every one.
 3. A planted bug per rule turns the judge red: re-pack a shelf, build jump state outside
-   `sceneAt`, skip the card cut, skip the collision check.
+   `sceneAt`, skip the card cut, skip the collision check, run placement every frame.
 
 The work is done when end-to-end tests and the guard are both green. Send the owner one
 picture per changed step; the owner judges whether the picture tells the story.

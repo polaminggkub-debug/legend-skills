@@ -37,7 +37,7 @@
     {
      "id": "B1",
      "kind": "thing",
-     "text": "B1 \u00b7 100",
+     "text": "B1 · 100",
      "rect": [
       150,
       40,
@@ -49,7 +49,7 @@
     {
      "id": "B2",
      "kind": "thing",
-     "text": "B2 \u00b7 100",
+     "text": "B2 · 100",
      "rect": [
       360,
       180,
@@ -137,7 +137,7 @@
     {
      "id": "B1",
      "kind": "thing",
-     "text": "B1 \u00b7 100",
+     "text": "B1 · 100",
      "rect": [
       800,
       280,
@@ -149,7 +149,7 @@
     {
      "id": "B2",
      "kind": "thing",
-     "text": "B2 \u00b7 100",
+     "text": "B2 · 100",
      "rect": [
       360,
       180,
@@ -212,7 +212,109 @@
     "mustSee": [
      "B1"
     ]
-   }
+   },
+   "motion": [
+    {
+     "moving": false,
+     "labels": [
+      [
+       "store",
+       "0px 0px",
+       true
+      ],
+      [
+       "B1",
+       "0px 0px",
+       true
+      ],
+      [
+       "B2",
+       "0px 0px",
+       true
+      ]
+     ]
+    },
+    {
+     "moving": true,
+     "labels": [
+      [
+       "store",
+       "0px 0px",
+       true
+      ],
+      [
+       "B1",
+       "0px 0px",
+       true
+      ],
+      [
+       "B2",
+       "0px 0px",
+       true
+      ]
+     ]
+    },
+    {
+     "moving": true,
+     "labels": [
+      [
+       "store",
+       "0px 0px",
+       true
+      ],
+      [
+       "B1",
+       "0px 0px",
+       true
+      ],
+      [
+       "B2",
+       "0px 0px",
+       true
+      ]
+     ]
+    },
+    {
+     "moving": true,
+     "labels": [
+      [
+       "store",
+       "0px 0px",
+       true
+      ],
+      [
+       "B1",
+       "0px 0px",
+       true
+      ],
+      [
+       "B2",
+       "0px 0px",
+       true
+      ]
+     ]
+    },
+    {
+     "moving": false,
+     "labels": [
+      [
+       "store",
+       "0px 0px",
+       true
+      ],
+      [
+       "B1",
+       "0px -14px",
+       true
+      ],
+      [
+       "B2",
+       "0px 0px",
+       true
+      ]
+     ]
+    }
+   ]
   },
   {
    "step": 3,
@@ -251,7 +353,7 @@
     {
      "id": "B1",
      "kind": "thing",
-     "text": "B1 \u00b7 100",
+     "text": "B1 · 100",
      "rect": [
       800,
       280,
@@ -263,7 +365,7 @@
     {
      "id": "B2",
      "kind": "thing",
-     "text": "B2 \u00b7 100",
+     "text": "B2 · 100",
      "rect": [
       360,
       180,
@@ -353,7 +455,7 @@
     {
      "id": "B1",
      "kind": "thing",
-     "text": "B1 \u00b7 100",
+     "text": "B1 · 100",
      "rect": [
       300,
       180,
@@ -365,7 +467,7 @@
     {
      "id": "B2",
      "kind": "thing",
-     "text": "B2 \u00b7 100",
+     "text": "B2 · 100",
      "rect": [
       360,
       180,
@@ -453,7 +555,7 @@
     {
      "id": "B1",
      "kind": "thing",
-     "text": "B1 \u00b7 100",
+     "text": "B1 · 100",
      "rect": [
       800,
       280,
@@ -465,7 +567,7 @@
     {
      "id": "B2",
      "kind": "thing",
-     "text": "B2 \u00b7 100",
+     "text": "B2 · 100",
      "rect": [
       360,
       180,
@@ -567,7 +669,7 @@
     {
      "id": "B1",
      "kind": "thing",
-     "text": "B1 \u00b7 100",
+     "text": "B1 · 100",
      "rect": [
       800,
       280,
@@ -579,7 +681,7 @@
     {
      "id": "B2",
      "kind": "thing",
-     "text": "B2 \u00b7 100",
+     "text": "B2 · 100",
      "rect": [
       360,
       180,

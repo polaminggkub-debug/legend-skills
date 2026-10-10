@@ -87,8 +87,36 @@ export function jumpWalkMisses(walk, jump) {
   return miss
 }
 
+// steady: while things move, no label changes its placement offset or flips shown/hidden.
+// row.motion = frames sampled during the press that led to this step: { moving, labels: [[id, offset, shown]] }.
+// A frame is moving when some thing's position changed since the frame before; placement may change only at rest.
+// Exact match, 0 px: labels are placed at rest and ride with their anchor (owner report 2026-10-11, labels jumped mid-move).
+export function steadyMisses(row) {
+  const frames = row.motion ?? []
+  const seen = new Set()
+  const miss = []
+  for (let k = 1; k < frames.length; k++) {
+    if (!frames[k].moving) continue
+    const prev = new Map(frames[k - 1].labels.map((l) => [l[0], l]))
+    for (const [id, offset, shown] of frames[k].labels) {
+      const p = prev.get(id)
+      if (!p || seen.has(id)) continue
+      const jumped = shown && p[2] && offset !== p[1]
+      if (!jumped && shown === p[2]) continue
+      seen.add(id)
+      miss.push({ rule: 'steady', step: row.step, detail: `label ${id} ${jumped ? `jumped ${p[1]} -> ${offset}` : 'flipped shown/hidden'} during the move` })
+    }
+  }
+  return miss
+}
+
 export function judge({ walk = [], jump = [] }) {
-  return [...walk.flatMap(pictureMisses), ...stayPutMisses(walk), ...jumpWalkMisses(walk, jump)]
+  return [
+    ...walk.flatMap(pictureMisses),
+    ...stayPutMisses(walk),
+    ...jumpWalkMisses(walk, jump),
+    ...walk.flatMap(steadyMisses),
+  ]
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
