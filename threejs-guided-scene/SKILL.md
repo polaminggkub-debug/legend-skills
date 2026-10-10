@@ -28,7 +28,7 @@ Every step publishes, for the guard and for nobody else:
 A thing missing from `mustSee` may be covered, cut or crowded. That is allowed: the story is
 not about it.
 
-## The five rules
+## The six rules
 
 Apply every rule to every step. Numbers carry their source; a number with no source is a
 guess and must be labelled as one.
@@ -40,8 +40,9 @@ guess and must be labelled as one.
 | **overlap** | Two shown labels, at least one must-see, are closer than the gap | 2 px (MapLibre `text-padding` default) |
 | **frame** | A must-see label or thing runs past the picture's edge | 0 px, strict containment (Plotly `assertElemInside`) |
 | **card-gap** | A must-see label comes nearer than the gap to a card laid over the picture (clock, KPI, progress) | 8 px: project rule; no reference project sets one |
+| **steady** | While things move (any thing's position changed since the last frame), a shown label changes its placement offset or flips between shown and hidden | Exact, 0 px: labels are placed at rest and ride with their anchor during a move (owner report 2026-10-11: labels jumped and flickered mid-move) |
 
-Two scope rules sit over all five:
+Two scope rules sit over all six:
 
 - **Covered picture.** When a dialog covers the whole picture, the learner sees none of it:
   skip overlap, frame and card-gap for that step. stay-put and jump-walk still run, because
@@ -57,6 +58,10 @@ Two scope rules sit over all five:
   until it passes is the loop to avoid.
 - Place labels by priority and let losers give way (MapLibre's approach: hide or move the
   loser, never stack it).
+- Place labels only when the scene is at rest. During a move every label keeps its last
+  offset and visibility and rides with its anchor; re-place once the move ends. Placing every
+  frame makes labels jump and flicker (in one measured demo it took a third of each
+  frame's work).
 - One label per pile (`AX1–AX10 · 100`), not one per box.
 - The jump route must build the same state as the walk: derive both from one step reducer.
 

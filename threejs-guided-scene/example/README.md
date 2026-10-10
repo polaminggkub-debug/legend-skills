@@ -6,7 +6,7 @@ a browser:
 ```
 probe.js        runs in the page: label boxes, cards, scene snapshot  ->  facts
 sweep.spec.ts   Playwright: walk every step, jump to every step, collect facts
-judge.mjs       pure: facts  ->  red misses (the five rules)
+judge.mjs       pure: facts  ->  red misses (the six rules)
 ```
 
 ## Try it without a browser

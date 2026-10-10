@@ -84,3 +84,22 @@ test('covered picture: stay-put still runs under a dialog', () => {
   thing(f.walk[2], 'B2').pos = [2, 0.08, 0]
   assert.deepEqual(rules(f), ['3 stay-put'])
 })
+
+test('steady: a label that jumps to a new spot while a box moves is red', () => {
+  const f = green()
+  f.walk[1].motion[2].labels[2][1] = '0px 6px'
+  assert.deepEqual(rules(f), ['2 steady'])
+})
+
+test('steady: a label that hides and shows while a box moves is red', () => {
+  const f = green()
+  f.walk[1].motion[3].labels[0][2] = false
+  assert.deepEqual(rules(f), ['2 steady'])
+})
+
+test('steady: a label may take a new spot once the scene is at rest', () => {
+  const f = green()
+  assert.equal(f.walk[1].motion.at(-1).moving, false)
+  assert.notEqual(f.walk[1].motion.at(-1).labels[1][1], f.walk[1].motion.at(-2).labels[1][1])
+  assert.deepEqual(rules(f), [])
+})

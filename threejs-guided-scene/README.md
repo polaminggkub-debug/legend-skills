@@ -71,10 +71,10 @@ the FG pile, not those.
 
 | File | What it is |
 |---|---|
-| [`SKILL.md`](SKILL.md) | The skill: step contract, five rules with sources, done criteria |
+| [`SKILL.md`](SKILL.md) | The skill: step contract, six rules with sources, done criteria |
 | [`example/probe.js`](example/probe.js) | In-page probe: reads labels, cards and the scene snapshot |
 | [`example/sweep.spec.ts`](example/sweep.spec.ts) | Playwright sweep: walks and jumps every step, then judges |
-| [`example/judge.mjs`](example/judge.mjs) | The five rules, as a pure function over facts |
+| [`example/judge.mjs`](example/judge.mjs) | The six rules, as a pure function over facts |
 | [`example/judge.test.mjs`](example/judge.test.mjs) | Plants one bug per rule into green facts and expects red |
 | [`example/fixtures/`](example/fixtures/) | Green and red facts for a three-step warehouse scene |
 
