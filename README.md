@@ -31,7 +31,12 @@ Windows, macOS, and Linux. OpenCode Worker has its own Python installer for
 macOS/Windows. Matt's optional upstream helper bundle requires Node.js and `npx`.
 
 General skills: `chris`, `formpress`, `margaret`, `matt`, `ship`, `steve`,
-`ui-ux-pro-max`, and `update-all`.
+`threejs-guided-scene`, `ui-ux-pro-max`, and `update-all`.
+
+[`threejs-guided-scene`](threejs-guided-scene/README.md) builds and guards a step-by-step
+3D scene with HTML labels: five measured rules (stay-put, jump-walk, overlap, frame,
+card-gap) instead of screenshot review, with a runnable example guard and pictures of the
+real bugs each rule caught.
 
 For an optional Max-plans/Flash-codes setup, see [Qwen Go defaults](opencode-worker/references/qwen-defaults.md).
 

@@ -1,0 +1,634 @@
+{
+ "walk": [
+  {
+   "step": 1,
+   "route": "walk",
+   "pictureCovered": false,
+   "stage": [
+    0,
+    0,
+    1000,
+    500
+   ],
+   "cards": [
+    {
+     "name": "clock",
+     "rect": [
+      10,
+      10,
+      200,
+      60
+     ]
+    }
+   ],
+   "labels": [
+    {
+     "id": "store",
+     "kind": "zone",
+     "text": "Store",
+     "rect": [
+      400,
+      80,
+      470,
+      100
+     ],
+     "shown": true
+    },
+    {
+     "id": "B1",
+     "kind": "thing",
+     "text": "B1 \u00b7 100",
+     "rect": [
+      300,
+      180,
+      350,
+      195
+     ],
+     "shown": true
+    },
+    {
+     "id": "B2",
+     "kind": "thing",
+     "text": "B2 \u00b7 100",
+     "rect": [
+      360,
+      180,
+      410,
+      195
+     ],
+     "shown": true
+    }
+   ],
+   "scene": {
+    "things": [
+     {
+      "id": "B1",
+      "place": "rack-A",
+      "pos": [
+       1,
+       0.8,
+       0
+      ],
+      "visible": true,
+      "rect": [
+       300,
+       200,
+       340,
+       240
+      ]
+     },
+     {
+      "id": "B2",
+      "place": "rack-A",
+      "pos": [
+       2,
+       0.8,
+       0
+      ],
+      "visible": true,
+      "rect": [
+       360,
+       200,
+       400,
+       240
+      ]
+     }
+    ],
+    "moves": [],
+    "mustSee": [
+     "B1"
+    ]
+   }
+  },
+  {
+   "step": 2,
+   "route": "walk",
+   "pictureCovered": false,
+   "stage": [
+    0,
+    0,
+    1000,
+    500
+   ],
+   "cards": [
+    {
+     "name": "clock",
+     "rect": [
+      10,
+      10,
+      200,
+      60
+     ]
+    }
+   ],
+   "labels": [
+    {
+     "id": "store",
+     "kind": "zone",
+     "text": "Store",
+     "rect": [
+      400,
+      80,
+      470,
+      100
+     ],
+     "shown": true
+    },
+    {
+     "id": "B1",
+     "kind": "thing",
+     "text": "B1 \u00b7 100",
+     "rect": [
+      800,
+      280,
+      850,
+      295
+     ],
+     "shown": true
+    },
+    {
+     "id": "B2",
+     "kind": "thing",
+     "text": "B2 \u00b7 100",
+     "rect": [
+      360,
+      180,
+      410,
+      195
+     ],
+     "shown": true
+    },
+    {
+     "id": "ship",
+     "kind": "bubble",
+     "text": "Ready to ship",
+     "rect": [
+      700,
+      240,
+      820,
+      262
+     ],
+     "shown": true
+    }
+   ],
+   "scene": {
+    "things": [
+     {
+      "id": "B1",
+      "place": "dock",
+      "pos": [
+       8,
+       0,
+       0
+      ],
+      "visible": true,
+      "rect": [
+       800,
+       300,
+       840,
+       340
+      ]
+     },
+     {
+      "id": "B2",
+      "place": "rack-A",
+      "pos": [
+       2,
+       0.8,
+       0
+      ],
+      "visible": true,
+      "rect": [
+       360,
+       200,
+       400,
+       240
+      ]
+     }
+    ],
+    "moves": [
+     "B1"
+    ],
+    "mustSee": [
+     "B1"
+    ]
+   }
+  },
+  {
+   "step": 3,
+   "route": "walk",
+   "pictureCovered": false,
+   "stage": [
+    0,
+    0,
+    1000,
+    500
+   ],
+   "cards": [
+    {
+     "name": "clock",
+     "rect": [
+      10,
+      10,
+      200,
+      60
+     ]
+    }
+   ],
+   "labels": [
+    {
+     "id": "store",
+     "kind": "zone",
+     "text": "Store",
+     "rect": [
+      400,
+      80,
+      470,
+      100
+     ],
+     "shown": true
+    },
+    {
+     "id": "B1",
+     "kind": "thing",
+     "text": "B1 \u00b7 100",
+     "rect": [
+      800,
+      280,
+      850,
+      295
+     ],
+     "shown": true
+    },
+    {
+     "id": "B2",
+     "kind": "thing",
+     "text": "B2 \u00b7 100",
+     "rect": [
+      360,
+      180,
+      410,
+      195
+     ],
+     "shown": true
+    }
+   ],
+   "scene": {
+    "things": [
+     {
+      "id": "B1",
+      "place": "dock",
+      "pos": [
+       8,
+       0,
+       0
+      ],
+      "visible": true,
+      "rect": [
+       800,
+       300,
+       840,
+       340
+      ]
+     },
+     {
+      "id": "B2",
+      "place": "rack-A",
+      "pos": [
+       2,
+       0.8,
+       0
+      ],
+      "visible": true,
+      "rect": [
+       360,
+       200,
+       400,
+       240
+      ]
+     }
+    ],
+    "moves": [],
+    "mustSee": [
+     "B1"
+    ]
+   }
+  }
+ ],
+ "jump": [
+  {
+   "step": 1,
+   "route": "jump",
+   "pictureCovered": false,
+   "stage": [
+    0,
+    0,
+    1000,
+    500
+   ],
+   "cards": [
+    {
+     "name": "clock",
+     "rect": [
+      10,
+      10,
+      200,
+      60
+     ]
+    }
+   ],
+   "labels": [
+    {
+     "id": "store",
+     "kind": "zone",
+     "text": "Store",
+     "rect": [
+      400,
+      80,
+      470,
+      100
+     ],
+     "shown": true
+    },
+    {
+     "id": "B1",
+     "kind": "thing",
+     "text": "B1 \u00b7 100",
+     "rect": [
+      300,
+      180,
+      350,
+      195
+     ],
+     "shown": true
+    },
+    {
+     "id": "B2",
+     "kind": "thing",
+     "text": "B2 \u00b7 100",
+     "rect": [
+      360,
+      180,
+      410,
+      195
+     ],
+     "shown": true
+    }
+   ],
+   "scene": {
+    "things": [
+     {
+      "id": "B1",
+      "place": "rack-A",
+      "pos": [
+       1,
+       0.8,
+       0
+      ],
+      "visible": true,
+      "rect": [
+       300,
+       200,
+       340,
+       240
+      ]
+     },
+     {
+      "id": "B2",
+      "place": "rack-A",
+      "pos": [
+       2,
+       0.8,
+       0
+      ],
+      "visible": true,
+      "rect": [
+       360,
+       200,
+       400,
+       240
+      ]
+     }
+    ],
+    "moves": [],
+    "mustSee": [
+     "B1"
+    ]
+   }
+  },
+  {
+   "step": 2,
+   "route": "jump",
+   "pictureCovered": false,
+   "stage": [
+    0,
+    0,
+    1000,
+    500
+   ],
+   "cards": [
+    {
+     "name": "clock",
+     "rect": [
+      10,
+      10,
+      200,
+      60
+     ]
+    }
+   ],
+   "labels": [
+    {
+     "id": "store",
+     "kind": "zone",
+     "text": "Store",
+     "rect": [
+      400,
+      80,
+      470,
+      100
+     ],
+     "shown": true
+    },
+    {
+     "id": "B1",
+     "kind": "thing",
+     "text": "B1 \u00b7 100",
+     "rect": [
+      800,
+      280,
+      850,
+      295
+     ],
+     "shown": true
+    },
+    {
+     "id": "B2",
+     "kind": "thing",
+     "text": "B2 \u00b7 100",
+     "rect": [
+      360,
+      180,
+      410,
+      195
+     ],
+     "shown": true
+    },
+    {
+     "id": "ship",
+     "kind": "bubble",
+     "text": "Ready to ship",
+     "rect": [
+      700,
+      240,
+      820,
+      262
+     ],
+     "shown": true
+    }
+   ],
+   "scene": {
+    "things": [
+     {
+      "id": "B1",
+      "place": "dock",
+      "pos": [
+       8,
+       0,
+       0
+      ],
+      "visible": true,
+      "rect": [
+       800,
+       300,
+       840,
+       340
+      ]
+     },
+     {
+      "id": "B2",
+      "place": "rack-A",
+      "pos": [
+       2,
+       0.8,
+       0
+      ],
+      "visible": true,
+      "rect": [
+       360,
+       200,
+       400,
+       240
+      ]
+     }
+    ],
+    "moves": [
+     "B1"
+    ],
+    "mustSee": [
+     "B1"
+    ]
+   }
+  },
+  {
+   "step": 3,
+   "route": "jump",
+   "pictureCovered": false,
+   "stage": [
+    0,
+    0,
+    1000,
+    500
+   ],
+   "cards": [
+    {
+     "name": "clock",
+     "rect": [
+      10,
+      10,
+      200,
+      60
+     ]
+    }
+   ],
+   "labels": [
+    {
+     "id": "store",
+     "kind": "zone",
+     "text": "Store",
+     "rect": [
+      400,
+      80,
+      470,
+      100
+     ],
+     "shown": true
+    },
+    {
+     "id": "B1",
+     "kind": "thing",
+     "text": "B1 \u00b7 100",
+     "rect": [
+      800,
+      280,
+      850,
+      295
+     ],
+     "shown": true
+    },
+    {
+     "id": "B2",
+     "kind": "thing",
+     "text": "B2 \u00b7 100",
+     "rect": [
+      360,
+      180,
+      410,
+      195
+     ],
+     "shown": true
+    }
+   ],
+   "scene": {
+    "things": [
+     {
+      "id": "B1",
+      "place": "dock",
+      "pos": [
+       8,
+       0,
+       0
+      ],
+      "visible": true,
+      "rect": [
+       800,
+       300,
+       840,
+       340
+      ]
+     },
+     {
+      "id": "B2",
+      "place": "rack-A",
+      "pos": [
+       2,
+       0.8,
+       0
+      ],
+      "visible": true,
+      "rect": [
+       360,
+       200,
+       400,
+       240
+      ]
+     }
+    ],
+    "moves": [],
+    "mustSee": [
+     "B1"
+    ]
+   }
+  }
+ ]
+}
