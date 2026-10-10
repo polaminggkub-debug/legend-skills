@@ -1,5 +1,5 @@
 // Proves each rule the way the skill says: plant one bug into green facts and expect red.
-// Run: node --test example/
+// Run: node --test 'threejs-guided-scene/example/**/*.test.mjs'
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 import { test } from 'node:test'

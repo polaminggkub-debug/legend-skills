@@ -31,7 +31,7 @@ RED  step 3  jump-walk: walk 2 things, jump 1; only walk: B2@rack-A; only jump: 
 ## Run the tests
 
 ```bash
-node --test threejs-guided-scene/example/
+node --test 'threejs-guided-scene/example/**/*.test.mjs'
 ```
 
 Each test plants one bug into the green facts and expects exactly its rule to go red, and
