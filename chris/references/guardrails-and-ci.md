@@ -27,6 +27,41 @@ Static syntax checks cannot prove runtime or rendered behavior; select that
 boundary through [Acceptance and evidence](acceptance-evidence.md). A guard
 larger than the code it protects needs owner approval.
 
+## Guards inside an agent's loop
+
+A guard an agent runs every turn (a Stop or PostToolUse hook, a per-commit
+script) is also a prompt: its output lands in the agent's context and picks the
+next action. Each added rule lowers the chance that all of them hold at once,
+and each failure log crowds out earlier context, so loose guards turn into
+run → fail → run cycles that cost more than the defects they catch. Keep every
+in-loop guard *tight*:
+
+- **Deterministic and fast.** Same input, same verdict, within seconds, on the
+  changed files. Full suites, mutation runs, and visual or LLM-as-judge review
+  run at the gate or in CI ([Test speed](test-speed.md#6-run-less)); a judgement
+  of how something looks goes to the owner or a sampled review.
+- **Quiet pass, short fail.** One line on success. On failure, the first few
+  violations as `file:line rule → fix`, so the message says what to change;
+  the full log goes to a file the agent can open.
+- **Bounded.** The same check failing twice on the same cause ends the loop:
+  report the evidence to the owner. A Claude Code Stop hook reads
+  `stop_hook_active` and exits 0 when it is already re-running.
+- **Locked.** The judged agent cannot edit the guard, its config, or the tests
+  it runs (hard rule 5). Mechanical locks answer gaming; extra written rules do
+  not.
+
+Prose rules in CLAUDE.md or a skill are advisory. A rule that must always hold
+becomes a hook or lint rule; a rule the agent already follows by default is
+deleted.
+
+**Keep the set small.** Each guard names the defect it exists to catch, and
+keeps a ledger: runs, failures, and failures that were real defects. Remove a
+guard, or move it to CI, when it fails often without real defects or judges
+what the owner reviews directly. When one guard keeps catching the same
+mistake, fix the instruction or example that leads the agent there instead of
+adding a retry or a second guard. Adding a guard to the loop is a policy
+change: state its run time and the defect it catches.
+
 ## Trace enforcement end to end
 
 Trace the actual chain, including wrappers and conditional steps:

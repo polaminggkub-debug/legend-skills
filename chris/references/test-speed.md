@@ -113,7 +113,8 @@ is named.
 
 ## 7. Guard
 
-Give each fix a mechanical guard so the cost cannot grow back:
+Guard a fix whose cost would grow back unnoticed, and keep the guard tight
+([Guards inside an agent's loop](guardrails-and-ci.md#guards-inside-an-agents-loop)):
 
 - lint bans on cost multipliers: fixed sleeps, unbounded `toPass`, viewport
   resizing inside tests ([Playwright](playwright.md#acceptance-walkthroughs));
@@ -123,6 +124,6 @@ Give each fix a mechanical guard so the cost cannot grow back:
   report instead of being killed;
 - per-file durations kept from each CI run and compared over time.
 
-Done when each fix has a guard shown to fail on its violation, and the report
+Done when each guarded fix has a guard shown to fail on its violation, and the report
 gives before and after wall-clock on the same machine at similar load. For
 precedents from large projects, read the [case index](cases/index.md).

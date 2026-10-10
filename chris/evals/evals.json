@@ -51,6 +51,21 @@
         "States that if the product enables the button before it can act, the product is fixed, not the test",
         "Keeps the failure visible until its cause is fixed, and for suites that do retry on CI, requires a record of each flake (failOnFlakyTests or a tracked issue)"
       ]
+    },
+    {
+      "id": 4,
+      "prompt": "My Claude Code setup has a Stop hook that runs our whole check script every turn: eslint on the repo, vue-tsc, the full Vitest suite, a visual diff of 40 screenshots, and an LLM reviewer that grades code style. It prints everything (about 3,000 lines). If anything fails it blocks and Claude tries again. Now a one-line fix takes 25 minutes and Claude keeps going run, fail, run, fail. Without the hook it skipped tests and once edited a test to make it pass. What should I change?",
+      "expected_output": "An audit of the in-loop guard that keeps it tight: fast deterministic checks on changed files only, quiet output with short fix messages, a two-failure stop, locked tests and guard files, and slow or judgement checks moved out of the loop, with a way to prune guards that do not catch real defects.",
+      "files": [],
+      "expectations": [
+        "Keeps a guard in the loop rather than removing all checks, citing the observed test editing",
+        "Limits the per-turn hook to fast deterministic checks (lint, typecheck, related tests) on changed files",
+        "Moves the full suite, the screenshot visual diff, and the LLM style reviewer out of the per-turn loop (gate, CI, sampled or owner review)",
+        "Makes the hook quiet on success and prints only the first violations with file:line and how to fix on failure, sending the full log to a file",
+        "Bounds the loop: after the same failure twice the agent stops and reports, and the Stop hook honours stop_hook_active",
+        "Prevents test gaming by locking test and guard files against edits by the agent (hook, protected path, or CODEOWNERS) rather than adding more written rules",
+        "Proposes tracking each guard's runs, failures, and real defects caught, and removing or relocating guards that fail without real defects"
+      ]
     }
   ]
 }
