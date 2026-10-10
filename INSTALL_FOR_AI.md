@@ -29,6 +29,8 @@ described below, not a second copy under the Codex skill directory.
 | `margaret` | `margaret` |
 | `matt` | `matt` |
 | `ship` | `ship` |
+| `threejs-guided-scene` | `threejs-guided-scene` |
+| `threejs-guided-scene-build` | `threejs-guided-scene-build` |
 | `update-all` | `update-all` |
 | `steve-design-suite/skills/steve` | `steve` |
 | `steve-design-suite/skills/ui-ux-pro-max` | `ui-ux-pro-max` |
