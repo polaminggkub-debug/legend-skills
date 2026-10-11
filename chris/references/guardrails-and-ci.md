@@ -19,13 +19,53 @@ rule is a precedent to evaluate, not a universal requirement.
 | Reject a domain-invalid outcome | Unit or integration invariant | Real state and independent expected values |
 | Keep generated files in sync | Regenerate and compare expected files | Tool version, tracked/untracked files, deterministic output |
 | Preserve an external interface | Contract/schema compatibility check | Consumer expectations and supported versions |
-| Formatting or repository hygiene | Formatter, whitespace/file policy check | Check mode versus auto-fix mode |
+| Formatting or repository hygiene | Formatter in write mode ([autofix](#fix-before-you-fail)) | Pinned config; only the files it owns |
 | A test passes without the behavior being true | Test lint bans ([Playwright](playwright.md#acceptance-walkthroughs)) | Rule severity: warnings exit 0 |
 | Suite run time or size creeps up | Slow-file report, run budget, spec-count and duplicate checks ([Test speed](test-speed.md#7-guard)) | Same selection and machine over time |
 
 Static syntax checks cannot prove runtime or rendered behavior; select that
 boundary through [Acceptance and evidence](acceptance-evidence.md). A guard
 larger than the code it protects needs owner approval.
+
+## Fix before you fail
+
+When a script can compute the right code, make the rule an *autofix*: the
+script rewrites the code and the agent never sees a failure, so there is no
+run → fail → run cycle. Pick the strongest rung that fits:
+
+1. **Default.** The shared component already does it (every button red by
+   default), so there is nothing to enforce.
+2. **Autofix.** A codemod or an ESLint rule with `meta.fixable` and a `fix`
+   (a `suggest` is never applied by `--fix`) runs after the agent's commit and
+   commits its result as a separate *Autofix* commit, so the version before and
+   after the script both stay in history.
+3. **Guard.** Keep a failing check only where the fix needs a choice (where to
+   split a long function, which layer owns a module, whether a test proves the
+   behavior) or the criterion is behavioral or rendered.
+
+Typical autofixes: formatting, a native element to its shared component, a deep
+import to the public index, a dropped `.only`/`.skip`, a removed fixed sleep or
+`force: true`, a missing `await`. Write each one tight:
+
+- **Parse, then edit.** Work on the syntax tree (the language's parser, or
+  `vue-eslint-parser` for SFCs), never on regex matches of the text.
+- **Find, check, fix.** Code that is already right stays untouched, so a second
+  run changes nothing.
+- **Unsure means leave it.** A case it cannot change safely (a `ref` on the
+  element, a dynamic value) is left as is and listed; the remaining guard
+  catches what is left.
+- **Honor reviewed exceptions.** A disable comment marks a deliberate case (a
+  sleep that proves nothing moves); the fix keeps it.
+- **Prove it on pairs.** Before/after fixture files (`x.input.*` → `x.output.*`)
+  plus a second-run test, the Next.js codemod pattern.
+- **Run the affected checks after.** An autofix is a code change: when it can
+  change behavior (a swapped component, a deleted sleep, a test that now runs),
+  the affected walkthroughs still run on the result.
+
+Replacing a guard with an autofix is one change: add the fix with its pairs,
+remove the guard, its lint-proof fixture and its docs line, and wire the fix to
+run after the agent's commit (a non-blocking PostToolUse hook on `git commit`,
+or the project's fix command).
 
 ## Guards inside an agent's loop
 
@@ -54,7 +94,8 @@ Prose rules in CLAUDE.md or a skill are advisory. A rule that must always hold
 becomes a hook or lint rule; a rule the agent already follows by default is
 deleted.
 
-**Keep the set small.** Each guard names the defect it exists to catch, and
+**Keep the set small.** Before adding a guard, ask whether a script can make
+the fix ([Fix before you fail](#fix-before-you-fail)). Each guard names the defect it exists to catch, and
 keeps a ledger: runs, failures, and failures that were real defects. Remove a
 guard, or move it to CI, when it fails often without real defects or judges
 what the owner reviews directly. When one guard keeps catching the same
