@@ -67,7 +67,7 @@ Read only the reference matching the current decision.
 | Write or debug auth-backed local E2E | [Authentication boundary](references/debugging-tests.md#authentication-boundary) |
 | Diagnose failure, flakiness, or environment issues | [Debugging tests](references/debugging-tests.md) |
 | Review tests, audit coverage gaps, or close review findings | [Reviewing tests](references/reviewing-tests.md), with a measured run from [Test speed](references/test-speed.md) step 1 |
-| Design or audit lint rules, check commands, agent hooks, CI gates, or policy-change detection; trim guards that slow an agent or make it loop | [Guardrails and CI](references/guardrails-and-ci.md) |
+| Design or audit lint rules, check commands, agent hooks, CI gates, or policy-change detection; turn a guard into an autofix; trim guards that slow an agent or make it loop | [Guardrails and CI](references/guardrails-and-ci.md) |
 | Run tests touching external state; configure fixtures, coverage, or performance | [Test infrastructure](references/test-infrastructure.md) |
 | Explain a precedent from real projects | [Case index](references/cases/index.md); select only the relevant case |
 
