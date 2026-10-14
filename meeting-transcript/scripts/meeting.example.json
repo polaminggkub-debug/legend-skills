@@ -1,0 +1,55 @@
+{
+  "title": "Example meetings",
+  "timezone": "+07:00",
+  "sources": {
+    "wA": {"kind": "wispr", "id": "WISPR-MEETING-ID-A", "files": ["wispr/WISPR-MEETING-ID-A.ogg"]},
+    "wB": {"kind": "wispr", "id": "WISPR-MEETING-ID-B", "files": ["wispr/WISPR-MEETING-ID-B.ogg"]},
+    "pA": {"kind": "plaud", "id": "of_PLAUD_FILE_ID_A", "files": ["plaud/of_PLAUD_FILE_ID_A.mp3"]},
+    "pB": {"kind": "plaud", "id": "of_PLAUD_FILE_ID_B", "files": ["plaud/of_PLAUD_FILE_ID_B.mp3"]},
+    "bk": {"kind": "quicktime", "id": "backup-recording", "files": [
+      "quicktime/backup-recording.part00.m4a",
+      "quicktime/backup-recording.part01.m4a"]}
+  },
+  "meetings": {
+    "m1": {"date": "2000-01-01", "title": "First meeting", "slug": "first", "sources": ["wA", "pA", "bk"], "topic": "production"},
+    "m2": {"date": "2000-01-02", "title": "Second meeting", "slug": "second", "sources": ["wB", "pB"], "topic": "other"}
+  },
+  "parts": [
+    ["m1", null, "production", "overview", "First meeting, part 1: overview"],
+    ["m1", "10:30:00", "other", "side-talk", "First meeting, part 2: side talk"],
+    ["m2", null, "production", "review", "Second meeting: review"]
+  ],
+  "topics": {"production": "Production", "other": "Other"},
+  "speaker_names": ["Alice", "Bob", "Carol"],
+  "aliases": {"S0": "S7"},
+  "corrections": [
+    {"packet": "m1-02", "start": "10:41:07.5", "old": "wrong word", "new": "right word", "note": "why the fix was made"}
+  ],
+  "align": {
+    "pairs": [["pA", "wA"], ["bk", "wA"], ["pB", "wB"]],
+    "borrow_offset": {},
+    "gap_fix": null
+  },
+  "asr": {
+    "best": [
+      ["m1", "wA", 0.0, null],
+      ["m1", "bk", 3000.0, null],
+      ["m2", "wB", 0.0, null]
+    ],
+    "alt": [["m1", "pA", 0.0, null]]
+  },
+  "diarize": {
+    "embed": ["wA", "wB", "pA", "pB"],
+    "recs": {
+      "wA": ["wA", null, null, null],
+      "pA": ["pA", null, null, null],
+      "wB": ["wB", null, null, null],
+      "pB": ["pB", null, null, null]
+    },
+    "simultaneous": [["pA", "wA"]],
+    "main": {
+      "m1": [["wA", 0, null]],
+      "m2": [["wB", 0, null]]
+    }
+  }
+}
