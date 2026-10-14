@@ -25,7 +25,8 @@ is what it is: [references/lessons.md](references/lessons.md).
   file detail, transcript, notes and photo marks JSON per recording. Download each recording's audio
   with `curl` from the `presigned_url` in its `get_file.json` (the link expires; never commit it).
 - **Plaud photos:** the marks JSON holds each photo's time, Plaud's caption and an OCR link, but not the
-  image file. Keep the marks next to the transcripts so the captions stay searchable by time.
+  image file. Ask the owner to save the photos from the Plaud app (e.g. to Downloads), then
+  `scripts/match_photos.py` copies them into `photos/` paired with their marks by capture time.
 - **Wispr Flow:** `scripts/gather_wispr.py` copies each meeting folder (audio + live + refined
   transcript) in the date range, read-only.
 - **Backups:** search the Mac for other audio/video from those days (screen recordings, Voice Memos,
