@@ -31,11 +31,15 @@ Windows, macOS, and Linux. OpenCode Worker has its own Python installer for
 macOS/Windows. Matt's optional upstream helper bundle requires Node.js and `npx`.
 
 General skills: `chris`, `formpress`, `margaret`, `matt`, `ship`, `steve`,
-`threejs-guided-scene`, `threejs-guided-scene-build`, `ui-ux-pro-max`, `update-all`, and `meeting-transcript`.
+`threejs-guided-scene`, `threejs-guided-scene-build`, `ui-ux-pro-max`, `update-all`, `meeting-transcript`, and `rea-verify`.
 
 [`meeting-transcript`](meeting-transcript/SKILL.md) turns Plaud, Wispr Flow and backup recordings into
 timestamped transcripts with named speakers using free local models on a worker machine (script merge,
 no LLM rewriting), with owner-checked speaker fixes and a safe write-back to Plaud.
+
+[`rea-verify`](rea-verify/SKILL.md) checks a release of your own program from the shipped file, not
+its source: REA reverse engineering, a promise list from the Issues and guides, black-box runs on a
+worker machine, and a per-version verdict (Match / Different / Bug suspect / Partial / Not checked).
 
 [`threejs-guided-scene`](threejs-guided-scene/README.md) builds and guards a step-by-step
 3D scene with HTML labels: six measured rules (stay-put, jump-walk, overlap, frame,
