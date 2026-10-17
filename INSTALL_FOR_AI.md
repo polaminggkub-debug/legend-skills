@@ -32,6 +32,7 @@ described below, not a second copy under the Codex skill directory.
 | `threejs-guided-scene` | `threejs-guided-scene` |
 | `threejs-guided-scene-build` | `threejs-guided-scene-build` |
 | `update-all` | `update-all` |
+| `rea-verify` | `rea-verify` |
 | `steve-design-suite/skills/steve` | `steve` |
 | `steve-design-suite/skills/ui-ux-pro-max` | `ui-ux-pro-max` |
 
