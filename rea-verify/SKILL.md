@@ -46,8 +46,25 @@ Route by format; [references/formats.md](references/formats.md) has the commands
 - Plain .NET assembly: REA `inspect-managed-members --format json`.
 - Electron / JavaScript: REA `analyze-javascript-application`.
 - Native: REA `open_binary` with Ghidra/IDA, or `inspect-go-binary` / `inspect-rust-binary`.
+- Web app: see "Web apps" below.
 
 Done when every app module (not framework files) has REA evidence saved to disk.
+
+### Web apps
+
+The shipped file of a web app is the bundle the live site serves. Open the live page in a browser
+with a loopback CDP port, then:
+
+- `rea list-browser-targets` to pick the page, `rea analyze-web-bundle <endpoint> <targetId>` to
+  capture and analyze its scripts (`export-web-scripts` saves them for static reading).
+- `rea compare-source-to-bundle <inputJson>` against a candidate commit proves which commit is live.
+  That commit is the one the verdict and its tag belong to.
+- `rea capture-browser-scenario` and `capture-web-screenshot` record the runtime checks;
+  `compare-web-captures` / `compare-web-screenshots` diff them against the previous version.
+
+Server-side promises (database functions, row-level security, API rules) are not in the bundle.
+Check them through the public API, signed in as each kind of user, never from the bundle or with an
+admin key.
 
 ## 4. Static checks
 
@@ -79,6 +96,9 @@ Build scenarios from the promises: [references/runtime-checks.md](references/run
 lists the kinds. Each scenario names the promise, the steps, and the observable that turns it pass
 or fail. Use copies of data, never the customer's live data.
 
+The 10-minute budget in that file covers each run, and each re-check run after a fix too. Start
+from the previous version's `scripts/` folder (report layout) instead of writing setup again.
+
 Done when every promise marked "needs runtime" has a scenario result or a stated reason it could
 not run.
 
@@ -97,3 +117,25 @@ static or runtime:
 
 Done when every promise has a verdict, the folder README's version table has the new row, every
 evidence file is free of secrets and customer data, and the owner's open questions are listed.
+
+## 7. Record the verdict (only with `docs/verification/modules.json`)
+
+Skip this step when the program's repository has no `docs/verification/modules.json`.
+
+1. Open the bug Issues: one per Bug suspect, or one parent Issue that lists them. Add label
+   `rea-verify` to every Issue this run opened (create the label once if the repo lacks it).
+2. Tag the commit the checked build came from (the release tag's commit, or the commit
+   `compare-source-to-bundle` proved live), with the module id from `modules.json`:
+   `git tag -a rea/<module-id>/<version-or-short-sha> <commit> -F <message-file>`.
+   Message line 1 is one of:
+   - `PASS`: every promise is Match.
+   - `FAIL <n> bugs #<issue>`: `n` Bug suspect verdicts; `#<issue>` is the single or parent Issue.
+   - `PARTIAL <n> #<issue>`: no Bug suspect, but `n` promises Different, Partial or Not checked.
+
+   Line 2 is the report folder path, relative to the repository root.
+3. Push the tag alone: `git push <remote> refs/tags/<tag>`.
+4. Run `npm run verify:status` and commit the regenerated `docs/verification/README.md` in the same
+   PR as the report folder.
+
+Done when the tag is on the remote, every bug Issue carries `rea-verify`, and the report PR holds the
+regenerated status README.
