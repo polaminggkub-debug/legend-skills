@@ -96,8 +96,10 @@ Build scenarios from the promises: [references/runtime-checks.md](references/run
 lists the kinds. Each scenario names the promise, the steps, and the observable that turns it pass
 or fail. Use copies of data, never the customer's live data.
 
-The 10-minute budget in that file covers each run, and each re-check run after a fix too. Start
-from the previous version's `scripts/` folder (report layout) instead of writing setup again.
+The 10-minute budget in that file covers each run, and each re-check run after a fix too. When the
+program has a **one-command runner** (listed under "One-command runners" in that file), run it: it
+is the runtime check. Otherwise start from the previous version's `scripts/` folder (report
+layout) instead of writing setup again.
 
 Done when every promise marked "needs runtime" has a scenario result or a stated reason it could
 not run.
