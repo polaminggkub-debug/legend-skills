@@ -36,3 +36,18 @@ If the plan cannot fit, cut scenarios and list them as Not checked. Do not stret
 
 A scenario that cannot run (missing OS, hardware, licence) gets verdict **Not checked** with that
 reason, never a silent skip.
+
+## One-command runners
+
+A runner is one command that runs every scenario of a program and prints one `PASS|FAIL|NOT-CHECKED
+<id> <reason>` line per Issue and promise, plus the total wall-clock. The AI starts it and reads the
+result; it does not drive the steps.
+
+- `ONLY=<ids>` while fixing a bug (e.g. `ONLY=447`, `ONLY=444,F12`): the report says `PARTIAL RUN —
+  not a release verdict`. An unknown id stops the run at once and lists the valid ids.
+- The full run (no `ONLY`) before every release: that run is the verdict.
+- A new bug or promise gets its check added to the runner, not a one-off script.
+
+| Program | Machine | Command | Notes |
+|---|---|---|---|
+| HipAgent (ssp-erp) | poo | `[ONLY=<ids>] tools/hip-agent/scripts/vm-regression.sh <HipAgent.exe> [--long]` | Parallel clones of the golden Windows image `~/vm/hip-golden/` (RAM snapshot, 6 s per clone), private Supabase stack `hipfast`. Full run 6:31 on 1.3.0; `ONLY=<one id>` about 3:45. A trap removes every clone and the stack, leaving only `win-test`. `--long` adds the 2M-row DB and hourly cases. Golden eval expires 2027-01-15: rebuild with `vm-golden-build.sh all` (about 1 h) before then. |
