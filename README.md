@@ -40,6 +40,9 @@ no LLM rewriting), with owner-checked speaker fixes and a safe write-back to Pla
 [`rea-verify`](rea-verify/SKILL.md) checks a release of your own program from the shipped file, not
 its source: REA reverse engineering, a promise list from the Issues and guides, black-box runs on a
 worker machine, and a per-version verdict (Match / Different / Bug suspect / Partial / Not checked).
+In a repository with `docs/verification/modules.json`, it tags the checked commit
+(`rea/<module>/<version>`) and [`ship`](ship/SKILL.md) tags each production deploy
+(`live/<target>/<UTC time>`), so `npm run verify:status` can show what is live and what was verified.
 
 [`threejs-guided-scene`](threejs-guided-scene/README.md) builds and guards a step-by-step
 3D scene with HTML labels: six measured rules (stay-put, jump-walk, overlap, frame,

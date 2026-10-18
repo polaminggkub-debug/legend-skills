@@ -10,6 +10,7 @@ One folder per program, one subfolder per verified version, inside the program's
 └── <version>/
     ├── report.md      verdict per promise, limits, open questions
     ├── checklist.md   the promises F1…Fn with their sources
+    ├── scripts/       runtime scenario and setup scripts; the next version starts from a copy
     └── evidence/      sha256.txt, bundle file list, runtimeconfig/deps, *-types.txt,
                        *-strings.txt, runtime traces and logs (trimmed)
 ```
