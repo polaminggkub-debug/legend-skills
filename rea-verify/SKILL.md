@@ -197,6 +197,12 @@ Skip this step when the program's repository has no `docs/verification/modules.j
 3. Push the tag alone: `git push <remote> refs/tags/<tag>`.
 4. Run `npm run verify:status` and commit the regenerated `docs/verification/README.md` in the same
    PR as the report folder.
+5. **Required:** update the status board, the GitHub Project named in `docs/verification/project.json`
+   (one row per module), with `npm run verify:project`. The owner checks that board, not the Issues
+   list, to see what was verified, at which commit, and how far live has moved since. A run that
+   skips it is lost to the owner. The `rea-status-project.sh` hook runs it after a tag push. Still
+   run it yourself, and read its last line: `N cells updated`. If it fails (for example, `gh` lacks
+   the `project` scope), write `BLOCKED: verify:project <reason>` in the report and tell the owner.
 
-Done when the tag is on the remote, every bug Issue carries `rea-verify`, and the report PR holds the
-regenerated status README.
+Done when the tag is on the remote, every bug Issue carries `rea-verify`, the report PR holds the
+regenerated status README, and the Project row for the module shows the new tag and verdict.
