@@ -40,7 +40,9 @@ duration, start time with offset).
 
 Audio goes to a private audio repo (`scripts/build_audio_repo.py` splits files over 95 MB with
 `ffmpeg -c copy -f segment` and writes `manifest.json`). Transcripts and raw source JSON go into the
-project repo as `README.md, manifest.json, sources/, transcript/, notes/`. Write `meeting.json` from
+project repo as `README.md, manifest.json, sources/, transcript/, notes/`. The project's `AGENTS.md`
+or evidence README names both repos; when it names an evidence repo, transcripts go there, not into the
+code repo. Write `meeting.json` from
 `scripts/meeting.example.json`: sources, meetings (one wall-clock timeline each), and parts.
 
 Done when both repos are pushed and the worker has a clone of each.
