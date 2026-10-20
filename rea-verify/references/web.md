@@ -15,10 +15,16 @@ the cost, so spend them on judgment, not on waiting or clicking.
    check (a shared component has no page of its own). Do what a user does: open, sort, filter,
    search, page, open a row, edit, save; over-fetch and duplicate writes only show under use.
 3. **One background shell command:** fresh browser and CDP port per scenario, stack reset per build.
-   Read-only scenarios run in parallel; writing scenarios run one after another after a reset (or on
-   their own stack). Wait with `curl --retry N --retry-connrefused`, `timeout` or `docker wait`. The
-   same script runs `list-browser-targets`, `analyze-web-bundle`, `export-web-scripts` and
-   `compare-web-captures`, raw output to disk.
+   `scripts/run-scenario.sh <scenario.json> <cdp-port> <out.json>` does one scenario: it starts
+   `scripts/chrome.sh` (headless Chromium in Docker, only `ALLOW_HOSTS` resolve, time zone from
+   `BROWSER_TZ`), points the scenario's `browser` block at it, runs `capture-browser-scenario`, and
+   removes the browser. Write each scenario file once without a `browser` block; secrets come from
+   environment variables named in its `secrets` list. Read-only scenarios run in parallel, e.g.
+   `run-scenario.sh a.json 9401 raw/a.json & run-scenario.sh b.json 9402 raw/b.json & wait`;
+   writing scenarios run one after another after a reset (or on their own stack). Wait with
+   `curl --retry N --retry-connrefused`, `timeout` or `docker wait`. The same command runs
+   `list-browser-targets`, `analyze-web-bundle`, `export-web-scripts` and `compare-web-captures`,
+   raw output to disk.
 4. **While it runs:** write promises, run the bundle sweep, and start one read-only static-review
    subagent per shared component under check. It reads the component's model files and lists logic
    bugs with file:line (wrong-day dates, server vs client mismatch, unescaped search, retried writes,
@@ -38,8 +44,12 @@ the cost, so spend them on judgment, not on waiting or clicking.
    console-call: demo code and private IPs in a production bundle are for the owner to judge.
    Harness-only flags (blocked fonts, isolated network) are noted as harness.
 7. **Trace every finding.** Build the same commit once with `vite build --sourcemap` (not deployed),
-   serve it, and run `trace-web-source-location` on the request initiator or the hit's offset. A
-   finding cites the traced `file:line`; one without a traced line is marked `untraced`.
+   serve it, capture one page of it with `inspect-web-page --include-script-sources`, and run
+   `export-web-scripts` on that result's `.data`. Then per finding:
+   `MAP_DIR=<build>/assets MAP_URL=http://127.0.0.1:<port>/assets scripts/trace.py <id> <label> <exportDir> <chunk-suffix> <literal> [occurrence]`
+   finds the literal in that chunk, runs `trace-web-source-location`, and appends the result to
+   `evidence/rea-trace.json`. A finding cites the traced `file:line`; one without a traced line is
+   marked `untraced`.
 8. **Promises** take their observable from the same captures, or from the previous version's
    one-command checks (Playwright or similar) run once. Re-run only scenarios whose code changed.
 
