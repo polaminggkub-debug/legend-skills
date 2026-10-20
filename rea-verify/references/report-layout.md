@@ -12,7 +12,8 @@ One folder per program, one subfolder per verified version, inside the program's
     ├── checklist.md   the promises F1…Fn with their sources
     ├── scripts/       runtime scenario and setup scripts; the next version starts from a copy
     └── evidence/      sha256.txt, bundle file list, runtimeconfig/deps, *-types.txt,
-                       *-strings.txt, runtime traces and logs (trimmed)
+                       *-strings.txt, runtime traces and logs (trimmed); web apps also
+                       rea-bundle.json, rea-session-<scenario>.json, rea-diff.json
 ```
 
 Keep raw REA JSON out of the repository (megabytes, and rebuildable from the shipped file). Before

@@ -52,15 +52,28 @@ Done when every app module (not framework files) has REA evidence saved to disk.
 
 ### Web apps
 
-The shipped file of a web app is the bundle the live site serves. Open the live page in a browser
-with a loopback CDP port, then:
+The shipped file of a web app is the bundle the live site serves. Open the live page (or the pinned
+copy of its bundle served locally) in a browser with a loopback CDP port, then run the REA tools
+below (CLI `rea <tool>` or the `rea` MCP server). **They are required, not suggestions.** A script or
+Playwright run may add checks, but it never replaces an REA tool. If a tool cannot run, write
+`BLOCKED: <tool> <reason>` in the report and stop for the owner; never switch method silently.
 
-- `rea list-browser-targets` to pick the page, `rea analyze-web-bundle <endpoint> <targetId>` to
-  capture and analyze its scripts (`export-web-scripts` saves them for static reading).
-- `rea compare-source-to-bundle <inputJson>` against a candidate commit proves which commit is live.
-  That commit is the one the verdict and its tag belong to.
-- `rea capture-browser-scenario` and `capture-web-screenshot` record the runtime checks;
-  `compare-web-captures` / `compare-web-screenshots` diff them against the previous version.
+| Required tool | Evidence file in the report folder |
+|---|---|
+| `list-browser-targets`, then `analyze-web-bundle <endpoint> <targetId>`: inventory of the shipped scripts, routes, endpoints, strings, libraries | `evidence/rea-bundle.json` |
+| `observe-web-session` (or `capture-browser-scenario`) around every runtime scenario: all requests and responses, console, errors | `evidence/rea-session-<scenario>.json` |
+| `compare-web-captures` against the previous verified version's sessions (first version: write `no previous`) | `evidence/rea-diff.json` |
+| `trace-web-source-location` for every finding, mapping minified code back to its module | cited in the finding |
+
+Commit proof: `compare-source-to-bundle <inputJson>` needs source maps. When the live bundle has
+none, build the candidate commit with source maps on the worker (never deploy it) and compare that,
+or byte-compare a clean production rebuild with build ids and chunk hashes masked. Record which one
+ran. The proven commit is the one the verdict and its tag belong to.
+
+Read the REA output for what the promises never mention: requests that fetch more columns or rows
+than the screen shows, repeated or failing requests the page hides, console errors, strings or code
+that should not ship (keys, test or demo code, local URLs), and any session difference against the
+previous version that no promise or release note explains. Each one is a finding.
 
 Server-side promises (database functions, row-level security, API rules) are not in the bundle.
 Check them through the public API, signed in as each kind of user, never from the bundle or with an
@@ -116,6 +129,9 @@ static or runtime:
 - **Bug suspect**: evidence of a likely defect; say what would confirm it.
 - **Partial**: some of the promise proven, the rest open.
 - **Not checked**: with the reason.
+
+A web report without `evidence/rea-bundle.json`, `evidence/rea-session-*.json` and
+`evidence/rea-diff.json` (or a `BLOCKED` line for each missing one) has no verdict: tag nothing.
 
 Done when every promise has a verdict, the folder README's version table has the new row, every
 evidence file is free of secrets and customer data, and the owner's open questions are listed.
