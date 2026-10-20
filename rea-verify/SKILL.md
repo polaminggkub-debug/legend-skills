@@ -31,7 +31,10 @@ Done when the target's sha256 is written down and matches its release record (or
 
 Load the `chris` skill and turn every requirement into a checkable promise, `F1`…`Fn`, each citing its
 source (Issue number, guide section, release note). Sources: closed Issues touching the program since
-the previous verified version, the user guide shipped with it, the release notes. For a new version,
+the previous verified version, the user guide shipped with it, the release notes, and the **approved
+UX**: mock-ups and screens the owner approved (artifact links and acceptance lists in those Issues).
+Each approved behaviour (which filter a column opens, what a screen shows, how fast it answers) is its
+own promise, so a release that fixes bugs but loses approved UX gets a Different verdict. For a new version,
 start from the previous version's `checklist.md` and add the promises closed since.
 
 Done when every closed Issue for this program since the last verified version maps to at least one
@@ -50,30 +53,68 @@ Route by format; [references/formats.md](references/formats.md) has the commands
 
 Done when every app module (not framework files) has REA evidence saved to disk.
 
-### Web apps
+### Web apps: the fast pipeline
 
-The shipped file of a web app is the bundle the live site serves. Open the live page (or the pinned
-copy of its bundle served locally) in a browser with a loopback CDP port, then run the REA tools
-below (CLI `rea <tool>` or the `rea` MCP server). **They are required, not suggestions.** A script or
-Playwright run may add checks, but it never replaces an REA tool. If a tool cannot run, write
-`BLOCKED: <tool> <reason>` in the report and stop for the owner; never switch method silently.
+The shipped file of a web app is the bundle the live site serves. Run REA on it as **one scripted
+batch**, never one model turn per click. A previous agent-driven run took 56 minutes and $17.73.
+A scripted run of the same scenarios found the same request bugs in 3 minutes for $0.17. The model's
+time is the cost, so the model writes the scenarios and reads short flag lists. Scripts do the
+clicking, capturing and counting.
 
-| Required tool | Evidence file in the report folder |
+1. **Reuse first.** Copy the previous version's `scripts/` folder (stack setup, seed, local server,
+   browser launcher, scenario file). Write setup only for what is missing.
+2. **Write scenarios once, as data.** One REA `capture-browser-scenario` input per scenario, with the
+   same step ids on every build. Cover every promise that needs runtime, plus one scenario for each
+   page that uses a shared component under check. A shared component has no page of its own, so its
+   bugs show through the pages that use it. Each scenario does what a user does: open, sort, filter,
+   search, page, open a row, edit and save. Over-fetch and duplicate writes only show when the page
+   is used.
+3. **Run everything in one shell command, in parallel.** Every scenario gets a fresh browser with its
+   own CDP port, and every build gets a stack reset. The script also runs `list-browser-targets`,
+   `analyze-web-bundle`, `export-web-scripts` and `compare-web-captures`. Raw output goes to disk only.
+4. **Read only short text:**
+   - `scripts/web_compact.py <raw> > <compact>` for each capture.
+   - `scripts/web_flags.py <compactDir> --new <tag> [--old <prevTag>] <scenarios…>`: flags for
+     select=*, wide or oversized responses, duplicate writes or RPCs in one step, repeated GETs,
+     failing requests and console lines, plus the diff against the previous version.
+   - `scripts/bundle_sweep.py <servedDistOrExportedScripts>`: keys, JWT roles, local and private
+     URLs, console calls, demo or test code, source maps and third-party hosts.
+
+   Never open a raw capture or bundle JSON in context. Use `jq`, `grep` or a short script for a
+   single field.
+5. **Turn each flag into a finding or a stated "not a bug" reason.** Trace each kept finding with
+   `trace-web-source-location`, using a source-mapped build of the same commit (never deployed). It
+   then cites a source file and line. A flag that only the test harness causes (blocked fonts, an
+   isolated network) is noted as harness, not as a bug.
+6. **Promises:** every runtime promise gets its observable from the same captures, or from the
+   previous version's one-command checks (Playwright or similar) run once. Never re-drive a promise by
+   hand when a script already checks it.
+
+Spend model turns on choosing scenarios, judging flags and tracing; never on waiting or clicking.
+Start the run in the background, and do static work (promises, bundle sweep) while it runs. Re-run
+only the scenarios whose code changed, and only to confirm a fix.
+
+| Required REA tool | Evidence file in the report folder |
 |---|---|
-| `list-browser-targets`, then `analyze-web-bundle <endpoint> <targetId>`: inventory of the shipped scripts, routes, endpoints, strings, libraries | `evidence/rea-bundle.json` |
-| `observe-web-session` (or `capture-browser-scenario`) around every runtime scenario: all requests and responses, console, errors | `evidence/rea-session-<scenario>.json` |
-| `compare-web-captures` against the previous verified version's sessions (first version: write `no previous`) | `evidence/rea-diff.json` |
+| `list-browser-targets`, then `analyze-web-bundle <endpoint> <targetId>`: inventory of the shipped scripts, routes, endpoints, strings, libraries | `evidence/rea-bundle.json` (trimmed) plus `bundle_sweep.py` output |
+| `capture-browser-scenario` (or `observe-web-session`) for every runtime scenario: all requests and responses, console, errors | `evidence/rea-session-<scenario>.json` (the `web_compact.py` output) |
+| `compare-web-captures` against the previous verified version's sessions (first version: write `no previous`) | `evidence/rea-diff.json` plus `web_flags.py` output |
 | `trace-web-source-location` for every finding, mapping minified code back to its module | cited in the finding |
+
+The tools are required, not suggestions. If a tool cannot run, write `BLOCKED: <tool> <reason>` in the
+report and stop for the owner. Never switch method silently.
 
 Commit proof: `compare-source-to-bundle <inputJson>` needs source maps. When the live bundle has
 none, build the candidate commit with source maps on the worker (never deploy it) and compare that,
 or byte-compare a clean production rebuild with build ids and chunk hashes masked. Record which one
 ran. The proven commit is the one the verdict and its tag belong to.
 
-Read the REA output for what the promises never mention: requests that fetch more columns or rows
-than the screen shows, repeated or failing requests the page hides, console errors, strings or code
-that should not ship (keys, test or demo code, local URLs), and any session difference against the
-previous version that no promise or release note explains. Each one is a finding.
+What counts as a finding, even when no promise mentions it:
+- requests that fetch more columns or rows than the screen shows
+- repeated or failing requests that the page hides
+- console warnings and errors
+- strings or code that should not ship (keys, test or demo code, local or private URLs, debug logs)
+- any session difference against the previous version that no promise or release note explains
 
 Server-side promises (database functions, row-level security, API rules) are not in the bundle.
 Check them through the public API, signed in as each kind of user, never from the bundle or with an
@@ -140,7 +181,9 @@ evidence file is free of secrets and customer data, and the owner's open questio
 
 Skip this step when the program's repository has no `docs/verification/modules.json`.
 
-1. Open the bug Issues: one per Bug suspect, or one parent Issue that lists them. Add label
+1. Open the bug Issues: one per Bug suspect, or one parent Issue that lists them. Each bug Issue
+   names the approved-UX promises (`Fn`) its screen carries under **Must keep**, so the fix is
+   judged on both: the bug gone and every Must keep promise still Match. Add label
    `rea-verify` to every Issue this run opened (create the label once if the repo lacks it).
 2. Tag the commit the checked build came from (the release tag's commit, or the commit
    `compare-source-to-bundle` proved live), with the module id from `modules.json`:
