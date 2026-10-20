@@ -98,3 +98,6 @@ secrets and customer data, and the owner's open questions are listed.
 
 Only when the repository has `docs/verification/modules.json`: open the bug Issues, tag the checked
 commit, and update the status board as in [references/record-verdict.md](references/record-verdict.md).
+Every run records its verdict, including a "report only" run or a re-check after fixes: the owner reads
+the board, and the board moves only on a `rea/` tag. A merge of a PR that adds a report folder with no
+tag naming it is blocked by the `rea-verdict-guard.sh` hook.
