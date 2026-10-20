@@ -230,6 +230,11 @@ def main():
     knot_maps(maps, probes, offs, dur)
     borrow_offsets(maps, offs, dur)
     for src in SOURCES:
+        if src not in maps:  # the only recording of its meeting: its own clock is the timeline
+            n0 = nominal_start_epoch_ms(src)
+            maps[src] = PieceMap([[0.0, dur[src], n0, n0 + dur[src]]])
+            offs[src] = {"offset_start_ms": 0, "note": "single recording, nominal start kept"}
+    for src in SOURCES:
         offs.setdefault(src, {})["pieces"] = [[round(v, 1) for v in pc] for pc in maps[src].pieces]
         offs[src]["start_local"] = hms(maps[src](0))
         offs[src]["end_local"] = hms(maps[src](dur[src]))
