@@ -1,0 +1,27 @@
+# Record the verdict
+
+Only for repositories with `docs/verification/modules.json`.
+
+1. **Bug Issues:** one per Bug suspect, or one parent Issue listing them. Each names the approved-UX
+   promises (`Fn`) of its screen under **Must keep**, so a fix is judged on both: bug gone, every
+   Must keep promise still Match. Label every Issue this run opened `rea-verify` (create the label
+   once if missing).
+2. **Tag** the checked commit (the release tag's commit, or the one `compare-source-to-bundle` proved
+   live) with the module id from `modules.json`:
+   `git tag -a rea/<module-id>/<version-or-short-sha> <commit> -F <message-file>`.
+   Message line 1:
+   - `PASS`: every promise Match.
+   - `FAIL <n> bugs #<issue>`: `n` Bug suspects; `#<issue>` is the single or parent Issue.
+   - `PARTIAL <n> #<issue>`: no Bug suspect, `n` promises Different, Partial or Not checked.
+
+   Line 2: the report folder path, relative to the repository root.
+3. **Push the tag alone:** `git push <remote> refs/tags/<tag>`.
+4. **Status README:** `npm run verify:status`, committed in the same PR as the report folder.
+5. **Status board:** `npm run verify:project` updates the GitHub Project named in
+   `docs/verification/project.json`. The owner reads that board, not the Issues list, so a run that
+   skips it is invisible to them. The `rea-status-project.sh` hook runs it after a tag push; run it
+   yourself too and check its last line `N cells updated`. On failure (e.g. `gh` lacks the `project`
+   scope) write `BLOCKED: verify:project <reason>` in the report and tell the owner.
+
+Done when the tag is on the remote, every bug Issue has `rea-verify`, the report PR holds the
+regenerated status README, and the module's Project row shows the new tag and verdict.
