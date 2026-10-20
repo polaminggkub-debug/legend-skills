@@ -61,8 +61,12 @@ A scripted run of the same scenarios found the same request bugs in 3 minutes fo
 time is the cost, so the model writes the scenarios and reads short flag lists. Scripts do the
 clicking, capturing and counting.
 
-1. **Reuse first.** Copy the previous version's `scripts/` folder (stack setup, seed, local server,
-   browser launcher, scenario file). Write setup only for what is missing.
+1. **Reuse first, parameterized.** Copy the previous version's `scripts/` folder (stack setup, seed,
+   local server, browser launcher, scenario file). A stack name, port, or path inside it must come from
+   an environment variable with the old value as default (`STACK=${STACK:-srea3}`, `PORT_BASE=…`,
+   `WORK=…`). If the copied scripts hardcode them, the first run that reuses them makes them variables
+   once and commits that change. Never re-port them with `sed` per run, and never share a stack, port
+   or browser port with another run.
 2. **Write scenarios once, as data.** One REA `capture-browser-scenario` input per scenario, with the
    same step ids on every build. Cover every promise that needs runtime, plus one scenario for each
    page that uses a shared component under check. A shared component has no page of its own, so its
@@ -70,7 +74,10 @@ clicking, capturing and counting.
    search, page, open a row, edit and save. Over-fetch and duplicate writes only show when the page
    is used.
 3. **Run everything in one shell command, in parallel.** Every scenario gets a fresh browser with its
-   own CDP port, and every build gets a stack reset. The script also runs `list-browser-targets`,
+   own CDP port, and every build gets a stack reset. Read-only scenarios run in parallel. Scenarios
+   that write share one database, so run them one after another after a reset, or give each its own
+   stack. Wait for readiness with `curl --retry N --retry-connrefused`, `timeout`, or `docker wait`,
+   never a `sleep` loop (the poll hook blocks those). The script also runs `list-browser-targets`,
    `analyze-web-bundle`, `export-web-scripts` and `compare-web-captures`. Raw output goes to disk only.
 4. **Read only short text:**
    - `scripts/web_compact.py <raw> > <compact>` for each capture.
@@ -81,10 +88,23 @@ clicking, capturing and counting.
      URLs, console calls, demo or test code, source maps and third-party hosts.
 
    Never open a raw capture or bundle JSON in context. Use `jq`, `grep` or a short script for a
-   single field.
-5. **Turn each flag into a finding or a stated "not a bug" reason.** Trace each kept finding with
-   `trace-web-source-location`, using a source-mapped build of the same commit (never deployed). It
-   then cites a source file and line. A flag that only the test harness causes (blocked fonts, an
+   single field. `export-web-scripts` takes the plain capture result: run the capture without
+   `--full-output`, or pass `.data` only.
+   While the run goes, start one read-only static-review subagent for each shared component under
+   check. It reads that component's model files and lists logic bugs with file:line: wrong-day dates,
+   server versus client mismatches, unescaped search, retries that repeat writes, guards that miss
+   events. Flags only catch request-shaped bugs, and in trials this review found most of the bugs
+   that show wrong data.
+5. **Turn each flag and each sweep hit into a finding or a stated "not a bug" reason.** This covers
+   every `web_flags.py` line, including select=* and wide reads seen only in the evidence. It also
+   covers every `bundle_sweep.py` hit under secret-key, demo-test-code, private-ip, local-url and
+   console-call: demo or test code and private IPs in a production bundle are findings for the owner
+   to judge, not noise.
+   **Trace every finding to its source; this step is required.** Build the same commit once with
+   source maps (`vite build --sourcemap`, never deployed). Serve it, and run
+   `trace-web-source-location` on the request's initiator or the hit's offset. A finding cites the
+   traced `file:line`, never a guess from grep. A finding that has no traced line is marked
+   `untraced`. A flag that only the test harness causes (blocked fonts, an
    isolated network) is noted as harness, not as a bug.
 6. **Promises:** every runtime promise gets its observable from the same captures, or from the
    previous version's one-command checks (Playwright or similar) run once. Never re-drive a promise by
