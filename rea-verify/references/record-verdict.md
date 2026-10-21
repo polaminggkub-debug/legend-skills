@@ -22,14 +22,19 @@ Only for repositories with `docs/verification/modules.json`.
 4. **Push the tag alone:** `git push <remote> refs/tags/<tag>`.
 5. **Status README:** `npm run verify:status`, committed in the same PR as the report folder.
 6. **Status board:** `npm run verify:project` updates the GitHub Project named in
-   `docs/verification/project.json`. The owner reads that board, not the Issues list, so a run that
-   skips it is invisible to them. The `rea-status-project.sh` hook runs it after a tag push; run it
-   yourself too and check its last line `N cells updated`. On failure (e.g. `gh` lacks the `project`
-   scope) write `BLOCKED: verify:project <reason>` in the report and tell the owner.
+   `docs/verification/project.json`. The owner reads that board, so the final state must reach it, but
+   run it **once per batch, never per verdict**. GitHub's secondary limits (80 writes/min, 500/hour,
+   shared with PRs, comments and commit statuses on the same account) blocked merges for hours on
+   2026-10-21 when every tag push re-ran it. No hook runs it any more.
+   - Working alone: run it once, after the report PR merges, and check its last line `N cells updated`.
+   - A child of a MASTER session: never run it and make no `gh` calls; tell the MASTER the tag is pushed.
+     The MASTER runs it once after a batch of merges.
+   - On a rate-limit error: stop, wait at least 5 minutes, try once. Never loop. On another failure
+     (e.g. `gh` lacks the `project` scope) write `BLOCKED: verify:project <reason>` in the report.
 
 The board (GitHub Project #3 "REA verify status") has views All, Modules and Shared components; the script
 keeps their columns. A ship that stops before its `live/*` tags (e.g. a failed smoke) leaves the Live
 column old: push `live/erp|db/<UTC YYYYMMDD-HHMM>` on the deployed commit by hand.
 
 Done when the tag is on the remote, every bug Issue has `rea-verify`, the report PR holds the
-regenerated status README, and the module's Project row shows the new tag and verdict.
+regenerated status README, and the module's Project row shows the new tag and verdict (after the batch's single `verify:project` run).
