@@ -34,7 +34,7 @@ General skills: `artifact-sketch`, `chris`, `formpress`, `margaret`, `matt`, `sh
 `threejs-guided-scene`, `threejs-guided-scene-build`, `ui-ux-pro-max`, `update-all`, `meeting-transcript`, and `rea-verify`.
 
 [`artifact-sketch`](artifact-sketch/SKILL.md) builds a step-by-step visual explainer as an Artifact page:
-one press = one action, a zoomed picture per step, every wire in its real colour (colour chips in text too),
+one press = one action, a zoomed picture per step, every wire in its real colour (colour chips in text too), text and picture lit together on hover,
 real device photos with only the used ports circled, an overview picture, and a full check before "done".
 Works for wiring and assembly, software setup, processes and concepts.
 

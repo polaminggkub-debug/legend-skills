@@ -2,7 +2,8 @@
 name: artifact-sketch
 description: >
   Build a step-by-step visual explainer as an Artifact page: one press = one action, a clear
-  picture for every step, real colours and real photos. Use whenever the user asks to
+  picture for every step, real colours and real photos, colour-coded text that lights up
+  its part of the picture on hover (and back). Use whenever the user asks to
   "sketch it in an Artifact", "อธิบายเป็นภาพ", "ทำ step by step", "วิธีต่อ", "วิธีประกอบ",
   or wants something explained or taught visually: wiring, electronics, assembly, hardware
   setup, installing or configuring software, a process, a workflow, a concept. Use it even
@@ -77,6 +78,16 @@ Load `artifact-design` before writing the page. For UI work in this setup, also 
   "แดง a1 j1 a11" where only "แดง" is coloured and the holes are plain grey is a fail: the
   reader scans for the hole, not the colour word. Build one map (column/pin → wire colour)
   from the circuit data and use it for both picture and text, so they cannot disagree.
+- **Text and picture are linked both ways on hover (and tap on phones).** Pointing at a
+  chip in the text (a hole, column, pin, colour word, port) lights up the matching wire,
+  part and hole/port ring in the picture and dims the rest. Pointing at a wire or part in the
+  picture lights up every chip in the text that refers to it. A tap pins the highlight until
+  the next tap (touch has no hover). Give every linkable drawing a key list
+  (`data-l="h-a21 c21 w-r"`: hole, column, wire colour, port) and give each text chip the same
+  kind of key, so one matcher serves both directions. Add a wide transparent hit stroke to
+  thin wires so they are easy to point at. Dimming must not hide the highlighted item inside
+  a faded layer (lift the layer's opacity while it holds a highlight). Clear the highlight on
+  step change. Put a one-line hint under the picture that this works.
 - Where the colour is unknown or does not matter, say it plainly: "2 wires, any colour, either
   way round", or "colour of the U-jumper depends on its length, not the picture". If the
   colour order is not standardised (e.g. JST cables), find it with a meter step, not by
@@ -92,7 +103,9 @@ Load `artifact-design` before writing the page. For UI work in this setup, also 
   separately, holes match the circuit, nothing on the 3.3V side touches 5V, final picture
   complete. Run a small script over the built step data that lists (a) steps that touch a
   wire but name no colour and (b) any identifier (hole, column, pin) left as plain text
-  outside a colour chip. Both lists must be empty before "done".
+  outside a colour chip. Both lists must be empty before "done". Then test the hover link
+  in the browser: hover one text chip (the picture lights the right wire and hole) and one
+  wire (the text lights the right chips), on a board step and a port step.
 - Render it and look (local server + screenshot; add `<meta charset="utf-8">` to the local
   copy, or Thai shows as mojibake). Report what was not visually checked.
 - Add stop rules where a mistake can damage something: "meter shows 5V → stop, send a photo".
@@ -109,7 +122,8 @@ The same shape works for any explainer: a software setup (one click per step, re
 screenshot with the button circled), a process (one actor action per step, overview diagram
 first and last), a concept (one idea per step, the same diagram growing step by step). Keep:
 one action per press, one clear picture per step, real visuals over abstract ones, colour
-references in text match the picture, an overview, and a full check before "done".
+references in text match the picture, hovering a term lights it in the picture (and back),
+an overview, and a full check before "done".
 
 ## Build pattern
 
@@ -117,5 +131,8 @@ Keep content as data and the page as a renderer: a Python (or JS) list of steps
 `{group, text, details[], picture-state, rings[], photo, warning}` and one HTML template that
 draws the picture for the current step. Post-process all text fields once (colour-word chips,
 plus dot chips for every hole, column, pin and signal from the colour map) and run the
-"missing colour" and "bare identifier" checks over the same list. Publish to the same Artifact URL on every
+"missing colour" and "bare identifier" checks over the same list. Wrap every drawn wire,
+part, terminal and port in `<g class="lk" data-l="…">` when you generate it (not by guessing
+from coordinates later); one delegated `pointerover`/`pointerout`/`click` handler on the
+document drives the two-way highlight. Publish to the same Artifact URL on every
 revision so the user's link stays the same.
