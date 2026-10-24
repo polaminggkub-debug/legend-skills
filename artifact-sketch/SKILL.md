@@ -13,126 +13,45 @@ description: >
 
 # Artifact sketch
 
-An artifact sketch is a page the user follows with their hands or their eyes, one step at a
-time. Its reader is not an engineer reading a spec. The reader is a person at a desk with the
-real parts, who looks up from the work, glances at the screen, and must know at once what to
-do next. Every rule below comes from that one glance.
+The reader has the real parts in hand, glances at the screen, and must know the next move at
+once. Every rule serves that glance. Load `artifact-design` first (here also `steve`, `ui-ux-pro-max`).
 
-Load `artifact-design` before writing the page. For UI work in this setup, also load
-`steve` and `ui-ux-pro-max` first.
+## Shape
+- Stepper, not a long page. One press = one action (one wire, one hole, one click); 50+ steps is fine.
+- Big ‹ ย้อน / ถัดไป › fixed at the bottom, arrow keys, group chips at the top to jump.
+- One counter only: "ข้อ 12 จาก 54" plus the group name. Never two number pairs.
+- First page = every part (photo, name, count) plus short prep lines. No do-nothing prep steps.
+- Say up front what changes preparation. Design one wire per screw slot and state it; a ferrule takes one wire.
 
-## 1. Shape: a stepper, not a long page
+## Pictures
+- Every step has a picture, zoomed to where the hands are, target marked with a solid ring and tag ("a21"); a whole-view toggle.
+- Earlier parts faded, this step full colour. Final and check steps: everything full colour.
+- No blinking, dashes or animation.
+- Never merge wires: a 4-wire cable is 4 lines, each its real colour, each into its own hole.
+- Show how each end attaches (arrow at a screw terminal, pin in a hole) with a legend. Never let wires look like they share a slot.
+- Ports: real device photo from the manual or shop. Circle only ports we use, label each (name, where on the board, what plugs in). Erase every other mark.
+- One overview picture of every connection end to end, at the start of the connect group and at the last step.
+- Name the far end: "→ IIC port of the ESP32 screen", not "→ IIC".
 
-- **One press = one action.** "Screw the red wire into a1" is one step. "Wire T1" is not:
-  split it into one step per wire, part or hole. 50+ steps is normal and fine.
-- Big **‹ ย้อน / ถัดไป ›** buttons fixed at the bottom, plus arrow keys. Group chips at the
-  top jump to a group (e.g. "3 · จัมเปอร์").
-- **One counter only:** "ข้อ 12 จาก 54", with the group name beside it. Never show two
-  number pairs (group X/Y and step X/Y) at once: the reader cannot tell which is which.
-- **Merge steps that do nothing.** "Prepare the parts" and "get the clock ready" are not
-  steps. Put all parts on one first page: photo card + name + count for each, plus a few
-  short prep lines (solder pins, set switches, insert battery, tools).
-- Say up front anything that changes how the reader prepares. Example: if two wires must
-  share one screw slot, say so in step 1, because one ferrule cannot take two wires and the
-  reader has to crimp them together before starting. Better: design so every slot takes
-  exactly one wire, and say that.
+## Colour and text
+- Real wire colours everywhere (the cable bought), never function colours.
+- Every step touching a wire states its colour in text.
+- Colour words are filled chips (red/white text, white/border, black, yellow/dark text).
+- Every identifier the reader looks for in the picture (hole, column, pin, signal, port) is a chip with a dot in its real wire colour; hollow dot if no wire. Colouring only the colour word is a fail. Build one map (column/pin → colour) and feed picture and text from it.
+- One colour per line: when a line lists several wires, give each wire its own row ("แดง a21 3.3V" / "ดำ a23 GND" …). Never chain colours with "·" in one line.
+- Two-way hover (tap pins on phones): text chip lights its wire, part and ring and dims the rest; a wire lights its text chips. Same key list on both (`data-l="h-a21 c21 w-r"`), wide transparent hit stroke on thin wires, faded layers lifted while highlighted, cleared on step change, one hint line under the picture.
+- Unknown or irrelevant colour: say "any colour, either way round". Non-standard order (JST): find it with a meter step and give both outcomes, never guess. Resistor bands too.
 
-## 2. Pictures: one clear picture per step
+## Check before "done"
+- Every pin, hole and port comes from a source (circuit, datasheet, board print). When a source corrects an assumption, fix every step and picture.
+- Script over the step data: steps with a wire but no colour, identifiers outside a chip, lines with 2+ colours. All empty.
+- Walk every step: colours, separate wires, holes match the circuit, 3.3V never meets 5V, final picture complete.
+- Render and look (local server, `<meta charset="utf-8">` in the local copy). Test hover both ways on a board step and a port step. Report what was not seen.
+- Stop rules where damage is possible: "meter shows 5V → stop, send a photo".
 
-- Every step has a picture. The picture **zooms to where the hands are** and marks the exact
-  spot (hole, port, button) with a ring and a readable tag ("a21"). A "ทั้งบอร์ด / whole
-  view" toggle shows the full picture.
-- Parts done in earlier steps are faded; this step's part is full colour. The **final step
-  and the check steps show everything in full colour**, nothing faded.
-- **No blinking, no dashed lines, no animation** that the reader must wait for or decode.
-  Solid lines and solid rings only.
-- **Never collapse many wires into one line.** A 4-wire cable is drawn as 4 wires, each in
-  its own colour, each ending in its own hole or slot. A "summary line" makes the reader
-  guess, and guessing is what the sketch exists to prevent.
-- Show *how* each end attaches. A wire into a screw terminal ends with an arrow at the
-  terminal; a jumper pin into a hole ends with a pin in that hole. Say the legend under the
-  picture. Never draw it so that several wires appear to enter one slot.
-- **Use a real photo** of the device for ports and connectors (from the official manual or
-  shop page). Circle only the ports this build uses, each with a label: name, where it is on
-  the board ("left edge, between RESET and BOOT"), and what plugs in. Remove every mark that
-  is not ours (the manual's red boxes, arrows, unused ports): unused highlights confuse.
-- **One overview picture** shows every connection end to end: source, cable, destination
-  port. Put it at the start of the "connect" group and again at the last step.
-- Always name the far end: "JST cable → IIC port **of the ESP32 screen**", not "→ IIC".
+## Language and scope
+- User's language (Thai here), short lines, one fact per line. If the user does not understand a picture, the picture is wrong: fix it, then explain each mark.
+- Works beyond hardware: software (real screenshot, button circled), process (one actor action per step), concept (one diagram growing step by step). Same rules.
 
-## 3. Colour: real colours, everywhere, in text too
-
-- **Every wire is drawn in its real colour** (the colour of the cable the user bought), in
-  every picture. Never use "function colours" (orange = power) that differ from the real
-  wire: the reader matches the screen to the wire in their hand.
-- **Every step that touches a wire states its colour in the text**: "แดง → a21 (3.3V)".
-- **Colour words in text are colour chips**, not plain monotone words: a small rounded chip
-  filled with the real colour and contrasting text (red chip with white text, white chip with
-  dark text and a border, black chip with white text, yellow chip with dark text). Apply it
-  to every text area (step title, details, warnings, checks) by post-processing the step
-  data, so no step is missed. Plain text "แดง ดำ เขียว" in one grey is a fail.
-- **Every reference in text carries its colour too, not only colour words.** Hole names
-  (a21), column numbers (1 3 5 7…), pins and signals (5V, GND, SDA, SCL, D+), and any other
-  identifier the reader must find in the picture are chips with a dot in the colour of the
-  real wire that lands there. Identifiers with no wire get a hollow dot. A list like
-  "แดง a1 j1 a11" where only "แดง" is coloured and the holes are plain grey is a fail: the
-  reader scans for the hole, not the colour word. Build one map (column/pin → wire colour)
-  from the circuit data and use it for both picture and text, so they cannot disagree.
-- **Text and picture are linked both ways on hover (and tap on phones).** Pointing at a
-  chip in the text (a hole, column, pin, colour word, port) lights up the matching wire,
-  part and hole/port ring in the picture and dims the rest. Pointing at a wire or part in the
-  picture lights up every chip in the text that refers to it. A tap pins the highlight until
-  the next tap (touch has no hover). Give every linkable drawing a key list
-  (`data-l="h-a21 c21 w-r"`: hole, column, wire colour, port) and give each text chip the same
-  kind of key, so one matcher serves both directions. Add a wide transparent hit stroke to
-  thin wires so they are easy to point at. Dimming must not hide the highlighted item inside
-  a faded layer (lift the layer's opacity while it holds a highlight). Clear the highlight on
-  step change. Put a one-line hint under the picture that this works.
-- Where the colour is unknown or does not matter, say it plainly: "2 wires, any colour, either
-  way round", or "colour of the U-jumper depends on its length, not the picture". If the
-  colour order is not standardised (e.g. JST cables), find it with a meter step, not by
-  guessing, and give both outcomes.
-- Components with colour codes get them too (resistor 5.1k = green brown red gold).
-
-## 4. Facts: check before you say done
-
-- Take every pin, hole and port name from a source: the circuit plan, the datasheet, the
-  print on the board. When a source corrects an assumption (e.g. pin 3 is SCL, not SDA),
-  update every step and picture that uses it.
-- Before reporting, walk **every step** and check: wire colour stated, picture shows each wire
-  separately, holes match the circuit, nothing on the 3.3V side touches 5V, final picture
-  complete. Run a small script over the built step data that lists (a) steps that touch a
-  wire but name no colour and (b) any identifier (hole, column, pin) left as plain text
-  outside a colour chip. Both lists must be empty before "done". Then test the hover link
-  in the browser: hover one text chip (the picture lights the right wire and hole) and one
-  wire (the text lights the right chips), on a board step and a port step.
-- Render it and look (local server + screenshot; add `<meta charset="utf-8">` to the local
-  copy, or Thai shows as mojibake). Report what was not visually checked.
-- Add stop rules where a mistake can damage something: "meter shows 5V → stop, send a photo".
-
-## 5. Language
-
-Write in the user's language (Thai for this owner), short lines, one fact per line. When the
-user says they don't understand a picture, the picture is wrong: fix the picture, then explain
-in plain words what each mark means.
-
-## 6. Beyond hardware
-
-The same shape works for any explainer: a software setup (one click per step, real
-screenshot with the button circled), a process (one actor action per step, overview diagram
-first and last), a concept (one idea per step, the same diagram growing step by step). Keep:
-one action per press, one clear picture per step, real visuals over abstract ones, colour
-references in text match the picture, hovering a term lights it in the picture (and back),
-an overview, and a full check before "done".
-
-## Build pattern
-
-Keep content as data and the page as a renderer: a Python (or JS) list of steps
-`{group, text, details[], picture-state, rings[], photo, warning}` and one HTML template that
-draws the picture for the current step. Post-process all text fields once (colour-word chips,
-plus dot chips for every hole, column, pin and signal from the colour map) and run the
-"missing colour" and "bare identifier" checks over the same list. Wrap every drawn wire,
-part, terminal and port in `<g class="lk" data-l="…">` when you generate it (not by guessing
-from coordinates later); one delegated `pointerover`/`pointerout`/`click` handler on the
-document drives the two-way highlight. Publish to the same Artifact URL on every
-revision so the user's link stays the same.
+## Build
+Steps as data (`{group, text, details[], picture-state, rings[], photo, warning}`) plus one HTML renderer. Post-process all text once (chips, dots, rows) and run the checks on the same list. Wrap each drawn wire, part, terminal and port in `<g class="lk" data-l="…">` at generation; one delegated pointer handler drives the highlight. Republish to the same Artifact URL.
