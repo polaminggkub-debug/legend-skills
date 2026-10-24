@@ -30,8 +30,13 @@ Copying the general skill files requires no installer runtime and works on
 Windows, macOS, and Linux. OpenCode Worker has its own Python installer for
 macOS/Windows. Matt's optional upstream helper bundle requires Node.js and `npx`.
 
-General skills: `chris`, `formpress`, `margaret`, `matt`, `ship`, `steve`,
+General skills: `artifact-sketch`, `chris`, `formpress`, `margaret`, `matt`, `ship`, `steve`,
 `threejs-guided-scene`, `threejs-guided-scene-build`, `ui-ux-pro-max`, `update-all`, `meeting-transcript`, and `rea-verify`.
+
+[`artifact-sketch`](artifact-sketch/SKILL.md) builds a step-by-step visual explainer as an Artifact page:
+one press = one action, a zoomed picture per step, every wire in its real colour (colour chips in text too),
+real device photos with only the used ports circled, an overview picture, and a full check before "done".
+Works for wiring and assembly, software setup, processes and concepts.
 
 [`meeting-transcript`](meeting-transcript/SKILL.md) turns Plaud, Wispr Flow and backup recordings into
 timestamped transcripts with named speakers using free local models on a worker machine (script merge,
