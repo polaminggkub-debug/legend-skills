@@ -6,17 +6,21 @@ One folder per program, one subfolder per verified version, inside the program's
 ```
 <program>-reverse-check/
 ├── README.md          version table + how to check the next version
-├── tools/             helper scripts copied from this skill, if the repo wants them pinned
 └── <version>/
-    ├── report.md      verdict per promise, limits, open questions
-    ├── checklist.md   the promises F1…Fn with their sources
-    ├── scripts/       runtime scenario and setup scripts; the next version starts from a copy
-    └── evidence/      sha256.txt, bundle file list, runtimeconfig/deps, *-types.txt,
-                       *-strings.txt, runtime traces and logs (trimmed); web apps also
-                       rea-bundle.json, rea-session-<scenario>.json, rea-diff.json
+    ├── report.md      verdict per promise, limits, open questions (short: see the template)
+    └── checklist.md   the promises F1…Fn with their sources
 ```
 
-Keep raw REA JSON out of the repository (megabytes, and rebuildable from the shipped file). Before
+**Only `report.md`, `checklist.md` and the README row go to the main branch** (owner 2026-10-25:
+one release's raw evidence was 17k–91k lines and hundreds of screenshots). The evidence and scripts
+(`evidence/`: sha256.txt, bundle file list, trimmed traces and logs, web apps also rea-bundle.json,
+rea-session-<scenario>.json, rea-diff.json; `scripts/`: scenario and setup scripts the next version
+copies) are committed on the report branch that the `rea/` tag points to, and are never merged: the
+tag keeps them (`git show <tag>:<path>`). The main-branch PR checks them out of the report branch
+file by file (report.md, checklist.md) and adds the README row. Links from the report to evidence
+use the tag form, not a relative path.
+
+Keep raw REA JSON out of every commit (megabytes, and rebuildable from the shipped file). Before
 saving evidence, scan it for keys, tokens, passwords, personal names and customer data; trim or drop
 any file that carries them.
 
@@ -34,6 +38,9 @@ any file that carries them.
 - Target: <file>, sha256 `<hash>`, matches <manifest / release note>.
 - Promises: [checklist.md](checklist.md), from <Issues, guide, release notes>.
 - Tools: REA <version>, <unpacker>, <runtime: VM / OS / tracer>.
+
+Keep it to about one screen per 10 promises: one table row per promise, one line per finding,
+no pasted logs or captures (cite the evidence file on the tag instead).
 
 ## Result per promise
 
