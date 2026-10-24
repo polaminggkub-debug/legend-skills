@@ -38,13 +38,14 @@ once. Every rule serves that glance. Load `artifact-design` first (here also `st
 - Every step touching a wire states its colour in text.
 - Colour words are filled chips (red/white text, white/border, black, yellow/dark text).
 - Every identifier the reader looks for in the picture (hole, column, pin, signal, port) is a chip with a dot in its real wire colour; hollow dot if no wire. Colouring only the colour word is a fail. Build one map (column/pin → colour) and feed picture and text from it.
+- Same look in text and picture: a tag in the picture ("a21") uses the same chip as the text (same dot colour, same text colour, no link-blue). Orange means only "do it here" (ring, tag border, hover).
 - One colour per line: when a line lists several wires, give each wire its own row ("แดง a21 3.3V" / "ดำ a23 GND" …). Never chain colours with "·" in one line.
 - Two-way hover (tap pins on phones): text chip lights its wire, part and ring and dims the rest; a wire lights its text chips. Same key list on both (`data-l="h-a21 c21 w-r"`), wide transparent hit stroke on thin wires, faded layers lifted while highlighted, cleared on step change, one hint line under the picture.
 - Unknown or irrelevant colour: say "any colour, either way round". Non-standard order (JST): find it with a meter step and give both outcomes, never guess. Resistor bands too.
 
 ## Check before "done"
 - Every pin, hole and port comes from a source (circuit, datasheet, board print). When a source corrects an assumption, fix every step and picture.
-- Script over the step data: steps with a wire but no colour, identifiers outside a chip, lines with 2+ colours. All empty.
+- Script over the step data: steps with a wire but no colour, identifiers outside a chip, lines with 2+ colours, hole colour in text ≠ wire colour in picture. All empty.
 - Walk every step: colours, separate wires, holes match the circuit, 3.3V never meets 5V, final picture complete.
 - Render and look (local server, `<meta charset="utf-8">` in the local copy). Test hover both ways on a board step and a port step. Report what was not seen.
 - Stop rules where damage is possible: "meter shows 5V → stop, send a photo".
