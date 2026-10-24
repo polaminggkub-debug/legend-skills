@@ -70,6 +70,13 @@ Load `artifact-design` before writing the page. For UI work in this setup, also 
   dark text and a border, black chip with white text, yellow chip with dark text). Apply it
   to every text area (step title, details, warnings, checks) by post-processing the step
   data, so no step is missed. Plain text "แดง ดำ เขียว" in one grey is a fail.
+- **Every reference in text carries its colour too, not only colour words.** Hole names
+  (a21), column numbers (1 3 5 7…), pins and signals (5V, GND, SDA, SCL, D+), and any other
+  identifier the reader must find in the picture are chips with a dot in the colour of the
+  real wire that lands there. Identifiers with no wire get a hollow dot. A list like
+  "แดง a1 j1 a11" where only "แดง" is coloured and the holes are plain grey is a fail: the
+  reader scans for the hole, not the colour word. Build one map (column/pin → wire colour)
+  from the circuit data and use it for both picture and text, so they cannot disagree.
 - Where the colour is unknown or does not matter, say it plainly: "2 wires, any colour, either
   way round", or "colour of the U-jumper depends on its length, not the picture". If the
   colour order is not standardised (e.g. JST cables), find it with a meter step, not by
@@ -83,7 +90,9 @@ Load `artifact-design` before writing the page. For UI work in this setup, also 
   update every step and picture that uses it.
 - Before reporting, walk **every step** and check: wire colour stated, picture shows each wire
   separately, holes match the circuit, nothing on the 3.3V side touches 5V, final picture
-  complete. A small script that lists steps without colour words is cheap and catches misses.
+  complete. Run a small script over the built step data that lists (a) steps that touch a
+  wire but name no colour and (b) any identifier (hole, column, pin) left as plain text
+  outside a colour chip. Both lists must be empty before "done".
 - Render it and look (local server + screenshot; add `<meta charset="utf-8">` to the local
   copy, or Thai shows as mojibake). Report what was not visually checked.
 - Add stop rules where a mistake can damage something: "meter shows 5V → stop, send a photo".
@@ -106,6 +115,7 @@ references in text match the picture, an overview, and a full check before "done
 
 Keep content as data and the page as a renderer: a Python (or JS) list of steps
 `{group, text, details[], picture-state, rings[], photo, warning}` and one HTML template that
-draws the picture for the current step. Post-process all text fields once (colour chips) and
-run the "missing colour" check over the same list. Publish to the same Artifact URL on every
+draws the picture for the current step. Post-process all text fields once (colour-word chips,
+plus dot chips for every hole, column, pin and signal from the colour map) and run the
+"missing colour" and "bare identifier" checks over the same list. Publish to the same Artifact URL on every
 revision so the user's link stays the same.
