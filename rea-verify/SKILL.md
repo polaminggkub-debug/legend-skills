@@ -68,6 +68,17 @@ Done when every promise has static evidence or is marked "needs runtime".
 
 ## 5. Runtime checks on the worker
 
+**Never against live.** Every runtime check runs in Docker on its own local stack (local database,
+API and auth with seed data, never the shared gate stack) with a production build of the checked
+commit served beside it. The browser and every script block the live API and site hosts and fail
+the run if a request reaches one. Live is the customer's production: on 2026-10-24 parallel REA
+rounds against live used up its database disk budget and took it down for hours. A promise that
+only live can prove (live secrets, a migration not yet pushed, real devices) is **Not checked** with
+that reason, and goes to the short post-ship smoke the owner approves (one job, one browser). Where
+`poo-job.sh` launches the job, its brief carries `## Target` `local`. Without the worker machine the
+same Docker run goes on the user's own computer, **one run at a time**: a stack plus a browser takes
+most of a laptop.
+
 Static evidence proves code is wired, not that it works. Run on the worker machine named in
 `~/.claude/docs/work-routing.md` (brief it with `poo-handoff`), otherwise the machine the user names,
 in a VM or container matching the customer's OS, with copies of data. Scenario kinds, the 10-minute

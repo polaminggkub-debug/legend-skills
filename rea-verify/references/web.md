@@ -1,6 +1,10 @@
 # Web apps: the scripted pipeline
 
-The shipped file is the bundle the live site serves. Scripts do the clicking, capturing and counting
+The shipped file is the bundle the live site serves; its runtime check runs on a production build of
+the same commit, against a local stack in Docker, never against the live site or its database (see
+SKILL.md step 5). `ALLOW_HOSTS` holds only the local stack and the local preview. Prove the build
+equals the shipped bundle by fetching the shipped static files once with `curl` (the hosting CDN
+only, never the database API) and byte-comparing them; never browse live. Scripts do the clicking, capturing and counting
 in one batch; the model writes scenarios, reads short flag lists and traces findings. Model turns are
 the cost, so spend them on judgment, not on waiting or clicking.
 
