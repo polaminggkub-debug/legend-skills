@@ -44,6 +44,7 @@ once. Every rule serves that glance. Load `artifact-design` first (here also `st
 - Unknown or irrelevant colour: say "any colour, either way round". Non-standard order (JST): find it with a meter step and give both outcomes, never guess. Resistor bands too.
 
 ## Check before "done"
+- Labels follow the real part's print and orientation (e.g. breadboard: where column 1 and row a really are). Ask or check a photo before drawing; if the picture and the part disagree, rename the labels to the print, not the reader's part.
 - Every pin, hole and port comes from a source (circuit, datasheet, board print). When a source corrects an assumption, fix every step and picture.
 - Script over the step data: steps with a wire but no colour, identifiers outside a chip, lines with 2+ colours, hole colour in text ≠ wire colour in picture. All empty.
 - Walk every step: colours, separate wires, holes match the circuit, 3.3V never meets 5V, final picture complete.
