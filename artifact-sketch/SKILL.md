@@ -21,6 +21,7 @@ once. Every rule serves that glance. Load `artifact-design` first (here also `st
 - Big ‹ ย้อน / ถัดไป › fixed at the bottom, arrow keys, group chips at the top to jump.
 - One counter only: "ข้อ 12 จาก 54" plus the group name. Never two number pairs.
 - First page = every part (photo, name, count) plus short prep lines. No do-nothing prep steps.
+- Order steps hardest-first while the space is empty: on a breadboard, small fiddly parts (resistors, capacitors) go in before terminals and cables crowd the holes.
 - Say up front what changes preparation. Design one wire per screw slot and state it; a ferrule takes one wire.
 
 ## Pictures
