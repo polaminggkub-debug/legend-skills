@@ -1,0 +1,12 @@
+{
+  "name": "legend-skills",
+  "owner": { "name": "polaminggkub-debug" },
+  "description": "Legend Skills plugins: skill, scripts and hooks that install and update together.",
+  "plugins": [
+    {
+      "name": "rea-verify",
+      "source": "./plugins/rea-verify",
+      "description": "Verify a release of your own program from the shipped file with REA. User-invoked skill, scripts and merge guard hook in one plugin."
+    }
+  ]
+}

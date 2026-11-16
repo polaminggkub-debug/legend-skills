@@ -1,0 +1,8 @@
+{
+  "name": "rea-verify",
+  "description": "Verify a release of your own program from the shipped file with REA: the rea-verify skill (user-invoked), its scripts, and the merge guard hook that refuses a report without a tag or without REA evidence.",
+  "author": { "name": "polaminggkub-debug" },
+  "homepage": "https://github.com/polaminggkub-debug/legend-skills",
+  "repository": "https://github.com/polaminggkub-debug/legend-skills",
+  "keywords": ["rea", "reverse-engineering", "verification", "release"]
+}

@@ -42,7 +42,7 @@ Works for wiring and assembly, software setup, processes and concepts.
 timestamped transcripts with named speakers using free local models on a worker machine (script merge,
 no LLM rewriting), with owner-checked speaker fixes and a safe write-back to Plaud.
 
-[`rea-verify`](rea-verify/SKILL.md) checks a release of your own program from the shipped file, not
+[`rea-verify`](plugins/rea-verify/skills/rea-verify/SKILL.md) checks a release of your own program from the shipped file, not
 its source: REA reverse engineering, a promise list from the Issues and guides, black-box runs on a
 worker machine, and a per-version verdict (Match / Different / Bug suspect / Partial / Not checked).
 In a repository with `docs/verification/modules.json`, it tags the checked commit
