@@ -99,6 +99,24 @@ Each promise gets one verdict with its evidence (static or runtime):
 - **Partial**: some proven, the rest open.
 - **Not checked**: with the reason.
 
+Give every Bug suspect a **severity**: **High** (data loss, wrong numbers, a security hole, a main
+flow blocked), **Medium** (a promise broken, with a workaround), **Low** (looks, wording, focus, a
+rare edge). Only Medium and High bugs start a fix round and its re-check. Low bugs go to Issues and
+wait for the owner. The loop **ends** at the first round with no Medium or High bug.
+
+**Round 1 sets the scope** of the whole loop: its `checklist.md` and its scenario list. A **re-check
+round** starts from the fix's diff and runs only:
+
+- the promises and scenarios of the bugs that were fixed,
+- each bug Issue's **Must keep** promises,
+- the version diff of the fixed build against round 1 (`compare-web-captures` or
+  `compare-managed-members`); a change it shows outside the fix is checked too.
+
+Every other promise keeps its round 1 verdict, cited as `round 1`. A defect a re-check meets outside
+that scope goes to a `rea-verify` Issue with its severity and waits for the owner; it starts no new
+round. Only a High one joins the current loop, because a PASS tag over a known High bug would mislead
+the owner.
+
 If a required tool cannot run, write `BLOCKED: <tool> <reason>` and stop for the owner, so a weaker
 method is never passed off as the real one.
 
@@ -110,5 +128,7 @@ secrets and customer data, and the owner's open questions are listed.
 Only when the repository has `docs/verification/modules.json`: open the bug Issues, tag the checked
 commit, and update the status board as in [references/record-verdict.md](references/record-verdict.md).
 Every run records its verdict, including a "report only" run or a re-check after fixes: the owner reads
-the board, and the board moves only on a `rea/` tag. A merge of a PR that adds a report folder with no
-tag naming it is blocked by the `rea-verdict-guard.sh` hook.
+the board, and the board moves only on a `rea/` tag. A run and its re-checks share one report PR. The
+`rea-verdict-guard.sh` hook blocks the merge of a PR that adds a report folder with no tag naming it,
+or a web report folder without the REA evidence files of [references/web.md](references/web.md) and
+without a `BLOCKED:` line in its report.

@@ -15,12 +15,18 @@ Only for repositories with `docs/verification/modules.json`.
    `git tag -a rea/<module-id>/<version-or-short-sha> <commit> -F <message-file>`.
    Message line 1:
    - `PASS`: every promise Match.
+   - `PASS <n> low #<issue>`: no Medium or High bug; `n` Low bugs wait in `#<issue>`. This ends the loop.
    - `FAIL <n> bugs #<issue>`: `n` Bug suspects; `#<issue>` is the single or parent Issue.
    - `PARTIAL <n> #<issue>`: no Bug suspect, `n` promises Different, Partial or Not checked.
 
    Line 2: the report folder path, relative to the repository root.
+   Line 3: `Rounds: <n>`, the number of REA rounds (each a different angle) the verdict rests on; the
+   board's Rounds column shows it.
 4. **Push the tag alone:** `git push <remote> refs/tags/<tag>`.
 5. **Status README:** `npm run verify:status`, committed in the same PR as the report folder.
+   **One report PR per loop:** a first run and its re-check rounds share one report branch. Push
+   each round's tag at once, commit its report folder to that branch, and open the PR when the
+   loop ends. A report PR per round costs a full gate each time.
 6. **Status board:** `npm run verify:project` updates the GitHub Project named in
    `docs/verification/project.json`. The owner reads that board, so the final state must reach it, but
    run it **once per batch, never per verdict**. GitHub's secondary limits (80 writes/min, 500/hour,
