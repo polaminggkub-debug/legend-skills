@@ -16,6 +16,10 @@ versions run it again and add to it.
 | `scenarios/<name>.json` | One `capture-browser-scenario` input per scenario, without a `browser` block; `${APP_URL}` is filled in. Same step ids on every version, so versions diff. |
 | `checks/<name>` | Executables. Each proves promises and prints one line per promise: `PASS <id> <fact>`, `FAIL <id> <what was seen>` or `NOT-CHECKED <id> <reason>`. `<id>` is the promise (`F12`) or the Issue. They read `$WORK/env`. |
 
+A full run starts from a fresh stack: checks write through the app, so `up.sh` resets the database
+and seed whenever it runs. A step a check skips or cannot trust prints `NOT-CHECKED`, never silence.
+A build for a local stack may need its own variables (a local auth key, for one); `up.sh` sets them.
+
 A check judges what a user or the public API can observe: a rendered screen, a downloaded file, an
 API answer as each kind of user. A check that reads the source tree proves nothing about the shipped
 build.
@@ -38,6 +42,9 @@ ONLY=users-page,api-roles rea-web-run.sh <suite>              # re-check round o
 - `ONLY` takes scenario and check names (an unknown name stops the run and lists the valid ones).
   That run prints `PARTIAL RUN — not a release verdict`; it still writes the bundle, diff and sweep
   evidence, which a re-check round's report needs.
+
+First run on poo (2026-11-16, ssp-erp app-shell, 1 scenario, 2 checks, 17 verdict lines): 166 s from
+a removed stack, with `node_modules` and the browser image already cached.
 
 ## What stays with the model
 
