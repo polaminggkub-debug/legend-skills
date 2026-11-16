@@ -8,6 +8,10 @@ only, never the database API) and byte-comparing them; never browse live. Script
 in one batch; the model writes scenarios, reads short flag lists and traces findings. Model turns are
 the cost, so spend them on judgment, not on waiting or clicking.
 
+**A module with a suite runs it:** `scripts/rea-web-run.sh <suite-dir>` does steps 1 to 5 below in one
+command and prints one verdict line per promise ([web-runner.md](web-runner.md) has the suite
+contract). The first run on a module writes its suite; the steps say what the suite and the runner do.
+
 ## Steps
 
 1. **Reuse the previous version's `scripts/`** (stack setup, seed, server, browser launcher,
