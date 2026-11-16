@@ -50,4 +50,5 @@ result; it does not drive the steps.
 
 | Program | Machine | Command | Notes |
 |---|---|---|---|
+| Any web app with a suite | the worker | `[ONLY=<names>] [PREV=<old WORK>] scripts/rea-web-run.sh <suite-dir>` | The suite is the project's folder of `up.sh`, scenarios and checks ([web-runner.md](web-runner.md)). Own local stack per suite; never live. |
 | HipAgent (ssp-erp) | poo | `[ONLY=<ids>] tools/hip-agent/scripts/vm-regression.sh <HipAgent.exe> [--long]` | Parallel clones of the golden Windows image `~/vm/hip-golden/` (RAM snapshot, 6 s per clone), private Supabase stack `hipfast`. Full run 6:31 on 1.3.0; `ONLY=<one id>` about 3:45. A trap removes every clone and the stack, leaving only `win-test`. `--long` adds the 2M-row DB and hourly cases. Golden eval expires 2027-01-15: rebuild with `vm-golden-build.sh all` (about 1 h) before then. |
