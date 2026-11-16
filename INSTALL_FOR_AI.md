@@ -32,12 +32,27 @@ described below, not a second copy under the Codex skill directory.
 | `threejs-guided-scene` | `threejs-guided-scene` |
 | `threejs-guided-scene-build` | `threejs-guided-scene-build` |
 | `update-all` | `update-all` |
-| `rea-verify` | `rea-verify` |
+| `plugins/rea-verify/skills/rea-verify` | `rea-verify` (Claude Code: install the plugin instead, see below) |
 | `steve-design-suite/skills/steve` | `steve` |
 | `steve-design-suite/skills/ui-ux-pro-max` | `ui-ux-pro-max` |
 
 If a destination exists and is not recorded as an unchanged Legend-managed
 copy, preserve it and ask before replacement. Never delete unrelated files.
+
+### rea-verify on Claude Code: a plugin
+
+On Claude Code, `rea-verify` installs as a plugin, so its skill, scripts and merge guard hook arrive
+and update together:
+
+```bash
+claude plugin marketplace add polaminggkub-debug/legend-skills
+claude plugin install rea-verify@legend-skills
+```
+
+Update later with `claude plugin marketplace update legend-skills` then
+`claude plugin update rea-verify@legend-skills`. The skill is user-invoked: it runs only when the
+user types `/rea-verify`. Remove an older copy under `~/.claude/skills/rea-verify` and an older
+`rea-verdict-guard.sh` entry in `~/.claude/settings.json`, so one copy is left.
 
 ### Chris global installation
 

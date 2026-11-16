@@ -1,12 +1,7 @@
 ---
 name: rea-verify
-description: >
-  Verify a release of the user's own program from the shipped file, not its source: reverse
-  engineer it with REA, check every promise from the Issues and guides, run black-box checks on the
-  worker machine, and give a per-version verdict with suspected bugs. Use when the user asks to
-  check, verify, audit or black-box test a built exe/app/package against its requirements, compare
-  what a release really does with what was promised, or find bugs in a shipped version
-  ("ตรวจตัวที่ส่งจริง", "reverse engineer โปรแกรมเรา", "เช็คว่าทำงานตาม requirement").
+description: Verify a release of your own program from the shipped file with REA, against its promises.
+disable-model-invocation: true
 ---
 
 # REA verify
@@ -85,6 +80,11 @@ in a VM or container matching the customer's OS, with copies of data. Scenario k
 budget and the one-command runners are in [references/runtime-checks.md](references/runtime-checks.md).
 When the program has a runner, run it: that is the runtime check. Otherwise reuse the previous
 version's `scripts/`.
+
+This skill is user-invoked, so a worker job or child session has no way to load it by name: its
+brief tells it to read this file and follow it, at
+`~/.claude/plugins/marketplaces/legend-skills/plugins/rea-verify/skills/rea-verify/SKILL.md`
+(the same path on every machine with the plugin installed; `scripts/` sits beside it).
 
 Done when every "needs runtime" promise has a result or a stated reason it could not run.
 
