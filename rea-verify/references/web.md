@@ -55,7 +55,11 @@ the cost, so spend them on judgment, not on waiting or clicking.
    `evidence/rea-trace.json`. A finding cites the traced `file:line`; one without a traced line is
    marked `untraced`.
 8. **Promises** take their observable from the same captures, or from the previous version's
-   one-command checks (Playwright or similar) run once. Re-run only scenarios whose code changed.
+   one-command checks (Playwright or similar) run once.
+9. **A re-check round** (SKILL.md step 6) reuses round 1's scripts and scenario files and runs only
+   the scenarios in its scope, then `analyze-web-bundle` and `compare-web-captures` against round 1's
+   captures. The bundle sweep and tracing cover only the chunks that diff shows changed. Its report
+   folder still holds the three evidence files below.
 
 ## Required REA tools and evidence
 
@@ -66,7 +70,9 @@ the cost, so spend them on judgment, not on waiting or clicking.
 | `compare-web-captures` against the previous verified version (first: `no previous`) | `evidence/rea-diff.json` plus `web_flags.py` output |
 | `trace-web-source-location` per finding | cited in the finding |
 
-A web report missing any of these files (without a `BLOCKED` line) has no verdict and gets no tag.
+A web report missing any of these files (without a `BLOCKED:` line at the start of a line in
+`report.md`) has no verdict and gets no tag. The `rea-verdict-guard.sh` hook checks the first three
+in the report PR and blocks its merge when one is missing.
 
 **Commit proof:** `compare-source-to-bundle <inputJson>` needs source maps. When the live bundle has
 none, compare a source-map build of the candidate commit on the worker, or byte-compare a clean
