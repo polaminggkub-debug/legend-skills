@@ -24,7 +24,10 @@ as an Apple product? Use the principle, not Apple visual copying.
 
 For deep audits, read `references/design-audit.md`.
 
-For build and fix work, invoke bundled `ui-ux-pro-max` and load only its
+Every time Steve runs (review, fix, build, audit, sketch), invoke the
+`ui-ux-pro-max` skill in the same turn, before any finding or change (owner
+2026-10-25; the hook `ui-skill-guard.sh` blocks UI file edits without both).
+Steve's colour verdicts check the approved sketch's palette first. Load only its
 relevant domain reference. If it is absent, say so and use a safe fallback.
 
 ## Look at the rendered screen
@@ -43,6 +46,21 @@ proof. Only the owner accepts the result.
 4. Use a coherent type scale, spacing system, contrast, and semantic controls.
 5. Prefer familiar patterns; use distinctive visuals only when they serve the
    product.
+6. **Anti-monotone (owner 2026-11-22).** Calm is not grey. A screen that is all
+   white cards, grey borders and grey text fails, even when tidy. Every screen
+   needs:
+   - Semantic colour per meaning, used the same app-wide: done/ok green,
+     running/active blue, hold/warning amber, NG/void/danger red,
+     planner/undo violet, idle neutral. Status shows as tinted chips or strips,
+     never grey text alone.
+   - Tinted surfaces to group sections (soft tinted header or card band, a
+     coloured left edge), not only borders.
+   - Icons on section titles, key actions and statuses.
+   - Key numbers big and coloured by meaning; labels small and muted.
+   - One accent for the primary action; the other colours carry meaning, not
+     decoration. No rainbow. WCAG AA contrast, works in light, dark and
+     projector-light.
+   Audits report a monotone screen as a finding (`MEDIUM` by default).
 
 ## Audit policy and output
 
